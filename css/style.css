@@ -31,6 +31,13 @@ body {
     transition: background 0.3s;
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: auto;
+}
+
 .nav-container {
     width: 100%;
     padding: 0 3rem;
@@ -932,5 +939,22 @@ footer {
 
     .image-grid {
         grid-template-columns: 1fr;
+    }
+
+    .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-left: auto;
+    }
+
+    .language-dropdown {
+        display: block;
+    }
+
+    .language-btn {
+        display: flex;
+        align-items: center;
+        gap: 4px;
     }
 }
