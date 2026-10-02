@@ -902,6 +902,12 @@ footer {
 .footer-copy { color: var(--c3); font-size: 0.78rem; }
 
 
+/* 手機版返回首頁：預設隱藏 */
+.mobile-home {
+    display: none;
+}
+
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
     .nav-links { display: none; }
@@ -956,5 +962,10 @@ footer {
         display: flex;
         align-items: center;
         gap: 4px;
+    }
+
+    /* 漢堡選單中的返回首頁顯示 */
+    .mobile-home {
+        display: block;
     }
 }
