@@ -14,6 +14,9 @@ window.addEventListener('scroll', () => {
         : 'rgba(40, 43, 66, 0.92)';
 
 
+    // 以下只在有 hero 區塊的首頁執行
+    if (!heroOverlay || !heroContent) return;
+
     // 背景漸暗：0 ~ 0.6vh 達到最暗，之後收斂
     heroOverlay.style.opacity = Math.min(scrollY / (h * 0.6), 1) * MAX_OVERLAY;
 
@@ -47,59 +50,3 @@ document.querySelectorAll('.group-buttons').forEach(row => {
         });
     });
 });
-
-// Group bracket selector
-const groupSelectorBtns = document.querySelectorAll('.group-selector-btn');
-const groupBrackets = document.querySelectorAll('.group-bracket');
-
-if (groupSelectorBtns.length > 0) {
-    groupSelectorBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const group = btn.dataset.group;
-
-            // Remove active from all buttons and brackets
-            groupSelectorBtns.forEach(b => b.classList.remove('active'));
-            groupBrackets.forEach(b => b.classList.remove('active-bracket'));
-
-            // Add active to clicked button and corresponding bracket
-            btn.classList.add('active');
-            const bracket = document.getElementById(`groupBracket${group}`);
-            if (bracket) {
-                bracket.classList.add('active-bracket');
-            }
-        });
-    });
-
-    // Randomize BYE positions for all groups
-    function randomizeBYEs() {
-        groupBrackets.forEach(bracket => {
-            const byeElements = bracket.querySelectorAll('.bye-text');
-            if (byeElements.length === 0) return;
-
-            // Create array of indices for BYE positions
-            const byeIndices = Array.from({length: byeElements.length}, (_, i) => i);
-
-            // Shuffle to get random positions
-            for (let i = byeIndices.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [byeIndices[i], byeIndices[j]] = [byeIndices[j], byeIndices[i]];
-            }
-
-            // Randomly determine how many BYEs to show (2-4 per group)
-            const byeCount = Math.floor(Math.random() * 3) + 2;
-            const selectedByeIndices = byeIndices.slice(0, byeCount);
-
-            byeElements.forEach((element, index) => {
-                if (selectedByeIndices.includes(index)) {
-                    element.textContent = 'BYE';
-                    element.parentElement.style.opacity = '1';
-                } else {
-                    element.textContent = '選手X';
-                    element.parentElement.style.opacity = '0.5';
-                }
-            });
-        });
-    }
-
-    randomizeBYEs();
-}
