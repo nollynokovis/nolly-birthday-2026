@@ -30,7 +30,30 @@ const navLinks  = document.getElementById('navLinks');
 navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
 navLinks.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => navLinks.classList.remove('open'));
-}, { passive: true });
+});
+
+// 語言選單：點擊切換（手機與鍵盤無法依賴 hover），點外面或按 Esc 關閉
+document.querySelectorAll('.language-dropdown').forEach(dropdown => {
+    const btn = dropdown.querySelector('.language-btn');
+    btn.setAttribute('aria-haspopup', 'true');
+    btn.setAttribute('aria-expanded', 'false');
+
+    const setOpen = open => {
+        dropdown.classList.toggle('open', open);
+        btn.setAttribute('aria-expanded', String(open));
+    };
+
+    btn.addEventListener('click', e => {
+        e.stopPropagation();
+        setOpen(!dropdown.classList.contains('open'));
+    });
+    document.addEventListener('click', e => {
+        if (!dropdown.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') setOpen(false);
+    });
+});
 
 // Group buttons for schedule images (each button row controls the image container in the same block)
 document.querySelectorAll('.group-buttons').forEach(row => {

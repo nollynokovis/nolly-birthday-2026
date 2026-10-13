@@ -19,6 +19,7 @@ body {
     font-family: 'Segoe UI', 'Noto Sans TC', sans-serif;
     line-height: 1.6;
 }
+body:lang(ja) { font-family: 'Segoe UI', 'Noto Sans JP', sans-serif; }
 
 /* ── NAV ── */
 #navbar {
@@ -127,10 +128,6 @@ body {
     white-space: nowrap;
 }
 
-.subsection {
-    scroll-margin-top: 100px;
-}
-
 .btn-nav {
     background: var(--c2);
     color: #fff;
@@ -182,7 +179,8 @@ body {
     transition: transform 0.2s;
 }
 
-.language-dropdown:hover .language-btn span {
+.language-dropdown:hover .language-btn span,
+.language-dropdown.open .language-btn span {
     transform: rotate(180deg);
 }
 
@@ -206,7 +204,17 @@ body {
         visibility 0.2s;
 }
 
-.language-dropdown:hover .language-menu {
+/* 補上按鈕與選單之間的 8px 空隙，滑鼠移動時不會中斷 hover */
+.language-menu::before {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    top: -8px;
+    height: 8px;
+}
+
+.language-dropdown:hover .language-menu,
+.language-dropdown.open .language-menu {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -884,11 +892,7 @@ body {
 }
 
 .valo-rules h3 { color: var(--c5); font-size: 1rem; letter-spacing: 2px; margin-bottom: 1rem; padding-left: 1.2em; text-indent: -1.2em; }
-.valo-rules p { color: var(--c5); font-size: 0.9rem; margin-bottom: 1rem; line-height: 0.8; }
-
-html {
-    scroll-behavior: smooth;
-}
+.valo-rules p { color: var(--c5); font-size: 0.9rem; margin-bottom: 0.3rem; line-height: 1.6; }
 
 /* ── FOOTER ── */
 footer {
@@ -1102,12 +1106,6 @@ footer {
     border-color: #ff7bac;
 }
 
-.group-btn.active {
-    background: rgba(123, 91, 201, 1.0);
-    border-color: rgba(123, 91, 201, 0.4);
-    color: #fff;
-}
-
 /* 各組別不同的Active顏色 */
 .group-btn[data-group="A"].active {
     background: #ed1c24;
@@ -1171,6 +1169,7 @@ footer {
 /* Subsection 樣式 */
 .subsection {
     margin-bottom: 4rem;
+    scroll-margin-top: 100px;
 }
 
 .subsection-title {
