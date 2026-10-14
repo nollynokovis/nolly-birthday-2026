@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STREET FIGHTER 6 參賽者介紹</title>
+    <meta name="description" content="Nolly生日盃 STREET FIGHTER 6 參賽者介紹：依報名順序列出全部參賽選手的名稱、最高牌位及參賽項目。">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Nolly生日盃">
+    <meta property="og:locale" content="zh_TW">
+    <meta property="og:title" content="STREET FIGHTER 6 參賽者介紹｜Nolly生日盃">
+    <meta property="og:description" content="Nolly生日盃 STREET FIGHTER 6 參賽者介紹：依報名順序列出全部參賽選手的名稱、最高牌位及參賽項目。">
+    <meta name="twitter:card" content="summary">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/style.css?v=20261017i">
+</head>
+<body>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">NOLLY<span>生日盃</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li class="mobile-home"><a href="schedule-sf6.html">返回賽程表<em>SCHEDULE</em></a></li>
+            </ul>
+            <a href="schedule-sf6.html" class="btn-nav">返回賽程表</a>
+
+            <div class="nav-right">
+                <div class="language-dropdown">
+                    <button class="language-btn">
+                        中文
+                        <span>▾</span>
+                    </button>
+                    <div class="language-menu">
+                        <a href="players.html">中文</a>
+                        <a href="players-ja.html">日本語</a>
+                        <a href="players-en.html">English</a>
+                    </div>
+                </div>
+            </div>
+            <button class="nav-toggle" id="navToggle">&#9776;</button>
+        </div>
+    </nav>
+
+    <section class="section-title player-hero">
+        <div class="section-inner">
+            <span class="title-eyebrow">NOLLY BIRTHDAY CUP 2026</span>
+            <span class="player-hero-game">STREET FIGHTER 6</span>
+            <h1>參賽者介紹</h1>
+            <span class="player-hero-en">PLAYER LIST</span>
+            <div class="title-deco"><span></span><span></span><span></span></div>
+        </div>
+    </section>
+
+    <section id="player-list" class="section">
+        <div class="section-inner" id="playerDirectory">
+            <nav class="directory-switch" aria-label="名鑑切換">
+                <a href="teams.html">VALORANT</a>
+                <span class="directory-switch-sep" aria-hidden="true">｜</span>
+                <a href="players.html" aria-current="page">STREET FIGHTER 6</a>
+            </nav>
+            <div class="player-stats">
+                <div class="player-stat">
+                    <span class="player-stat-en">PLAYERS</span>
+                    <span class="player-stat-num" data-stat="total">-</span>
+                    <span class="player-stat-label">總人數</span>
+                </div>
+                <div class="player-stat player-stat-solo">
+                    <span class="player-stat-en">SOLO</span>
+                    <span class="player-stat-num" data-stat="solo">-</span>
+                    <span class="player-stat-label">個人賽</span>
+                </div>
+                <div class="player-stat player-stat-team">
+                    <span class="player-stat-en">TEAM</span>
+                    <span class="player-stat-num" data-stat="team">-</span>
+                    <span class="player-stat-label">團體賽</span>
+                </div>
+            </div>
+
+            <div class="player-controls">
+                <div class="player-search">
+                    <label class="visually-hidden" for="playerSearch">搜尋選手名稱</label>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                    <input type="search" id="playerSearch" placeholder="搜尋選手名稱" autocomplete="off">
+                </div>
+                <div class="player-filters" role="group" aria-label="參賽項目篩選">
+                    <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">全部</button>
+                    <button type="button" class="filter-btn" data-filter="solo" aria-pressed="false">個人賽</button>
+                    <button type="button" class="filter-btn" data-filter="team" aria-pressed="false">團體賽</button>
+                </div>
+                <div class="player-sort">
+                    <button type="button" class="sort-toggle" aria-haspopup="true" aria-expanded="false" aria-controls="sortMenu">
+                        <span class="sort-label">排序</span><span class="sort-current">報名順序</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <ul class="sort-menu" id="sortMenu" role="menu" hidden>
+                        <li role="none"><button type="button" role="menuitemradio" aria-checked="true" data-sort="entry">報名順序</button></li>
+                        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-sort="rank-desc">牌位高到低</button></li>
+                        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-sort="rank-asc">牌位低到高</button></li>
+                        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-sort="name-asc">名稱 A 到 Z</button></li>
+                        <li role="none"><button type="button" role="menuitemradio" aria-checked="false" data-sort="name-desc">名稱 Z 到 A</button></li>
+                    </ul>
+                </div>
+            </div>
+
+            <p class="player-result" aria-live="polite"></p>
+            <div class="player-grid"></div>
+            <nav class="pagination" aria-label="頁碼" hidden></nav>
+        </div>
+        <a href="schedule-sf6.html" class="btn-goods">返回 STREET FIGHTER 6 賽程</a>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-logo">NOLLY<span>生日盃</span></div>
+            <p class="footer-copy">© 2026 Nolly生日盃. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js?v=20261013"></script>
+    <script src="js/players.js?v=20261017a"></script>
+</body>
+</html>

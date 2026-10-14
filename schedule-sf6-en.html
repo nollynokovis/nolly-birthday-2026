@@ -15,13 +15,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="css/style.css?v=20261013">
+    <link rel="stylesheet" href="css/style.css?v=20261017i">
 </head>
 <body>
 
     <nav id="navbar">
         <div class="nav-container">
-            <div class="nav-logo">NOLLY<span>CUP</span></div>
+            <a href="index-en.html" class="nav-logo">NOLLY<span>CUP</span></a>
             <ul class="nav-links" id="navLinks">
                 <li><a href="#player-introduction">PLAYERS</a></li>
                 <li class="nav-dropdown">
@@ -33,10 +33,7 @@
                 </li>
                 <li><a href="#team-schedule">TEAM</a></li>
                 <li><a href="#prizes">PRIZES</a></li>
-
-                <li class="mobile-home"><a href="index-en.html">BACK TO NOLLY CUP</a></li>
             </ul>
-            <a href="index-en.html" class="btn-nav">BACK TO NOLLY CUP</a>
 
             <div class="nav-right">
                 <div class="language-dropdown">
@@ -60,6 +57,11 @@
             <span class="title-eyebrow">NOLLY BIRTHDAY CUP</span>
             <h1>STREET FIGHTER 6</h1>
             <div class="title-deco"><span></span><span></span><span></span></div>
+            <nav class="directory-switch" aria-label="Switch schedule">
+                <a href="schedule-valo-en.html">VALORANT</a>
+                <span class="directory-switch-sep" aria-hidden="true">｜</span>
+                <a href="schedule-sf6-en.html" aria-current="page">STREET FIGHTER 6</a>
+            </nav>
         </div>
     </section>
 
@@ -67,11 +69,39 @@
         <div class="section-inner">
             <div class="section-header">
                 <span class="sec-en">PLAYERS</span>
-                <h2 class="sec-title">PLAYER INTRODUCTION</h2>
+                <h2 class="sec-title">PLAYERS</h2>
+                <div class="sec-line"></div>
+                <div class="player-stats">
+                    <div class="player-stat">
+                        <span class="player-stat-en">PLAYERS</span>
+                        <span class="player-stat-num" data-stat="total">-</span>
+                        <span class="player-stat-label">All Players</span>
+                    </div>
+                    <div class="player-stat player-stat-solo">
+                        <span class="player-stat-en">SOLO</span>
+                        <span class="player-stat-num" data-stat="solo">-</span>
+                        <span class="player-stat-label">Individual</span>
+                    </div>
+                    <div class="player-stat player-stat-team">
+                        <span class="player-stat-en">TEAM</span>
+                        <span class="player-stat-num" data-stat="team">-</span>
+                        <span class="player-stat-label">Team</span>
+                    </div>
+                </div>
+            </div>
+            <a href="players-en.html" class="btn-players">VIEW ALL <span data-stat="total">-</span> PLAYERS →</a>
+        </div>
+    </section>
+
+    <section id="team-introduction" class="section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="sec-en">TEAMS</span>
+                <h2 class="sec-title">TEAM INTRODUCTION</h2>
                 <div class="sec-line"></div>
             </div>
             <div class="reg-info">
-                <p>※Player introductions will be announced at a later date.</p>
+                <p>※Team introductions will be announced at a later date.</p>
             </div>
         </div>
     </section>
@@ -188,5 +218,6 @@
 
     <script src="js/main.js?v=20261013"></script>
     <script src="js/slide.js"></script>
+    <script src="js/players.js?v=20261017a"></script>
 </body>
 </html>

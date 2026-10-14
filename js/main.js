@@ -64,12 +64,25 @@ document.querySelectorAll('.group-buttons').forEach(row => {
     buttons[0].classList.add('active');
     images[0].classList.add('active');
 
+    // Lazy images under display:none never load, so preload the other groups once the first one has loaded
+    const preloadAll = () => images.forEach(img => { img.loading = 'eager'; });
+    if (images[0].complete) preloadAll();
+    else images[0].addEventListener('load', preloadAll, { once: true });
+
     buttons.forEach((button, index) => {
         button.addEventListener('click', () => {
             buttons.forEach(btn => btn.classList.remove('active'));
-            images.forEach(img => img.classList.remove('active'));
             button.classList.add('active');
-            images[index].classList.add('active');
+
+            // Keep the current image visible until the target is decoded, so there's no blank flash
+            const target = images[index];
+            target.loading = 'eager';
+            const show = () => {
+                if (!button.classList.contains('active')) return;
+                images.forEach(img => img.classList.remove('active'));
+                target.classList.add('active');
+            };
+            target.decode().then(show, show);
         });
     });
 });

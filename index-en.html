@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=20261013">
+    <link rel="stylesheet" href="css/style.css?v=20261017i">
 </head>
 <body>
 
@@ -27,10 +27,14 @@
                 <li><a href="#rules">RULES</a></li>
                 <li><a href="#registration">REGISTRATION</a></li>
                 <li class="nav-dropdown">
-                    <a href="#schedule">SCHEDULE ▾</a>
-                    <ul class="nav-submenu">
-                        <li><a href="schedule-valo-en.html">VALORANT</a></li>
-                        <li><a href="schedule-sf6-en.html">STREET FIGHTER 6</a></li>
+                    <a href="#schedule">EVENTS ▾</a>
+                    <ul class="nav-submenu nav-event-menu">
+                        <li class="nav-submenu-label">VALORANT</li>
+                        <li><a href="schedule-valo-en.html">Schedule</a></li>
+                        <li><a href="teams-en.html">Teams</a></li>
+                        <li class="nav-submenu-label">STREET FIGHTER 6</li>
+                        <li><a href="schedule-sf6-en.html">Schedule</a></li>
+                        <li><a href="players-en.html">Players</a></li>
                     </ul>
                 </li>
                 <li><a href="#prizes">PRIZES</a></li>
@@ -38,7 +42,7 @@
                 <li><a href="#sponsor">SPONSOR</a></li>
                 <li><a href="#info">FAQ</a></li>
             </ul>
-            <a href="#registration" class="btn-nav">REGISTRATION</a>
+            <a href="#schedule" class="btn-nav">VIEW SCHEDULE</a>
 
             <div class="nav-right">
                 <div class="language-dropdown">
@@ -69,16 +73,16 @@
                     <div class="gc-format">5v5 TEAM TOURNAMENT</div>
 
                     <div class="gc-date">11.7<span class="gc-day">(Sat)</span><span class="gc-amp">&amp;</span>8<span class="gc-day">(Sun)</span></div>
-                    <div class="gc-format">CURRENT REGISTRATION: 22 TEAMS</div>
-                    <a href="#registration" class="btn-valo">REGISTER NOW</a>
+                    <div class="gc-format">CURRENT REGISTRATION: 24 TEAMS</div>
+                    <a href="#schedule" class="btn-valo">VIEW EVENT</a>
                 </div>
                 <div class="game-card gc-orange">
                     <div class="gc-game">STREET FIGHTER 6</div>
                     <div class="gc-format">1v1 TOURNAMENT &nbsp; &amp; &nbsp; 3v3 TEAM TOURNAMENT</div>
 
                     <div class="gc-date">11.14<span class="gc-day">(Sat)</span><span class="gc-amp">&amp;</span>15<span class="gc-day">(Sun)</span></div>
-                    <div class="gc-format">CURRENT REGISTRATION: 114 PLAYERS</div>
-                    <a href="#registration" class="btn-sf6">REGISTER NOW</a>
+                    <div class="gc-format">CURRENT REGISTRATION: 113 PLAYERS</div>
+                    <a href="#schedule" class="btn-sf6">VIEW EVENT</a>
                 </div>
             </div>
         </div>
@@ -174,14 +178,14 @@
                 <div class="reg-card">
                     <div class="reg-num-valo">VALORANT</div>
                     <h3>5v5 Team Tournament</h3>
-                    <h3>Current Number of Registered Teams: 22</h3>
+                    <h3>Current Number of Registered Teams: 24</h3>
                     <a href="https://forms.gle/4FHApoaFnDxc3TxK6" class="btn-valo">VALORANT REGISTRATION FORM</a>
                 </div>
                 <div class="reg-card">
                     <div class="reg-num-sf6">STREET FIGHTER 6</div>
                     <h3>Individual Tournament & 3v3 Team Tournament</h3>
-                    <h3>Current Number of Registrants: 114</h3>
-                    <a href="https://forms.gle/MHcSmVGbUeENvi4FA" class="btn-sf6">STREET FIGHTER 6 REGISTRATION FORM</a>
+                    <h3>Current Number of Registrants: 113</h3>
+                    <a href="https://forms.gle/MHcSmVGbUeENvi4FA" class="btn-sf6 btn-closed">STREET FIGHTER 6 REGISTRATION FORM</a>
                     <p>※SF6 registration has closed early as the number of applicants reached the limit.</p>
                 </div>
             </div>
@@ -209,7 +213,10 @@
                         <p>・November 8 (Sun) 20:00〜 Finals</p>
                         <p>※Some preliminary matches will be played simultaneously. All matches from the Quarterfinals to the Final will be streamed.</p>
                     </div>
-                    <a href="schedule-valo-en.html" class="btn-valo">VALORANT SCHEDULE</a>
+                    <div class="schedule-actions">
+                        <a href="schedule-valo-en.html" class="btn-valo">VIEW SCHEDULE →</a>
+                        <a href="teams-en.html" class="btn-valo">VIEW TEAMS →</a>
+                    </div>
                 </div>
                 <div class="reg-card">
                     <div class="reg-num-sf6">STREET FIGHTER 6</div>
@@ -219,7 +226,10 @@
                         <p>・November 15 (Sun) 20:00〜 Individual Tournament Finals</p>
                         <p>・November 15 (Sun) 21:00〜 3v3 Team Tournament</p>
                     </div>
-                    <a href="schedule-sf6-en.html" class="btn-sf6">STREET FIGHTER 6 SCHEDULE</a>
+                    <div class="schedule-actions">
+                        <a href="schedule-sf6-en.html" class="btn-sf6">VIEW SCHEDULE →</a>
+                        <a href="players-en.html" class="btn-sf6">VIEW PLAYERS →</a>
+                    </div>
                 </div>
             </div>
         </div>

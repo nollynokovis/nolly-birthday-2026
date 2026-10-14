@@ -8,6 +8,17 @@
     --c7: #ff751f; /* Example additional color */
     --c8: #FF4655; /* Example additional color */
     --c9: #000000;
+
+    /* VALORANT Rank Text */
+    --valo-iron: #747B86;
+    --valo-bronze: #A66B43;
+    --valo-silver: #788A9B;
+    --valo-gold: #B88A20;
+    --valo-platinum: #18ada8;
+    --valo-diamond: #b34dad;
+    --valo-ascendant: #2bac74;
+    --valo-immortal: #C34E69;
+    --valo-radiant: #d8be2d;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -53,9 +64,14 @@ body:lang(ja) { font-family: 'Segoe UI', 'Noto Sans JP', sans-serif; }
     font-weight: 900;
     letter-spacing: 2px;
     color: var(--c5);
+    text-decoration: none;
     flex-shrink: 0;
+    transition: color 0.2s;
 }
-.nav-logo span { color: var(--c4); }
+.nav-logo span { color: var(--c4); transition: color 0.2s; }
+/* 子頁面的 logo 是回首頁的連結 */
+a.nav-logo:hover,
+a.nav-logo:hover span { color: #fff; }
 
 .nav-links {
     display: flex;
@@ -127,6 +143,54 @@ body:lang(ja) { font-family: 'Segoe UI', 'Noto Sans JP', sans-serif; }
     border-radius: 0;
     white-space: nowrap;
 }
+
+/* 首頁「賽事」選單：單層，遊戲名稱為分類標題（不是連結），兩個遊戲之間用細線分隔
+   原本 .nav-submenu 的 padding-top 是滑鼠移入的緩衝區；這裡改用 margin＋::before 緩衝，背景與外框才不會蓋到空隙 */
+.nav-event-menu {
+    min-width: 0;
+    width: max-content;
+    margin-top: 8px;
+    padding: 0.4rem;
+    background: #343353;
+    border: 1px solid #7770A5;
+    border-radius: 8px;
+}
+
+.nav-event-menu::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 100%;
+    height: 10px;
+}
+
+.nav-event-menu li,
+.nav-event-menu li:first-child { background: none; border: none; }
+
+.nav-event-menu .nav-submenu-label {
+    padding: 0.45rem 0.75rem 0.25rem;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--c4);
+}
+
+.nav-event-menu .nav-submenu-label:not(:first-child) {
+    margin-top: 0.4rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid #555174;
+}
+
+.nav-event-menu a {
+    align-items: flex-start;
+    padding: 0.5rem 1.6rem 0.5rem 0.75rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    color: #fff8ee;
+}
+
+.nav-event-menu a:hover { background: #51467A; }
 
 .btn-nav {
     background: var(--c2);
@@ -317,9 +381,21 @@ body:lang(ja) { font-family: 'Segoe UI', 'Noto Sans JP', sans-serif; }
     margin-top: 1rem;
     margin-bottom: 0.6rem;
 }
-.btn-sf6:hover { 
+.btn-sf6:hover {
     opacity: 0.75;
     transform: translateY(-2px); }
+
+/* 報名已截止：灰色外觀但仍可點擊，不顯示 hover 效果 */
+.btn-valo.btn-closed,
+.btn-valo.btn-closed:hover,
+.btn-sf6.btn-closed,
+.btn-sf6.btn-closed:hover {
+    margin-bottom: 0.6rem;
+    background: #8a8a8a;
+    color: #e6e6e6;
+    opacity: 1;
+    transform: none;
+}
 
 /* ── HERO FADE (固定於 viewport 底部，背景圖漸層消失效果) ── */
 .hero-fade {
@@ -656,7 +732,8 @@ body:lang(ja) { font-family: 'Segoe UI', 'Noto Sans JP', sans-serif; }
 
 /* ── GOODS ── */
 
-.btn-goods {
+.btn-goods,
+.btn-players {
     display: block;
     width: fit-content;
     margin: 20px auto;
@@ -671,7 +748,8 @@ body:lang(ja) { font-family: 'Segoe UI', 'Noto Sans JP', sans-serif; }
     transition: background 0.2s, transform 0.15s;
 }
 
-.btn-goods:hover {
+.btn-goods:hover,
+.btn-players:hover {
     opacity: 0.75;
     transform: translateY(-2px);
 }
@@ -796,6 +874,11 @@ body:lang(ja) { font-family: 'Segoe UI', 'Noto Sans JP', sans-serif; }
 .reg-card p { display: table; margin: 0 auto 1.5rem; text-align: left; color: var(--c5); font-size: 1.05rem; font-weight: 500; }
 .schedule-lines { display: table; margin: 0 auto 1.5rem; text-align: left; }
 .reg-card .schedule-lines p { display: block; margin: 0 0 0.6rem; color: var(--c5); font-size: 1rem; font-weight: 700; letter-spacing: 2px; padding-left: 1.2em; text-indent: -1.2em; }
+/* 首頁賽程卡片：查看賽程表／查看參賽名單兩個按鈕並排，兩張卡片同寬；空間不夠時自動換行成上下排列 */
+.schedule-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 1rem; }
+.schedule-actions a { width: 13rem; max-width: 100%; margin: 0; padding: 0.85rem 1rem; text-align: center; }
+/* 報名已截止的標示（報名資訊區塊標題下方） */
+.reg-info .reg-closed { display: table; margin: 0 auto 1rem; padding: 0.3rem 1.2rem; border: 1px solid var(--c4); border-radius: 999px; color: var(--c6); font-size: 0.95rem; font-weight: 800; letter-spacing: 2px; }
 .reg-info { color: var(--c5); font-size: 1rem; text-align: center; margin-bottom: 3rem; margin-top: -1rem;}
 .reg-info p { text-align: center; color: var(--c4); font-size: 1rem; margin-bottom: 1rem; }
 .reg-num-sf6 {
@@ -923,6 +1006,10 @@ footer {
         background: rgba(40, 43, 66, 0.98);
         padding: 0.8rem;
         border-bottom: 1px solid rgba(145,141,195,0.1);
+        /* 選單項目較多時，在選單內捲動，不會超出螢幕 */
+        max-height: calc(100vh - 64px);
+        max-height: calc(100dvh - 64px);
+        overflow-y: auto;
     }
     .nav-links.open a { flex-direction: row; gap: 0.5rem; font-size: 0.85rem; }
     .nav-submenu {
@@ -935,8 +1022,13 @@ footer {
     .nav-submenu li,
     .nav-submenu li:first-child { background: none; border: none; }
     .nav-submenu a { padding: 0.35rem 0.65rem; }
+    /* 首頁賽事選單：在漢堡選單中直接展開（點擊操作、不靠 hover），連結加高方便點擊 */
+    .nav-event-menu { width: auto; margin: 0.25rem 0.65rem 0.4rem; padding: 0.35rem; }
+    .nav-event-menu::before { display: none; }
+    .nav-event-menu a { padding: 0.65rem 0.75rem; }
     .btn-nav { display: none; }
-    .nav-toggle { display: block; }
+    /* 語言選單（.nav-right 的 margin-left:auto）靠右，漢堡緊接在旁邊；不再各自 auto 平分空白 */
+    .nav-toggle { display: block; margin-left: 0; }
     .org-card  { display: grid; grid-template-columns: min(90px, 26vw) 1fr; gap: 0.8rem 1.2rem; align-items: start; }
     .org-img   { grid-column: 1; grid-row: 1; max-width: 100%; align-self: center; }
     .org-info  { display: contents; }
@@ -1177,8 +1269,8 @@ footer {
     align-items: center;
     justify-content: center;
     gap: 1rem;
-    margin: 0 0 1rem 0;
-    font-size: 1.6rem;
+    margin: 0 0 0.5rem 0;
+    font-size: 1.3rem;
     font-weight: 800;
     color: var(--c6);
     letter-spacing: 3px;
@@ -1197,9 +1289,9 @@ footer {
 .subsection-subtitle {
     display: block;
     width: fit-content;
-    margin: 0 auto 2rem auto;
-    padding: 0.5rem 1.5rem;
-    font-size: 1.1rem;
+    margin: 0 auto 1.25rem auto;
+    padding: 0.25rem 1.5rem;
+    font-size: 0.95rem;
     font-weight: 600;
     color: var(--c5);
     letter-spacing: 1px;
@@ -1207,7 +1299,7 @@ footer {
 }
 
 .subsection-note {
-    margin: -1.2rem auto 1.5rem auto;
+    margin: -0.6rem auto 1.5rem auto;
     text-align: center;
     font-size: 0.95rem;
     color: var(--c4);
@@ -1227,4 +1319,728 @@ footer {
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 2px;
+}
+
+/* ── PLAYER LIST (SF6 選手名鑑) ── */
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* 選手名鑑標題區：品牌 → 分類（斜切小標籤）→ 主標題 → 英文輔助，集中排版 */
+.player-hero { padding-bottom: 0; }
+.player-hero .title-eyebrow { margin-bottom: 0.9rem; }
+
+/* 遊戲名稱標籤：SF6 用橘色（同 SF6 按鈕），VALORANT 頁（.title-valo）用紅色（同 VALORANT 按鈕） */
+.player-hero-game {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 0.6rem;
+    padding: 0.3rem 1.3rem;
+    background: var(--c7);
+    clip-path: polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%);
+    font-size: 0.8rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    color: #fff;
+}
+
+.title-valo .player-hero-game { background: var(--c8); }
+
+.player-hero h1 {
+    font-size: 2.4rem;
+    line-height: 1.25;
+    letter-spacing: 4px;
+}
+
+.player-hero-en {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    color: var(--c3);
+}
+
+#player-list,
+#team-list { padding-top: 2.25rem; }
+
+/* VALORANT 隊伍名鑑／SF6 選手名鑑互相切換：文字連結，目前頁面白色粗體＋下方紫色短線 */
+.directory-switch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.1rem;
+    margin: 0 auto 2rem;
+}
+
+.directory-switch a {
+    position: relative;
+    padding: 0.35rem 0 0.6rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    color: var(--c4);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.directory-switch a:hover { color: var(--c5); }
+
+.directory-switch a[aria-current="page"] { color: #fff; font-weight: 900; }
+
+.directory-switch a[aria-current="page"]::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 28px;
+    height: 3px;
+    border-radius: 2px;
+    background: #7b5bc9;
+    transform: translateX(-50%);
+}
+
+.directory-switch-sep { font-size: 0.9rem; color: var(--c3); }
+
+/* 賽程表頁：放在主標題區（.section-title）的裝飾線下方，VALORANT 賽程／SF6 賽程互相切換 */
+.section-title .directory-switch { margin: 2rem auto 0; }
+
+/* 總人數／個人賽／團體賽：精簡橫向資訊列，細線分隔（數字左、英文＋說明右） */
+.player-stats {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto 2.25rem;
+}
+
+/* schedule 頁：放在參賽者介紹標題下方，與下方「查看全部」按鈕的距離交給 .section-header 的 margin */
+.section-header .player-stats { margin: 1.75rem 0 0; text-align: left; }
+
+.player-stat {
+    display: grid;
+    grid-template-areas: "num en" "num label";
+    align-items: center;
+    column-gap: 0.55rem;
+    padding: 0 1.6rem;
+}
+
+.player-stat + .player-stat { border-left: 1px solid rgba(145, 141, 195, 0.35); }
+
+.player-stat-en {
+    grid-area: en;
+    align-self: end;
+    font-size: 0.66rem;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: 2.5px;
+    color: var(--c4);
+}
+
+.player-stat-num {
+    grid-area: num;
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--c6);
+}
+
+.player-stat-solo .player-stat-num { color: var(--c7); }
+.player-stat-team .player-stat-num,
+.player-stat-free .player-stat-num { color: #a58ae8; }
+.player-stat-teams .player-stat-num { color: var(--c8); }
+
+.player-stat-label {
+    grid-area: label;
+    align-self: start;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    color: var(--c5);
+}
+
+/* 工具列：搜尋（靠左、吃滿剩餘寬度）＋篩選＋排序（靠右）同一列；SF6／VALORANT 共用，
+   控制項的高度、圓角、外框、字級統一由下方變數設定（工具列本身不加底色與外框） */
+.player-controls {
+    --ctrl-h: 42px;
+    --ctrl-radius: 8px;
+    --ctrl-border: 1.5px solid rgba(181, 167, 213, 0.35);
+    --ctrl-fs: 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2.25rem;
+    scroll-margin-top: 90px;
+}
+
+.player-search {
+    position: relative;
+    flex: 1 1 260px;
+    min-width: 0;
+}
+
+.player-search svg {
+    position: absolute;
+    top: 50%;
+    left: 0.9rem;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    color: var(--c4);
+    pointer-events: none;
+}
+
+.player-search input {
+    width: 100%;
+    height: var(--ctrl-h);
+    padding: 0 1rem 0 2.6rem;
+    background: none;
+    border: var(--ctrl-border);
+    border-radius: var(--ctrl-radius);
+    color: var(--c6);
+    font-family: inherit;
+    font-size: var(--ctrl-fs);
+    font-weight: 700;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.player-search input::placeholder { color: var(--c4); }
+
+.player-search input:focus {
+    outline: none;
+    border-color: #B5A7D5;
+    box-shadow: 0 0 0 3px rgba(181, 167, 213, 0.18);
+}
+
+.player-filters {
+    display: flex;
+    gap: 0.6rem;
+}
+
+.filter-btn {
+    height: var(--ctrl-h);
+    padding: 0 1.2rem;
+    background: rgba(136, 150, 212, 0.12);
+    border: var(--ctrl-border);
+    border-radius: var(--ctrl-radius);
+    color: var(--c5);
+    font-family: inherit;
+    font-size: var(--ctrl-fs);
+    font-weight: 800;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.filter-btn:hover {
+    transform: translateY(-2px);
+    border-color: #B5A7D5;
+    color: #fff;
+}
+
+.filter-btn.active {
+    background: #7b5bc9;
+    border-color: #7b5bc9;
+    color: #fff;
+}
+
+.filter-btn[data-filter="solo"].active {
+    background: var(--c7);
+    border-color: var(--c7);
+}
+
+/* 排序選單：工具列右側「排序 目前選項 ⌄」按鈕＋下拉清單（目前選項打勾） */
+.player-sort {
+    position: relative;
+    margin-left: auto;
+}
+
+.sort-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: var(--ctrl-h);
+    padding: 0 0.9rem;
+    background: rgba(136, 150, 212, 0.12);
+    border: var(--ctrl-border);
+    border-radius: var(--ctrl-radius);
+    font-family: inherit;
+    font-size: var(--ctrl-fs);
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.sort-toggle:hover { border-color: #B5A7D5; }
+
+.sort-label { font-weight: 700; color: var(--c4); }
+.sort-current { font-weight: 800; color: var(--c6); }
+
+.sort-toggle svg {
+    width: 14px;
+    height: 14px;
+    color: var(--c6);
+    transition: transform 0.2s ease;
+}
+
+.sort-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+.sort-toggle:focus-visible {
+    outline: 2px solid #B5A7D5;
+    outline-offset: 2px;
+}
+
+.sort-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    z-index: 20;
+    min-width: 180px;
+    padding: 0.4rem 0;
+    background: #F4F0FA;
+    border: 2px solid #B5A7D5;
+    border-radius: 10px;
+    box-shadow: 0 6px 16px rgba(20, 18, 40, 0.25);
+    list-style: none;
+}
+
+.sort-menu[hidden] { display: none; }
+
+/* 指向按鈕的小三角 */
+.sort-menu::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    right: 1rem;
+    width: 10px;
+    height: 10px;
+    background: #F4F0FA;
+    border-top: 2px solid #B5A7D5;
+    border-left: 2px solid #B5A7D5;
+    transform: rotate(45deg);
+}
+
+.sort-menu button {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.55rem 1.1rem;
+    background: none;
+    border: none;
+    color: #35345F;
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: left;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.sort-menu button:hover,
+.sort-menu button:focus-visible {
+    outline: none;
+    background: #E7D9FA;
+}
+
+.sort-menu button[aria-checked="true"] { font-weight: 900; }
+
+.sort-menu button[aria-checked="true"]::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 12 5 5L20 6'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 12 5 5L20 6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* 篩選／搜尋後的人數（「共 N 位選手」）；往上收，與工具列距離比工具列到卡片近一點 */
+.player-result {
+    margin: -0.75rem 0 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--c4);
+}
+
+/* 選手卡片 */
+.player-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-auto-rows: 1fr; /* 每一列等高，長名稱換行時整頁卡片仍一致 */
+    gap: 1.375rem;
+}
+
+@keyframes player-card-in {
+    from { opacity: 0; transform: translateY(8px); }
+}
+
+/* 淺色純色卡片＋深藍紫邊框、右上角牌位色書籤 */
+.player-card {
+    --pad-x: 1.35rem;
+    --ribbon-w: 14px;
+    --ribbon-h: 23px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 1.45rem var(--pad-x) 1.3rem;
+    background: #E6E9F5;
+    border: 2px solid #45497B;
+    border-radius: 10px;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    animation: player-card-in 0.4s ease backwards;
+    animation-delay: calc(var(--i, 0) * 25ms);
+}
+
+/* 書籤：從上框垂下，牌位色；無牌位時用深藍紫 */
+.player-card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    right: var(--pad-x);
+    width: var(--ribbon-w);
+    height: var(--ribbon-h);
+    background: var(--tier, #45497B);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 74%, 0 100%);
+    pointer-events: none;
+}
+
+/* Hover：上浮 2px＋邊框加深＋很淡的陰影（僅限可 hover 的裝置，避免手機點擊後殘留） */
+@media (hover: hover) {
+    .player-card:hover {
+        transform: translateY(-2px);
+        border-color: #2C2F57;
+        box-shadow: 0 4px 10px rgba(53, 52, 95, 0.1);
+    }
+}
+
+.player-name {
+    flex: 1;
+    margin: 0.1rem 0 0.9rem;
+    padding-right: calc(var(--ribbon-w) + 0.4rem); /* 避開右上角書籤 */
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1.3;
+    letter-spacing: 0.5px;
+    color: #1A1F3D;
+    overflow-wrap: anywhere;
+}
+
+/* 參賽標籤（左下）＋牌位／操作方式（右下）；寬度不足時標籤換到下一行靠左
+   DOM 順序為 meta → events，以 row-reverse 讓 meta 在右、換行時留在上方 */
+.player-info {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding-top: 0.65rem;
+    border-top: 1px solid #C8C3DB;
+}
+
+/* 牌位在上、操作方式在下，靠右對齊 */
+.player-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+    margin-left: auto;
+    line-height: 1.2;
+    text-align: right;
+}
+
+/* 所有牌位同字級、字重；固定預留兩行高度，單行牌位靠下對齊，
+   讓每張卡片的牌位與操作方式位置一致 */
+.player-rank {
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    min-height: 2.1em;
+    font-size: 1.3rem;
+    font-weight: 900;
+    line-height: 1;
+    color: #45497B;
+}
+
+/* 牌位色（JS 依 rank 設定 data-tier）
+   --tier：代表色，用於右上角書籤
+   --tier-text：同色相僅降低亮度，到在淺色卡片底上對比度約 3:1（大字可讀的下限），用於牌位文字；黃色系維持原色 */
+.player-card[data-tier="rookie"]          { --tier: #BDB6CF; --tier-text: #8A8AA0; }
+.player-card[data-tier="iron"]            { --tier: #9295A8; --tier-text: #85858C; }
+.player-card[data-tier="bronze"]          { --tier: #D99A70; --tier-text: #B8753D; }
+.player-card[data-tier="silver"]          { --tier: #B6C6D8; --tier-text: #818C9F; }
+.player-card[data-tier="gold"]            { --tier: #E6C45C; --tier-text: #F0C13E; }
+.player-card[data-tier="platinum"]        { --tier: #79D7E0; --tier-text: #2ca9b9; }
+.player-card[data-tier="diamond"]         { --tier: #e68dbe; --tier-text: #e68dbe; }
+.player-card[data-tier="master"]          { --tier: #61ccaa; --tier-text: #1E9D74; }
+.player-card[data-tier="high-master"]     { --tier: #9BC9E6; --tier-text: #5fb1d4; }
+.player-card[data-tier="grand-master"]    { --tier: #F2BA35; --tier-text: #F2BA35; }
+.player-card[data-tier="ultimate-master"] { --tier: #d33159; --tier-text: #d33159; }
+.player-card[data-tier="legend"]          { --tier: #fa7014; --tier-text: #fa7014; }
+
+/* VALORANT 牌位文字色（teams.js 設在隊伍卡片的每位隊員上） */
+.team-member[data-tier="iron"]      { --tier-text: var(--valo-iron); }
+.team-member[data-tier="bronze"]    { --tier-text: var(--valo-bronze); }
+.team-member[data-tier="silver"]    { --tier-text: var(--valo-silver); }
+.team-member[data-tier="gold"]      { --tier-text: var(--valo-gold); }
+.team-member[data-tier="platinum"]  { --tier-text: var(--valo-platinum); }
+.team-member[data-tier="diamond"]   { --tier-text: var(--valo-diamond); }
+.team-member[data-tier="ascendant"] { --tier-text: var(--valo-ascendant); }
+.team-member[data-tier="immortal"]  { --tier-text: var(--valo-immortal); }
+.team-member[data-tier="radiant"]   { --tier-text: var(--valo-radiant); }
+
+/* 牌位文字：純色、大寫，兩個字的牌位（HIGH MASTER 等）每字一行；
+   複合牌位的「MASTER」(.rank-master) 用 Master 的綠色 */
+.player-rank-text {
+    display: inline-block;
+    width: min-content;
+    line-height: 1.05; /* 兩行牌位（HIGH / MASTER）行距收緊 */
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.player-card[data-tier] .player-rank-word { color: var(--tier-text); }
+.player-card[data-tier] .rank-master { --tier-text: #1E9D74; }
+
+.player-control {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #45497B;
+}
+
+.player-events {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-right: auto;
+    list-style: none;
+}
+
+/* 參賽標籤：只有外框＋文字，與卡片線條同色 */
+.player-events li {
+    padding: 0.15rem 0.65rem;
+    border: 1px solid #45497B;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 800;
+    line-height: 1.5;
+    letter-spacing: 1.5px;
+    color: #45497B;
+}
+
+.player-empty {
+    grid-column: 1 / -1;
+    padding: 3rem 1rem;
+    border: 2px dashed var(--c3);
+    border-radius: 12px;
+    text-align: center;
+    color: var(--c5);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* VALORANT 隊伍卡片：沿用 .player-card，隊名下方為隊伍介紹，底部為隊長＋隊員 4 人＋候補
+   書籤顏色依報名順序由紅到紫漸變的粉彩色（--hue 由 teams.js 設定，0＝紅、280＝紫） */
+/* 電腦版每排 2 張；隊伍卡片只讓同一排等高（不沿用 .player-grid 整頁等高），名單靠 margin-top:auto 貼齊卡片底部 */
+.team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: auto; }
+/* 隊伍卡片外框比選手卡片粗一點；書籤的 top 要跟著外框寬度，才會從上框垂下
+   卡片較寬，左右內距加大（隊名、介紹、名單、候補共用同一個 --pad-x，左右對齊一致） */
+.team-card { --tier: hsl(var(--hue, 0) 55% 58%); --pad-x: 1.625rem; border-width: 3px; }
+.team-card::before { top: -3px; }
+/* 隊名是卡片最主要的文字（約 21.6px），長隊名照 .player-name 換行 */
+.team-card .player-name { flex: none; margin-bottom: 0.45rem; font-size: 1.35rem; line-height: 1.35; }
+.team-card .player-name.is-tbd { color: #8A8AA0; }
+
+/* 沒有介紹的隊伍也會輸出空的 .team-intro，保留與名單之間的距離 */
+.team-intro {
+    margin-bottom: 0.9rem;
+    padding-right: calc(var(--ribbon-w) + 0.4rem);
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.5;
+    color: #45497B;
+    overflow-wrap: anywhere;
+}
+
+/* 名單兩欄：名稱（剩餘寬度，可換行）＋牌位（整張卡片同寬、靠右）；每位選手一列，用 subgrid 共用欄寬 */
+.team-roster {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 1.25rem;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid #C8C3DB;
+    list-style: none;
+}
+
+/* 名稱在左（隊長／候補標籤緊接在名稱後），牌位靠右，兩者對齊第一行；不支援 subgrid 時退回每列各自兩欄 */
+.team-member {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-columns: subgrid;
+    align-items: baseline;
+    padding: 0.5rem 0;
+}
+
+.team-member-name {
+    min-width: 0;
+    font-size: 0.9375rem;
+    font-weight: 800;
+    line-height: 1.4;
+    color: #1A1F3D;
+    overflow-wrap: anywhere;
+}
+
+.team-role {
+    display: inline-block;
+    margin-left: 0.5rem;
+    padding: 0 0.4rem;
+    border: 1px solid #45497B;
+    border-radius: 5px;
+    font-size: 0.66rem;
+    font-weight: 800;
+    line-height: 1.5;
+    letter-spacing: 1px;
+    color: #45497B;
+    vertical-align: 0.1em;
+}
+
+.team-member.is-captain .team-role { background: #45497B; color: #E6E9F5; }
+
+/* 候補與正式隊員之間多留一點距離，以虛線分隔 */
+.team-member.is-sub {
+    margin-top: 0.75rem;
+    padding-top: 0.6rem;
+    border-top: 1px dashed #C8C3DB;
+}
+
+.team-member-rank {
+    font-size: 0.85rem;
+    font-weight: 900;
+    line-height: 1.4;
+    letter-spacing: 0.5px;
+    text-align: right;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: #45497B;
+}
+
+.team-member[data-tier] .team-member-rank { color: var(--tier-text); }
+
+/* 頁碼 */
+.pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+}
+
+.pagination[hidden] { display: none; }
+
+.page-btn {
+    min-width: 42px;
+    height: 42px;
+    padding: 0 0.8rem;
+    background: transparent;
+    border: 1px solid rgba(145, 141, 195, 0.3);
+    border-radius: 6px;
+    color: var(--c5);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.page-btn:hover:not(:disabled):not(.active) {
+    transform: translateY(-2px);
+    background: var(--c3);
+    border-color: var(--c3);
+    color: #fff;
+}
+
+.page-btn.active {
+    background: var(--c2);
+    border-color: var(--c2);
+    color: #fff;
+    cursor: default;
+}
+
+.page-btn:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+.page-gap {
+    align-self: center;
+    padding: 0 0.2rem;
+    color: var(--c4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .player-card { animation: none; }
+}
+
+/* 平板：一樣每排 3 張，卡片較窄所以字級與內距收小一點 */
+@media (max-width: 1024px) {
+    .player-grid { gap: 1.25rem; }
+    .player-card { --pad-x: 1rem; --ribbon-w: 13px; --ribbon-h: 20px; padding: 1.2rem var(--pad-x) 1.1rem; }
+    .player-name { font-size: 1.15rem; }
+    .player-rank { font-size: 1.15rem; }
+    /* 隊伍卡片：平板起每排 1 張 */
+    .team-grid { grid-template-columns: minmax(0, 1fr); }
+    .team-card { --pad-x: 1.5rem; }
+}
+
+/* 手機：每排 2 張；統計改為數字在上，工具列改為搜尋／篩選／排序各一列 */
+@media (max-width: 640px) {
+    .player-hero h1 { font-size: 1.9rem; letter-spacing: 2px; }
+    .player-hero-game { font-size: 0.72rem; letter-spacing: 2px; }
+    #player-list,
+    #team-list { padding-top: 2rem; }
+    .directory-switch { gap: 0.7rem; margin-bottom: 1.6rem; }
+    .directory-switch a { font-size: 0.85rem; letter-spacing: 1px; }
+
+    .player-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem 0.7rem; }
+    .player-card { --pad-x: 0.75rem; --ribbon-w: 11px; --ribbon-h: 17px; padding: 0.95rem var(--pad-x) 0.85rem; border-radius: 8px; }
+    .player-name { margin: 0.1rem 0 0.6rem; font-size: 0.98rem; letter-spacing: 0; }
+    .player-info { gap: 0.4rem; padding-top: 0.45rem; }
+    .player-events li { padding: 0.08rem 0.45rem; font-size: 0.68rem; letter-spacing: 1px; }
+    .player-rank { font-size: 0.95rem; }
+    .player-control { font-size: 0.62rem; letter-spacing: 1px; }
+
+    /* 隊伍卡片：維持每排 1 張（要寫在上面 .player-grid 的 2 欄之後才會覆蓋），內距收小，隊名維持約 20px */
+    .team-grid { grid-template-columns: minmax(0, 1fr); }
+    .team-card { --pad-x: 1.1rem; }
+    .team-card .player-name { font-size: 1.25rem; }
+
+    .player-stats { margin-bottom: 2rem; }
+    .player-stat { flex: 1; grid-template-areas: "num" "en" "label"; justify-items: center; row-gap: 0.15rem; padding: 0 0.4rem; text-align: center; }
+    .player-stat-num { font-size: 1.6rem; margin-bottom: 0.15rem; }
+    .player-stat-en { letter-spacing: 1.5px; }
+    .player-stat-label { font-size: 0.72rem; }
+
+    /* 觸控目標 44px；輸入框字級 16px 以免 iOS 聚焦時自動放大 */
+    .player-controls { --ctrl-h: 44px; gap: 0.6rem; }
+    .player-search input { font-size: 1rem; }
+    .player-search,
+    .player-filters,
+    .player-sort { flex: 1 1 100%; }
+    .filter-btn { flex: 1; padding: 0 0.5rem; letter-spacing: 1px; }
+    .sort-toggle { width: 100%; }
+    .sort-toggle svg { margin-left: auto; }
+    .sort-menu { left: 0; }
 }
