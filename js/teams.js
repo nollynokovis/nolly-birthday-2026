@@ -98,7 +98,7 @@
     // 全形／半形、大小寫視為相同
     const normalize = str => str.normalize('NFKC').toLowerCase().trim();
 
-    // role：captain／member／sub；沒有候補時顯示「—」，讓每張卡片的名單列數一致
+    // role：captain／member／sub；沒有候補時顯示「—」，讓每張卡片的名單列數一致（隊伍檔案的紀念卡則不顯示，見 createMemorialMember 的呼叫處）
     function createMember(player, role) {
         const item = el('li', `team-member is-${role}`);
         const rank = (player && player.rank) || '';
@@ -457,8 +457,8 @@
 
         const members = el('ol', 'memorial-members');
         team.members.forEach((player, i) => members.append(createMemorialMember(player, i === 0 ? 'captain' : 'member')));
-        // 候補放在正式隊員後面（三欄剛好兩排）；沒有候補時顯示「—」
-        members.append(createMemorialMember(team.sub, 'sub'));
+        // 候補放在正式隊員後面（三欄剛好兩排）；沒有候補時不顯示
+        if (team.sub) members.append(createMemorialMember(team.sub, 'sub'));
 
         const body = el('div', 'memorial-body');
         body.append(head, members, createBanMaps(team.banMaps));
