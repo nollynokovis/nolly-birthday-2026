@@ -1,5 +1,5 @@
 {
-  "summary": { "total": 128 },
+  "summary": { "total": 134 },
   "teams": [
     {
       "name": "饒明軒粉絲團",
@@ -11,7 +11,8 @@
         { "name": "仰望蝦頭派搭配獰檬油醋佐宓汁肋排", "rank": "Immortal 1" },
         { "name": "牛牛225", "rank": "Ascendant 2" }
       ],
-      "sub": { "name": "Akashiya", "rank": "Platinum 2" }
+      "sub": { "name": "Akashiya", "rank": "Platinum 2" },
+      "banMaps": [{ "en": "ICEBOX", "zh": "極地寒港" }, { "en": "ABYSS", "zh": "深窟幽境" }]
     },
     {
       "name": "五區戰車",
@@ -23,7 +24,8 @@
         { "name": "李伊leei", "rank": "Immortal 1" },
         { "name": "阿公", "rank": "Ascendant 3" }
       ],
-      "sub": { "name": "HE (欸取一)", "rank": "Ascendant 1" }
+      "sub": { "name": "HE (欸取一)", "rank": "Ascendant 1" },
+      "banMaps": [{ "en": "ABYSS", "zh": "深窟幽境" }, { "en": "SUNSET", "zh": "日落之城" }]
     },
     {
       "name": "殺光年糕",
@@ -35,7 +37,8 @@
         { "name": "water", "rank": "Immortal 1" },
         { "name": "Kasumi", "rank": "Ascendant 3" }
       ],
-      "sub": { "name": "毛毛", "rank": "Ascendant 2" }
+      "sub": { "name": "毛毛", "rank": "Ascendant 2" },
+      "banMaps": [{ "en": "BREEZE", "zh": "熱帶樂園" }, { "en": "FRACTURE", "zh": "天漠之峽" }]
     },
     {
       "name": "LJ",
@@ -47,7 +50,8 @@
         { "name": "雷幻滅", "rank": "Diamond 3" },
         { "name": "snowone", "rank": "" }
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     },
     {
       "name": "年年四宮一全部倒第一",
@@ -59,7 +63,8 @@
         { "name": "重(ㄔㄨㄥˊ)億", "rank": "Immortal 1" },
         { "name": "鯨魚比隆", "rank": "Immortal 2" }
       ],
-      "sub": { "name": "啾卡", "rank": "Immortal 1" }
+      "sub": { "name": "啾卡", "rank": "Immortal 1" },
+      "banMaps": [{ "en": "HAVEN", "zh": "遺落境地" }, { "en": "LOTUS", "zh": "蓮華古城" }]
     },
     {
       "name": "67總部",
@@ -71,7 +76,8 @@
         { "name": "西瓜", "rank": "Immortal 1" },
         { "name": "歐布豬到", "rank": "Ascendant 3" }
       ],
-      "sub": { "name": "白咖啡", "rank": "Diamond 1" }
+      "sub": { "name": "白咖啡", "rank": "Diamond 1" },
+      "banMaps": [{ "en": "SPLIT", "zh": "雙塔迷城" }, { "en": "ICEBOX", "zh": "極地寒港" }]
     },
     {
       "name": "冰蜂聖羊乃",
@@ -83,7 +89,8 @@
         { "name": "小蜂", "rank": "Ascendant" },
         { "name": "阿澤", "rank": "Ascendant 2" }
       ],
-      "sub": { "name": "安安", "rank": "Platinum 2" }
+      "sub": { "name": "安安", "rank": "Platinum 2" },
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "ICEBOX", "zh": "極地寒港" }]
     },
     {
       "name": "請主播跟我們說聲加油",
@@ -95,7 +102,8 @@
         { "name": "阿萬", "rank": "Ascendant 1" },
         { "name": "酱波", "rank": "Gold 3" }
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": [{ "en": "BREEZE", "zh": "熱帶樂園" }, { "en": "HAVEN", "zh": "遺落境地" }]
     },
     {
       "name": "想贏的時候再贏就好了啊",
@@ -107,7 +115,8 @@
         { "name": "0.0", "rank": "Diamond 2" },
         { "name": "朽木あまぎ", "rank": "Diamond 3" }
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "SUMMIT", "zh": "頂峰亭閣" }]
     },
     {
       "name": "Lamb Gaming TW",
@@ -119,7 +128,8 @@
         { "name": "JFzyy", "rank": "Platinum 2" },
         { "name": "Kreacher", "rank": "Ascendant 2" }
       ],
-      "sub": { "name": "Hank", "rank": "Ascendant 2" }
+      "sub": { "name": "Hank", "rank": "Ascendant 2" },
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     },
     {
       "name": "關注益綸謝謝喵",
@@ -131,7 +141,8 @@
         { "name": "flowie", "rank": "Ascendant 1" },
         { "name": "choco", "rank": "Immortal 1" }
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": [{ "en": "ABYSS", "zh": "深窟幽境" }, { "en": "FRACTURE", "zh": "天漠之峽" }]
     },
     {
       "name": "不服來快打搶5",
@@ -143,7 +154,8 @@
         { "name": "凱開", "rank": "Iron 3" },
         { "name": "ssod", "rank": "Silver 2" }
       ],
-      "sub": { "name": "老盧", "rank": "Silver 2" }
+      "sub": { "name": "老盧", "rank": "Silver 2" },
+      "banMaps": [{ "en": "SUMMIT", "zh": "頂峰亭閣" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     },
     {
       "name": "來自企鵝的再臨者",
@@ -155,7 +167,8 @@
         { "name": "佐井修吾", "rank": "Platinum 2" },
         { "name": "啾子", "rank": "Gold 3" }
       ],
-      "sub": { "name": "藍色雷霆皮卡丘", "rank": "Gold 3" }
+      "sub": { "name": "藍色雷霆皮卡丘", "rank": "Gold 3" },
+      "banMaps": [{ "en": "CORRODE", "zh": "晶蝕之地" }, { "en": "PEARL", "zh": "深海遺珠" }]
     },
     {
       "name": "特戰鬼滅",
@@ -167,7 +180,8 @@
         { "name": "dkjun", "rank": "Bronze 2" },
         { "name": "LuoLin", "rank": "Gold 2" }
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     },
     {
       "name": "萌新同樂會",
@@ -179,7 +193,8 @@
         { "name": "芭奈醬", "rank": "Bronze 2" },
         { "name": "熊貓", "rank": "Iron 3" }
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": [{ "en": "SUMMIT", "zh": "頂峰亭閣" }, { "en": "ICEBOX", "zh": "極地寒港" }]
     },
     {
       "name": "新鮮現炸",
@@ -191,7 +206,8 @@
         { "name": "順暢", "rank": "Iron 3" },
         { "name": "多蟲", "rank": "Iron 2" }
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "BIND", "zh": "劫境之地" }]
     },
     {
       "name": "Never Win",
@@ -203,7 +219,8 @@
         { "name": "バラバラ", "rank": "Ascendant 3" },
         { "name": "Levin", "rank": "Immortal 1" }
       ],
-      "sub": { "name": "Silver 3", "rank": "Gold 2" }
+      "sub": { "name": "Silver 3", "rank": "Gold 2" },
+      "banMaps": [{ "en": "SUMMIT", "zh": "頂峰亭閣" }, { "en": "ICEBOX", "zh": "極地寒港" }]
     },
     {
       "name": "好大的JB",
@@ -215,7 +232,21 @@
         { "name": "rice", "rank": "Gold 3" },
         { "name": "蟲", "rank": "Silver 3" }
       ],
-      "sub": { "name": "PeteRR", "rank": "Platinum 1" }
+      "sub": { "name": "PeteRR", "rank": "Platinum 1" },
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "PEARL", "zh": "深海遺珠" }]
+    },
+    {
+      "name": "爆揍諾麗",
+      "intro": "為了爆揍諾麗成立的隊伍",
+      "members": [
+        { "name": "asunamywife", "rank": "Ascendant 1" },
+        { "name": "kaneruan", "rank": "Platinum 1" },
+        { "name": "mikasama", "rank": "Diamond 1" },
+        { "name": "Alan", "rank": "Diamond 1" },
+        { "name": "清流", "rank": "Platinum 1" }
+      ],
+      "sub": { "name": "尤斯塔夫", "rank": "Platinum 3" },
+      "banMaps": [{ "en": "ICEBOX", "zh": "極地寒港" }, { "en": "ABYSS", "zh": "深窟幽境" }]
     },
     {
       "name": "",
@@ -227,7 +258,8 @@
         { "name": "Y0sh1no", "rank": "" },
         null
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": []
     },
     {
       "name": "",
@@ -237,9 +269,10 @@
         { "name": "餅乾", "rank": "Diamond" },
         { "name": "吖", "rank": "Platinum 1" },
         { "name": "sushi cat", "rank": "Diamond 1" },
-        null
+        { "name": "annceter", "rank": "Gold 1" }
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": []
     },
     {
       "name": "",
@@ -251,7 +284,8 @@
         null,
         null
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": []
     },
     {
       "name": "",
@@ -263,7 +297,8 @@
         null,
         null
       ],
-      "sub": null
+      "sub": null,
+      "banMaps": []
     }
   ]
 }
