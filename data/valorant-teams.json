@@ -249,6 +249,19 @@
       "banMaps": [{ "en": "ICEBOX", "zh": "極地寒港" }, { "en": "ABYSS", "zh": "深窟幽境" }]
     },
     {
+      "name": "小心從你屁屁來",
+      "intro": "小心屁眼",
+      "members": [
+        { "name": "拔辣", "rank": "Gold 1" },
+        { "name": "阿呆", "rank": "Bronze 2" },
+        { "name": "亞摩", "rank": "Silver 3" },
+        { "name": "土撥鼠", "rank": "Gold 1" },
+        { "name": "ZE", "rank": "Bronze 3" }
+      ],
+      "sub": null,
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
+    },
+    {
       "name": "",
       "intro": "",
       "members": [
