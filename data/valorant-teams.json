@@ -1,5 +1,5 @@
 {
-  "summary": { "total": 134 },
+  "summary": { "total": 139 },
   "teams": [
     {
       "name": "饒明軒粉絲團",
@@ -174,9 +174,9 @@
       "name": "特戰鬼滅",
       "intro": "",
       "members": [
-        { "name": "JAT Jimmy", "rank": "Silver 2" },
+        { "name": "JAT Jimmy", "rank": "" },
         { "name": "千刃", "rank": "Silver 2" },
-        { "name": "蘇蘇拿斯", "rank": "Platinum 1" },
+        { "name": "蘇蘇拿斯", "rank": "" },
         { "name": "dkjun", "rank": "Bronze 2" },
         { "name": "LuoLin", "rank": "Gold 2" }
       ],
