@@ -24,7 +24,7 @@
     { "id": 21, "name": "Elephant", "rank": "Ultimate Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 22, "name": "Ayase(星詠み)", "rank": "Legend", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 23, "name": "Anoxiaa", "rank": "Ultimate Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
-    { "id": 24, "name": "古拉的蝦子", "rank": "High Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
+    { "id": 24, "name": "古拉的蝦子", "rank": "Ultimate Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 25, "name": "星詠み(*´∀｀)", "rank": "Master", "control": "MODERN", "events": ["SOLO", "TEAM"] },
     { "id": 26, "name": "FukanaSakana", "rank": "Platinum", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 27, "name": "高中牲18HITBOX練習中", "rank": "High Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
