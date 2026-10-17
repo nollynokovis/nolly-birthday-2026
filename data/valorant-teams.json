@@ -1,5 +1,5 @@
 {
-  "summary": { "total": 139 },
+  "summary": { "total": 143 },
   "teams": [
     {
       "name": "饒明軒粉絲團",
@@ -293,8 +293,8 @@
       "members": [
         { "name": "yoch", "rank": "Platinum 3" },
         { "name": "Hank", "rank": "Diamond 2" },
-        null,
-        null,
+        { "name": "Door3172", "rank": "Platinum 1" },
+        { "name": "max", "rank": "Gold" },
         null
       ],
       "sub": null,
