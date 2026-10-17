@@ -16,7 +16,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css?v=20261021n">
-    <script>try{var s=sessionStorage,v=s.getItem('nollyLoader');s.removeItem('nollyLoader');if(v&&v===(location.pathname.split('/').pop().replace(/\.html$/,'')||'index'))document.documentElement.classList.add('show-loader')}catch(e){}</script>
+    <script>try{var s=sessionStorage,v=s.getItem('nollyLoader'),f=!s.getItem('nollyVisited');s.removeItem('nollyLoader');s.setItem('nollyVisited','1');if(f||v&&v===(location.pathname.split('/').pop().replace(/\.html$/,'')||'index'))document.documentElement.classList.add('show-loader')}catch(e){}</script>
 </head>
 <body>
     <div class="page-loader" aria-hidden="true"><img class="page-loader-icon" src="favicon.png" alt="" width="96" height="96"><div class="page-loader-progress"><span></span></div><div class="page-loader-num">0%</div></div>
@@ -335,7 +335,7 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=20261021p"></script>
+    <script src="js/main.js?v=20261021q"></script>
     <script src="js/slide.js?v=20261021a"></script>
 </body>
 </html>

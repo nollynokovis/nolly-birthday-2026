@@ -969,7 +969,7 @@ footer {
 .footer-copy { color: var(--c3); font-size: 0.78rem; }
 
 /* ── PAGE LOADER：換頁載入動畫（每頁 body 開頭的 .page-loader，平常隱藏）
-   只在語言切換、首頁⇄賽程／參賽者／規則／周邊、參賽者→賽程時出現（這類換頁兩次相隔不到 2 秒則第二次不出現）：點連結時 main.js 加 .is-leaving 淡入，
+   只在網站第一次打開，以及語言切換、首頁⇄賽程／參賽者／規則／周邊、參賽者→賽程時出現（這類換頁兩次相隔不到 2 秒則第二次不出現）：點連結時 main.js 加 .is-leaving 淡入，
    下一頁由 <head> 內的程式加上 html.show-loader，進度約 1.5 秒從 0% 跑到 100% 後淡出
    上方為 favicon（Nolly 頭像）上下跳動，下方為進度條＋百分比；JS 沒有執行時，6 秒後自動隱藏，不會一直擋住頁面 ── */
 .page-loader {
