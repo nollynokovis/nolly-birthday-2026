@@ -1,4 +1,4 @@
-// 換頁載入動畫：只在「語言切換」、「首頁 ⇄ 賽程／參賽者／規則／周邊」、「參賽者 → 賽程」時出現，其他換頁都不顯示；
+// 換頁載入動畫：只在網站第一次打開，以及「語言切換」、「首頁 ⇄ 賽程／參賽者／規則／周邊」、「參賽者 → 賽程」時出現，其他換頁都不顯示；
 // 這類換頁兩次相隔不到 2 秒時，第二次不顯示（其他換頁不列入計算）
 // 點連結時淡入蓋住換頁前的空白，並在 sessionStorage 記下目的頁；
 // 目的頁由 <head> 內的小段程式加上 html.show-loader，進度約 1.5 秒從 0% 跑到 100% 後淡出
@@ -7,6 +7,10 @@ const LOADER_KEY = 'nollyLoader';
 const LOADER_HUB_PAGES = ['schedule-valo', 'schedule-sf6', 'teams', 'players', 'rules', 'goods'];
 const LOADER_COOLDOWN_MS = 2000;
 const LOADER_LAST_KEY = 'nollyLoaderLast';
+
+// 網站第一次打開（這個分頁還沒有 nollyVisited）時 <head> 的程式也會顯示載入畫面；
+// 檔案頁沒有那段程式，這裡補記，之後換到其他頁不會再被當成第一次打開
+try { sessionStorage.setItem('nollyVisited', '1'); } catch (e) {}
 
 // 路徑 → 頁名與語言，例如 /schedule-valo-en.html → { name: 'schedule-valo-en', base: 'schedule-valo', lang: '-en' }
 const pageInfo = pathname => {
