@@ -21,7 +21,8 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+/* 一律預留捲軸的位置：內容長短不同的頁面切換時（或隊伍／選手名單載入後才變長），版面不會左右跳 */
+html { scroll-behavior: smooth; scrollbar-gutter: stable; }
 
 body {
     background: var(--c1);
@@ -967,7 +968,9 @@ footer {
 .footer-logo span { color: var(--c4); }
 .footer-copy { color: var(--c3); font-size: 0.78rem; }
 
-/* ── PAGE LOADER：換頁載入動畫（每頁 body 開頭的 .page-loader，main.js 讓進度約 2 秒從 0% 跑到 100% 後淡出、點站內連結時淡入）
+/* ── PAGE LOADER：換頁載入動畫（每頁 body 開頭的 .page-loader，平常隱藏）
+   只在語言切換、首頁⇄賽程／參賽者／規則／周邊、參賽者→賽程時出現（這類換頁兩次相隔不到 2 秒則第二次不出現）：點連結時 main.js 加 .is-leaving 淡入，
+   下一頁由 <head> 內的程式加上 html.show-loader，進度約 1.5 秒從 0% 跑到 100% 後淡出
    上方為 favicon（Nolly 頭像）上下跳動，下方為進度條＋百分比；JS 沒有執行時，6 秒後自動隱藏，不會一直擋住頁面 ── */
 .page-loader {
     position: fixed;
@@ -979,12 +982,15 @@ footer {
     justify-content: center;
     gap: 1.4rem;
     background: var(--c1);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.3s ease, visibility 0.3s;
-    animation: page-loader-timeout 0s 6s forwards;
 }
 
-.page-loader.is-leaving { animation: none; }
-.page-loader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.show-loader .page-loader,
+.page-loader.is-leaving { opacity: 1; visibility: visible; pointer-events: auto; }
+.show-loader .page-loader { animation: page-loader-timeout 0s 6s forwards; }
 
 @keyframes page-loader-timeout {
     to { opacity: 0; visibility: hidden; pointer-events: none; }

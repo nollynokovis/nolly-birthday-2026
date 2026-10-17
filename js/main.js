@@ -1,8 +1,32 @@
-// 換頁載入動畫：進度約 2 秒從 0% 跑到 100% 後淡出；點站內連結時淡入，蓋住換頁前的空白
+// 換頁載入動畫：只在「語言切換」、「首頁 ⇄ 賽程／參賽者／規則／周邊」、「參賽者 → 賽程」時出現，其他換頁都不顯示；
+// 這類換頁兩次相隔不到 2 秒時，第二次不顯示（其他換頁不列入計算）
+// 點連結時淡入蓋住換頁前的空白，並在 sessionStorage 記下目的頁；
+// 目的頁由 <head> 內的小段程式加上 html.show-loader，進度約 1.5 秒從 0% 跑到 100% 後淡出
 // 放在檔案最前面，後面的程式出錯也不會讓載入畫面一直擋著
+const LOADER_KEY = 'nollyLoader';
+const LOADER_HUB_PAGES = ['schedule-valo', 'schedule-sf6', 'teams', 'players', 'rules', 'goods'];
+const LOADER_COOLDOWN_MS = 2000;
+const LOADER_LAST_KEY = 'nollyLoaderLast';
+
+// 路徑 → 頁名與語言，例如 /schedule-valo-en.html → { name: 'schedule-valo-en', base: 'schedule-valo', lang: '-en' }
+const pageInfo = pathname => {
+    const name = pathname.split('/').pop().replace(/\.html$/, '') || 'index';
+    const m = name.match(/^(.*?)(-en|-ja)?$/);
+    return { name, base: m[1], lang: m[2] || '' };
+};
+
+const wantsLoader = (from, to) => {
+    if (from.base === to.base) return from.lang !== to.lang;
+    // 從隊伍／參賽者介紹回到賽程
+    if (['teams', 'players'].includes(from.base) && to.base.startsWith('schedule-')) return true;
+    return (from.base === 'index' && LOADER_HUB_PAGES.includes(to.base))
+        || (to.base === 'index' && LOADER_HUB_PAGES.includes(from.base));
+};
+
 const pageLoader = document.querySelector('.page-loader');
 if (pageLoader) {
-    const LOADER_MS = 2000;
+    const LOADER_MS = 1500;
+    const root = document.documentElement;
     const loaderBar = pageLoader.querySelector('.page-loader-progress span');
     const loaderNum = pageLoader.querySelector('.page-loader-num');
     let loaderFrame = 0;
@@ -16,19 +40,21 @@ if (pageLoader) {
     const hideLoader = () => {
         cancelAnimationFrame(loaderFrame);
         clearTimeout(loaderTimer);
+        root.classList.remove('show-loader');
         pageLoader.classList.remove('is-leaving');
-        pageLoader.classList.add('is-hidden');
     };
 
     // 先快後慢（ease-out），到 100% 後停一下再淡出
-    const loaderStart = performance.now();
-    const tick = now => {
-        const t = Math.min(Math.max((now - loaderStart) / LOADER_MS, 0), 1);
-        setProgress(Math.round((1 - (1 - t) * (1 - t)) * 100));
-        if (t < 1) loaderFrame = requestAnimationFrame(tick);
-        else loaderTimer = setTimeout(hideLoader, 150);
-    };
-    loaderFrame = requestAnimationFrame(tick);
+    if (root.classList.contains('show-loader')) {
+        const loaderStart = performance.now();
+        const tick = now => {
+            const t = Math.min(Math.max((now - loaderStart) / LOADER_MS, 0), 1);
+            setProgress(Math.round((1 - (1 - t) * (1 - t)) * 100));
+            if (t < 1) loaderFrame = requestAnimationFrame(tick);
+            else loaderTimer = setTimeout(hideLoader, 150);
+        };
+        loaderFrame = requestAnimationFrame(tick);
+    }
 
     // 按上一頁／下一頁從快取還原時，載入畫面還停在離開前的狀態，要收起來
     window.addEventListener('pageshow', e => { if (e.persisted) hideLoader(); });
@@ -39,14 +65,24 @@ if (pageLoader) {
         if ((a.target && a.target !== '_self') || a.hasAttribute('download')) return;
 
         const url = new URL(a.href, location.href);
-        // 外部網站、mailto: 等不同協定，或同一頁的錨點，都不顯示
         if (url.protocol !== location.protocol || url.origin !== location.origin) return;
-        if (url.pathname === location.pathname && url.search === location.search && url.hash) return;
+        const to = pageInfo(url.pathname);
+        if (!wantsLoader(pageInfo(location.pathname), to)) return;
 
+        // 記下這次換頁的時間；和上一次會顯示載入畫面的換頁相隔不到 2 秒就不顯示
+        const now = Date.now();
+        let last = 0;
+        try {
+            last = Number(sessionStorage.getItem(LOADER_LAST_KEY)) || 0;
+            sessionStorage.setItem(LOADER_LAST_KEY, String(now));
+        } catch (err) {}
+        if (now - last < LOADER_COOLDOWN_MS) return;
+
+        try { sessionStorage.setItem(LOADER_KEY, to.name); } catch (err) {}
         cancelAnimationFrame(loaderFrame);
         clearTimeout(loaderTimer);
         setProgress(0);
-        pageLoader.classList.remove('is-hidden');
+        root.classList.remove('show-loader');
         pageLoader.classList.add('is-leaving');
         // 換頁被取消（例如按了停止）時不要一直擋著
         loaderTimer = setTimeout(hideLoader, 10000);
