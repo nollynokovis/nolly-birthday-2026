@@ -1,10 +1,12 @@
-// VALORANT 參賽隊伍介紹：完整隊伍頁 (#teamDirectory)、隊伍個人頁 (#teamProfile，team.html?id=N，參賽紀念卡)
+// VALORANT 參賽隊伍介紹：完整隊伍頁 (#teamDirectory)、隊伍個人頁 (#teamProfile，team.html?id=N，參賽紀念卡)、
+// 選手個人頁 (#valoPlayerProfile，valo-player.html?team=N&p=M，直式參賽紀念卡)
 // 與 schedule-valo 頁的人數統計 ([data-stat]) 共用 data/valorant-teams.json
 // 隊伍頁卡片沿用 SF6 選手卡片（.player-card）的樣式，每隊為隊長＋隊員 4 人＋候補 1 人
 (() => {
-    const directory = document.getElementById('teamDirectory');
-    const profile   = document.getElementById('teamProfile');
-    if (!directory && !profile && !document.querySelector('[data-stat]')) return;
+    const directory     = document.getElementById('teamDirectory');
+    const profile       = document.getElementById('teamProfile');
+    const playerProfile = document.getElementById('valoPlayerProfile');
+    if (!directory && !profile && !playerProfile && !document.querySelector('[data-stat]')) return;
 
     const TEAMS_URL     = 'data/valorant-teams.json';
     // 隊伍頁狀態（網址參數字串、最後點開的隊伍）；隊伍個人頁的「返回」連結也讀這裡
@@ -12,6 +14,11 @@
     // 隊伍個人頁的參賽紀念卡背景模板（原始尺寸 1920×1080；左側人物插畫，右側空白區放隊伍資訊，見 CSS .team-memorial）
     const MEMORIAL_BG   = 'img/1x/參賽紀念卡.webp?v=20261020f';
     const MEMORIAL_SIZE = { width: 1920, height: 1080 };
+    // 選手個人頁的參賽紀念卡：沿用 SF6 的直式模板（1080×1350；下方空白框放選手資訊，見 CSS .valo-memorial）
+    const PLAYER_MEMORIAL_BG   = 'img/1x/參賽者紀念卡sf6.webp?v=20261020f';
+    const PLAYER_MEMORIAL_SIZE = { width: 1080, height: 1350 };
+    // 選手個人頁欄位的英文小標（中文／日文頁顯示在欄位名稱下方）
+    const PLAYER_FIELDS_EN = { team: 'TEAM', rank: 'RANK' };
     // 紀念卡存成 PNG 用的 html2canvas（MIT，1.4.1），第一次按下載時才載入（同 players.js）
     const HTML2CANVAS_URL = 'js/vendor/html2canvas.min.js';
 
@@ -36,6 +43,12 @@
             downloading: '圖片產生中…',
             downloadError: '圖片產生失敗，請再試一次',
             title: name => `${name}｜VALORANT 隊伍介紹｜Nolly生日盃`,
+            playerProfile: 'valo-player.html',
+            players: '隊員檔案',
+            playerFields: { team: '所屬隊伍', rank: '牌位' },
+            playerNotFound: '找不到這位選手',
+            playerNotFoundHint: '連結可能有誤，請回到隊伍檔案重新選擇。',
+            playerTitle: name => `${name}｜VALORANT 選手介紹｜Nolly生日盃`,
         },
         ja: {
             directory: 'teams-ja.html',
@@ -57,6 +70,12 @@
             downloading: '画像を作成中…',
             downloadError: '画像の作成に失敗しました。もう一度お試しください',
             title: name => `${name}｜VALORANT チームプロフィール｜Nolly生日杯`,
+            playerProfile: 'valo-player-ja.html',
+            players: 'メンバープロフィール',
+            playerFields: { team: '所属チーム', rank: 'ランク' },
+            playerNotFound: 'この選手は見つかりませんでした',
+            playerNotFoundHint: 'リンクが正しくない可能性があります。チームプロフィールからもう一度お選びください。',
+            playerTitle: name => `${name}｜VALORANT 選手プロフィール｜Nolly生日杯`,
         },
         en: {
             directory: 'teams-en.html',
@@ -78,6 +97,12 @@
             downloading: 'CREATING IMAGE…',
             downloadError: 'Failed to create the image. Please try again.',
             title: name => `${name} | VALORANT Team Profile | Nolly CUP`,
+            playerProfile: 'valo-player-en.html',
+            players: 'PLAYER PROFILES',
+            playerFields: { team: 'Team', rank: 'Rank' },
+            playerNotFound: 'Player not found',
+            playerNotFoundHint: 'The link may be incorrect. Please choose a player from the team profile.',
+            playerTitle: name => `${name} | VALORANT Player Profile | Nolly CUP`,
         },
     };
     const lang = document.documentElement.lang;
@@ -335,7 +360,7 @@
     // ── 隊伍個人頁（team.html?id=N）：網址的 id＝隊伍編號（valorant-teams.json 內的報名順序，從 1 起算） ──
     const profileId = profile && new URLSearchParams(location.search).get('id');
     const validProfileId = /^\d+$/.test(profileId || '');
-    const profileBack = profile && document.querySelector('.profile-back');
+    const profileBack = (profile || playerProfile) && document.querySelector('.profile-back');
 
     if (profile) {
         // 返回隊伍頁：帶回最後的搜尋／排序／分頁（隊伍頁會再捲到這隊的卡片）
@@ -348,17 +373,40 @@
         }
     }
 
-    // 找不到隊伍／載入失敗：訊息＋返回隊伍頁按鈕（取代上方的返回連結）
-    function showProfileMessage(title, hint) {
+    // ── 選手個人頁（valo-player.html?team=N&p=M）：team＝隊伍編號，p＝隊內位置（1＝隊長、2–5＝隊員、6＝候補） ──
+    const playerParams = playerProfile && new URLSearchParams(location.search);
+    const playerTeamId = playerParams && playerParams.get('team');
+    const playerSlot   = playerParams && playerParams.get('p');
+    const validPlayerTeamId = /^\d+$/.test(playerTeamId || '');
+
+    if (playerProfile) {
+        // 返回這位選手的隊伍檔案；隊伍編號有誤時改回隊伍頁
+        if (validPlayerTeamId) {
+            profileBack.href = `${t.profile}?id=${playerTeamId}`;
+        } else {
+            profileBack.href = t.directory + (loadSaved().search || '');
+            profileBack.textContent = t.back;
+        }
+        // 切換語言時停留在同一位選手
+        if (playerTeamId || playerSlot) {
+            const query = new URLSearchParams({ team: playerTeamId || '', p: playerSlot || '' });
+            document.querySelectorAll('.language-menu a').forEach(a => {
+                a.href = `${a.getAttribute('href')}?${query}`;
+            });
+        }
+    }
+
+    // 找不到隊伍／選手、載入失敗：訊息＋返回按鈕（文字與連結同上方的返回連結，並取代它）
+    function showProfileMessage(container, title, hint) {
         const box = el('div', 'profile-missing');
         box.append(el('p', 'profile-missing-title', title));
         if (hint) box.append(el('p', 'profile-missing-text', hint));
-        const back = el('a', 'btn-goods', t.back);
+        const back = el('a', 'btn-goods', profileBack.textContent);
         back.href = profileBack.href.replace(/#.*$/, '');
         box.append(back);
         profileBack.hidden = true;
-        profile.replaceChildren(box);
-        profile.removeAttribute('aria-busy');
+        container.replaceChildren(box);
+        container.removeAttribute('aria-busy');
     }
 
     // 紀念卡的成員格：身分（隊長／隊員／候補）、名稱、牌位；空的欄位顯示「—」
@@ -431,7 +479,7 @@
     function initProfile(teams) {
         const team = validProfileId && teams.find(tm => tm.id === Number(profileId));
         if (!team) {
-            showProfileMessage(t.notFound, t.notFoundHint);
+            showProfileMessage(profile, t.notFound, t.notFoundHint);
             return;
         }
 
@@ -467,8 +515,9 @@
         info.append(body);
         card.append(bg, info);
 
-        // 卡片下方加「下載 PNG」按鈕；隊名未定時檔名用隊伍編號
-        profile.replaceChildren(card, createDownload(card, team.name || `Team-${String(team.id).padStart(2, '0')}`));
+        // 卡片上方：隊員按鈕（連到各自的選手個人頁）；下方：「下載 PNG」按鈕，隊名未定時檔名用隊伍編號
+        profile.replaceChildren(createPlayerLinks(team), card,
+            createDownload(card, team.name || `Team-${String(team.id).padStart(2, '0')}`, MEMORIAL_SIZE));
         profile.removeAttribute('aria-busy');
         document.title = t.title(team.name || t.tbd);
 
@@ -477,7 +526,90 @@
         document.fonts.ready.then(() => fitMemorial(card));
     }
 
-    // ── 紀念卡下載成 PNG：html2canvas 截圖，輸出為背景模板的原始尺寸（1920×1080） ──
+    // 隊員按鈕：隊長、隊員、候補各一顆（略過空的欄位），按鈕上只有選手名稱
+    // 網址的 p＝隊內位置（[...members, sub] 的順序，從 1 起算），不受前面空欄位影響
+    function createPlayerLinks(team) {
+        const nav = el('nav', 'profile-players');
+        nav.setAttribute('aria-label', t.players);
+        const list = el('ul', 'profile-players-list');
+        team.slots.forEach((player, i) => {
+            if (!player) return;
+            const link = el('a', 'profile-player-link', player.name);
+            link.href = `${t.playerProfile}?team=${team.id}&p=${i + 1}`;
+            const item = el('li');
+            item.append(link);
+            list.append(item);
+        });
+        nav.append(list);
+        return nav;
+    }
+
+    // 選手紀念卡的資料欄位（欄位名稱，中文／日文頁下方加英文小標；同 players.js）
+    function memorialField(key, value) {
+        const item = el('div', `memorial-field memorial-field-${key}`);
+        const label = el('dt', 'memorial-label');
+        label.append(el('span', 'memorial-label-main', t.playerFields[key]));
+        if (!isEn) label.append(el('span', 'memorial-label-en', PLAYER_FIELDS_EN[key]));
+        const data = el('dd', 'memorial-value');
+        data.append(value);
+        item.append(label, data);
+        return item;
+    }
+
+    // 選手個人頁：SF6 直式模板的參賽紀念卡（版面同 players.js 的 .player-memorial），
+    // 框內為隊伍編號＋選手名稱，細線下方是所屬隊伍／牌位
+    function initPlayerProfile(teams) {
+        const team = validPlayerTeamId && teams.find(tm => tm.id === Number(playerTeamId));
+        const index = /^[1-6]$/.test(playerSlot || '') ? Number(playerSlot) - 1 : -1;
+        const player = team && index >= 0 && team.slots[index];
+        if (!player) {
+            showProfileMessage(playerProfile, t.playerNotFound, t.playerNotFoundHint);
+            return;
+        }
+
+        const card = el('article', 'player-memorial valo-memorial');
+        const bg = el('img', 'memorial-bg');
+        bg.src = PLAYER_MEMORIAL_BG;
+        bg.alt = '';
+        bg.width = PLAYER_MEMORIAL_SIZE.width;
+        bg.height = PLAYER_MEMORIAL_SIZE.height;
+
+        const no = el('p', 'memorial-no');
+        no.append(el('span', 'memorial-no-label', t.fields.no), el('span', 'memorial-no-num', String(team.id).padStart(2, '0')));
+        const name = el('h2', 'memorial-name', player.name);
+        name.dataset.fit = '';
+        const head = el('div', 'memorial-head');
+        head.append(no, name);
+
+        // 隊名最多兩行，超過時縮小（隊名未定時顯示灰字「隊名未定」）
+        const teamName = el('span', team.name ? 'memorial-team' : 'memorial-team is-tbd', team.name || t.tbd);
+        teamName.dataset.fit = '';
+        // 牌位：大寫、VALORANT 牌位純色（同隊伍紀念卡的 .memorial-member-rank）
+        const rank = el('span', 'memorial-valo-rank', player.rank || '—');
+        const tier = rankTier(player.rank || '');
+        if (tier) rank.dataset.tier = tier;
+
+        const fields = el('dl', 'memorial-fields');
+        fields.append(
+            memorialField('team', teamName),
+            memorialField('rank', rank),
+        );
+
+        const body = el('div', 'memorial-body');
+        body.append(head, fields);
+        const info = el('div', 'memorial-info');
+        info.append(body);
+        card.append(bg, info);
+
+        playerProfile.replaceChildren(card, createDownload(card, player.name, PLAYER_MEMORIAL_SIZE));
+        playerProfile.removeAttribute('aria-busy');
+        document.title = t.playerTitle(player.name);
+
+        new ResizeObserver(() => fitMemorial(card)).observe(card);
+        document.fonts.ready.then(() => fitMemorial(card));
+    }
+
+    // ── 紀念卡下載成 PNG：html2canvas 截圖，輸出為背景模板的原始尺寸（隊伍 1920×1080、選手 1080×1350） ──
     let html2canvasLoading;
     const loadHtml2canvas = () => html2canvasLoading || (html2canvasLoading = new Promise((resolve, reject) => {
         const script = el('script');
@@ -490,15 +622,15 @@
         document.head.append(script);
     }));
 
-    // 在畫面外放一張寬 1920px 的複本來截圖（.memorial-stage）：字級與位置都以卡片寬度為單位，
+    // 在畫面外放一張模板原寬（隊伍 1920px、選手 1080px）的複本來截圖（.memorial-stage）：字級與位置都以卡片寬度為單位，
     // 版面與畫面上的預覽等比例，輸出不受螢幕寬度、瀏覽器縮放與裝置像素比影響；只截卡片，不含按鈕等 UI
-    async function captureCard(card) {
+    async function captureCard(card, size) {
         const html2canvas = await loadHtml2canvas();
         await document.fonts.ready;
 
         const stage = el('div', 'memorial-stage');
         stage.setAttribute('aria-hidden', 'true');
-        stage.style.width = `${MEMORIAL_SIZE.width}px`;
+        stage.style.width = `${size.width}px`;
         const copy = card.cloneNode(true);
         stage.append(copy);
         document.body.append(stage);
@@ -508,8 +640,8 @@
             fitMemorial(copy);
             const canvas = await html2canvas(copy, {
                 scale: 1,
-                width: MEMORIAL_SIZE.width,
-                height: MEMORIAL_SIZE.height,
+                width: size.width,
+                height: size.height,
                 backgroundColor: null,
                 logging: false,
             });
@@ -532,8 +664,8 @@
         setTimeout(() => URL.revokeObjectURL(url), 60000);
     }
 
-    // 卡片下方的下載按鈕；檔名 NollyCup-VALORANT-隊名.png（去掉檔名不能用的字元）
-    function createDownload(card, name) {
+    // 卡片下方的下載按鈕；檔名 NollyCup-VALORANT-隊名（選手名稱）.png（去掉檔名不能用的字元）
+    function createDownload(card, name, size) {
         const button = el('button', 'btn-goods', t.download);
         button.type = 'button';
         const status = el('p', 'profile-download-status');
@@ -544,7 +676,7 @@
             button.textContent = t.downloading;
             status.textContent = '';
             try {
-                const blob = await captureCard(card);
+                const blob = await captureCard(card, size);
                 saveFile(blob, `NollyCup-VALORANT-${name.replace(/[\\/:*?"<>|]+/g, '_').trim()}.png`);
             } catch (err) {
                 console.error('Failed to create team image', err);
@@ -568,17 +700,19 @@
         })
         .then(data => {
             // order＝報名順序（JSON 內的順序）；id＝隊伍編號（order＋1，個人頁網址與卡片錨點用）
-            // players＝隊員＋候補（略過空的欄位）
+            // slots＝隊內位置（隊長、隊員 4 人、候補，保留空的欄位；選手個人頁網址的 p 用）；players＝隊員＋候補（略過空的欄位）
             // hue＝書籤色相，第一隊紅（0）到最後一隊紫（280）平均分配，搜尋或排序後顏色仍跟著隊伍
             const last = Math.max(data.teams.length - 1, 1);
             const teams = data.teams.map((team, order) => {
-                const players = [...team.members, team.sub].filter(Boolean);
+                const slots = [...team.members, team.sub];
+                const players = slots.filter(Boolean);
                 return {
                     ...team,
                     name: team.name || '',
                     order,
                     id: order + 1,
                     hue: Math.round(order / last * 280),
+                    slots,
                     players,
                     searchKey: normalize([team.name || '', ...players.map(p => p.name)].join('\n')),
                 };
@@ -586,10 +720,12 @@
             renderStats(teams, data.summary);
             if (directory) initDirectory(teams);
             if (profile) initProfile(teams);
+            if (playerProfile) initPlayerProfile(teams);
         })
         .catch(err => {
             console.error('Failed to load valorant-teams.json', err);
             if (directory) showMessage(directory.querySelector('.player-grid'), t.error);
-            if (profile) showProfileMessage(t.error);
+            if (profile) showProfileMessage(profile, t.error);
+            if (playerProfile) showProfileMessage(playerProfile, t.error);
         });
 })();

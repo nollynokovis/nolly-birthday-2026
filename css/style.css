@@ -1805,16 +1805,16 @@ footer {
 .player-card[data-tier="ultimate-master"], .profile-card[data-tier="ultimate-master"], .player-memorial[data-tier="ultimate-master"] { --tier: #d33159; --tier-text: #d33159; }
 .player-card[data-tier="legend"],          .profile-card[data-tier="legend"],          .player-memorial[data-tier="legend"]          { --tier: #fa7014; --tier-text: #fa7014; }
 
-/* VALORANT 牌位文字色（teams.js 設在隊伍卡片的每位隊員上；隊伍個人頁紀念卡的 .memorial-member 共用） */
-.team-member[data-tier="iron"],      .memorial-member[data-tier="iron"]      { --tier-text: var(--valo-iron); }
-.team-member[data-tier="bronze"],    .memorial-member[data-tier="bronze"]    { --tier-text: var(--valo-bronze); }
-.team-member[data-tier="silver"],    .memorial-member[data-tier="silver"]    { --tier-text: var(--valo-silver); }
-.team-member[data-tier="gold"],      .memorial-member[data-tier="gold"]      { --tier-text: var(--valo-gold); }
-.team-member[data-tier="platinum"],  .memorial-member[data-tier="platinum"]  { --tier-text: var(--valo-platinum); }
-.team-member[data-tier="diamond"],   .memorial-member[data-tier="diamond"]   { --tier-text: var(--valo-diamond); }
-.team-member[data-tier="ascendant"], .memorial-member[data-tier="ascendant"] { --tier-text: var(--valo-ascendant); }
-.team-member[data-tier="immortal"],  .memorial-member[data-tier="immortal"]  { --tier-text: var(--valo-immortal); }
-.team-member[data-tier="radiant"],   .memorial-member[data-tier="radiant"]   { --tier-text: var(--valo-radiant); }
+/* VALORANT 牌位文字色（teams.js 設在隊伍卡片的每位隊員上；隊伍紀念卡的 .memorial-member、選手紀念卡的 .memorial-valo-rank 共用） */
+.team-member[data-tier="iron"],      .memorial-member[data-tier="iron"],      .memorial-valo-rank[data-tier="iron"]      { --tier-text: var(--valo-iron); }
+.team-member[data-tier="bronze"],    .memorial-member[data-tier="bronze"],    .memorial-valo-rank[data-tier="bronze"]    { --tier-text: var(--valo-bronze); }
+.team-member[data-tier="silver"],    .memorial-member[data-tier="silver"],    .memorial-valo-rank[data-tier="silver"]    { --tier-text: var(--valo-silver); }
+.team-member[data-tier="gold"],      .memorial-member[data-tier="gold"],      .memorial-valo-rank[data-tier="gold"]      { --tier-text: var(--valo-gold); }
+.team-member[data-tier="platinum"],  .memorial-member[data-tier="platinum"],  .memorial-valo-rank[data-tier="platinum"]  { --tier-text: var(--valo-platinum); }
+.team-member[data-tier="diamond"],   .memorial-member[data-tier="diamond"],   .memorial-valo-rank[data-tier="diamond"]   { --tier-text: var(--valo-diamond); }
+.team-member[data-tier="ascendant"], .memorial-member[data-tier="ascendant"], .memorial-valo-rank[data-tier="ascendant"] { --tier-text: var(--valo-ascendant); }
+.team-member[data-tier="immortal"],  .memorial-member[data-tier="immortal"],  .memorial-valo-rank[data-tier="immortal"]  { --tier-text: var(--valo-immortal); }
+.team-member[data-tier="radiant"],   .memorial-member[data-tier="radiant"],   .memorial-valo-rank[data-tier="radiant"]   { --tier-text: var(--valo-radiant); }
 
 /* 牌位文字：純色、大寫，兩個字的牌位（HIGH MASTER 等）每字一行；
    複合牌位的「MASTER」(.rank-master) 用 Master 的綠色 */
@@ -2261,6 +2261,44 @@ footer {
     color: var(--c5);
 }
 
+/* VALORANT 隊伍個人頁：紀念卡上方的隊員按鈕（teams.js 的 createPlayerLinks），每位隊員一顆、橫向置中排列，連到選手個人頁 */
+.profile-players { margin-bottom: 1.25rem; }
+
+.profile-players-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    list-style: none;
+}
+
+.profile-player-link {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 0.45rem 1.1rem;
+    background: rgba(136, 150, 212, 0.12);
+    border: 1.5px solid rgba(181, 167, 213, 0.35);
+    border-radius: 8px;
+    color: var(--c6);
+    font-weight: 800;
+    line-height: 1.4;
+    letter-spacing: 1px;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition: transform 0.2s, border-color 0.2s, background 0.2s;
+}
+
+.profile-player-link:hover {
+    transform: translateY(-2px);
+    border-color: #B5A7D5;
+    background: rgba(136, 150, 212, 0.22);
+    color: #fff;
+}
+
+.profile-player-link:focus-visible { outline: 3px solid #B5A7D5; outline-offset: 3px; }
+
 /* 主辦（Nolly）個人頁彩蛋：點卡片翻面（players.js 只對主辦產生 .profile-flip）
    每一面同樣式、同牌位緞帶，全部疊在同一格，高度跟著正面資料卡；各面朝向與整體轉動角度由 JS 設定 */
 .profile-flip {
@@ -2673,6 +2711,32 @@ html:not([lang="zh-TW"]) .profile-reverse-text { font-size: 1.9rem; letter-spaci
     letter-spacing: calc(2 * var(--u));
     color: #45497B;
 }
+
+/* VALORANT 選手個人頁（teams.js 的 .valo-memorial）：沿用 SF6 直式卡（.player-memorial）的模板與版面，
+   細線下方兩欄為所屬隊伍（較寬）／牌位 */
+.valo-memorial .memorial-fields { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); }
+
+/* 所屬隊伍：最多兩行，超過時 teams.js 縮小 --fit */
+.memorial-team {
+    display: block;
+    max-height: 2.6em;
+    overflow: hidden;
+    font-size: calc(40 * var(--u) * var(--fit, 1));
+}
+
+.memorial-team.is-tbd { color: #8A8AA0; }
+
+/* 牌位：大寫、VALORANT 牌位純色（同隊伍紀念卡的 .memorial-member-rank），兩個字時第二個字換行 */
+.memorial-valo-rank {
+    display: inline-block;
+    font-size: calc(40 * var(--u));
+    line-height: 1.1;
+    letter-spacing: calc(1 * var(--u));
+    text-transform: uppercase;
+    color: #45497B;
+}
+
+.memorial-valo-rank[data-tier] { color: var(--tier-text); }
 
 /* 下載 PNG 時的截圖用複本（teams.js／players.js 的 captureCard）：放在畫面外，寬度由 JS 設為 1920px */
 .memorial-stage {
