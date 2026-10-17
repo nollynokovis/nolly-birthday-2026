@@ -5,9 +5,8 @@
     --c4: #918DC3;
     --c5: #B3B8D8;
     --c6: #f1eeff;
-    --c7: #ff751f; /* Example additional color */
-    --c8: #FF4655; /* Example additional color */
-    --c9: #000000;
+    --c7: #ff751f; /* SF6 橘 */
+    --c8: #FF4655; /* VALORANT 紅 */
 
     /* VALORANT Rank Text */
     --valo-iron: #747B86;
@@ -99,7 +98,7 @@ a.nav-logo:hover span { color: #fff; }
     font-size: 0.6rem;
     color: var(--c4);
     letter-spacing: 1.5px;
-    font-weight: 500;
+    font-weight: 400;
 }
 .nav-links a:hover { background: var(--c3); }
 
@@ -199,7 +198,7 @@ a.nav-logo:hover span { color: #fff; }
     border-radius: 4px;
     text-decoration: none;
     font-size: 0.82rem;
-    font-weight: 600;
+    font-weight: 700;
     flex-shrink: 0;
     transition: background 0.2s;
 }
@@ -360,10 +359,10 @@ a.nav-logo:hover span { color: #fff; }
     font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: 1px;
-    transition: background 0.2s, transform 0.15s;
+    transition: opacity 0.2s, transform 0.15s;
     margin-top: 1rem;
 }
-.btn-valo:hover { 
+.btn-valo:hover {
     opacity: 0.75;
     transform: translateY(-2px); }
 
@@ -377,7 +376,7 @@ a.nav-logo:hover span { color: #fff; }
     font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: 1px;
-    transition: background 0.2s, transform 0.15s;
+    transition: opacity 0.2s, transform 0.15s;
     margin-top: 1rem;
     margin-bottom: 0.6rem;
 }
@@ -474,10 +473,6 @@ a.nav-logo:hover span { color: #fff; }
     z-index: 10;
     background: var(--c1);
 }
-.section-alt {
-    background: var(--c1);
-}
-
 .section-inner {
     max-width: 1200px;
     margin: 0 auto;
@@ -598,7 +593,7 @@ a.nav-logo:hover span { color: #fff; }
     flex-shrink: 0;
 }
 .org-info h3 { color: var(--c6); font-size: 2rem; margin-bottom: 0.8rem; }
-.org-info p { color: var(--c5); font-size: 1rem; line-height: 1.8; font-weight: 500; }
+.org-info p { color: var(--c5); font-size: 1rem; line-height: 1.8; font-weight: 400; }
 
 /* ── PRIZES ── */
 .prize-img {
@@ -612,22 +607,6 @@ a.nav-logo:hover span { color: #fff; }
     flex-shrink: 0;
     margin-bottom: 2rem;
 }
-
-/*.prize-img {
-    width: 100%;
-    height: auto;
-    display: block;
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
-
-    border: 3px solid var(--c4);
-    border-radius: 12px;
-}*/
 
 .slideshow {
     width: 100%;
@@ -745,7 +724,7 @@ a.nav-logo:hover span { color: #fff; }
     border-radius: 8px;
     font-weight: 700;
     letter-spacing: 1px;
-    transition: background 0.2s, transform 0.15s;
+    transition: opacity 0.2s, transform 0.15s;
 }
 
 .btn-goods:hover,
@@ -842,7 +821,7 @@ a.nav-logo:hover span { color: #fff; }
     border-radius: 8px;
     font-weight: 700;
     letter-spacing: 1px;
-    transition: background 0.2s, transform 0.15s;
+    transition: opacity 0.2s, transform 0.15s;
 }
 
 .btn-rules:hover {
@@ -871,14 +850,12 @@ a.nav-logo:hover span { color: #fff; }
 }
 
 .reg-card h3 { color: var(--c5); font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 1rem; }
-.reg-card p { display: table; margin: 0 auto 1.5rem; text-align: left; color: var(--c5); font-size: 1.05rem; font-weight: 500; }
+.reg-card p { display: table; margin: 0 auto 1.5rem; text-align: left; color: var(--c5); font-size: 1.05rem; font-weight: 400; }
 .schedule-lines { display: table; margin: 0 auto 1.5rem; text-align: left; }
 .reg-card .schedule-lines p { display: block; margin: 0 0 0.6rem; color: var(--c5); font-size: 1rem; font-weight: 700; letter-spacing: 2px; padding-left: 1.2em; text-indent: -1.2em; }
 /* 首頁賽程卡片：查看賽程表／查看參賽名單兩個按鈕並排，兩張卡片同寬；空間不夠時自動換行成上下排列 */
 .schedule-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 1rem; }
 .schedule-actions a { width: 13rem; max-width: 100%; margin: 0; padding: 0.85rem 1rem; text-align: center; }
-/* 報名已截止的標示（報名資訊區塊標題下方） */
-.reg-info .reg-closed { display: table; margin: 0 auto 1rem; padding: 0.3rem 1.2rem; border: 1px solid var(--c4); border-radius: 999px; color: var(--c6); font-size: 0.95rem; font-weight: 800; letter-spacing: 2px; }
 .reg-info { color: var(--c5); font-size: 1rem; text-align: center; margin-bottom: 3rem; margin-top: -1rem;}
 .reg-info p { text-align: center; color: var(--c4); font-size: 1rem; margin-bottom: 1rem; }
 .reg-num-sf6 {
@@ -923,7 +900,7 @@ a.nav-logo:hover span { color: #fff; }
 .faq-item summary {
     padding: 1.1rem 1.4rem;
     color: var(--c5);
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
     list-style: none;
     display: flex;
@@ -956,8 +933,8 @@ a.nav-logo:hover span { color: #fff; }
 
 .image-item h3 {
     color: var(--c6); 
-    font-size: 1.2rem; 
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
     margin-bottom: 0.6rem; 
     text-align: center;
 }
@@ -965,8 +942,8 @@ a.nav-logo:hover span { color: #fff; }
 .image-item p {
     color: var(--c6); 
     font-size: 1.1rem; 
-    font-weight: 550;
-    margin-bottom: 0.6rem; 
+    font-weight: 700;
+    margin-bottom: 0.6rem;
     text-align: center;
 }
 
@@ -989,6 +966,80 @@ footer {
 .footer-logo { font-size: 1.8rem; font-weight: 900; color: var(--c5); letter-spacing: 2px; margin-bottom: 0.4rem; }
 .footer-logo span { color: var(--c4); }
 .footer-copy { color: var(--c3); font-size: 0.78rem; }
+
+/* ── PAGE LOADER：換頁載入動畫（每頁 body 開頭的 .page-loader，main.js 讓進度約 2 秒從 0% 跑到 100% 後淡出、點站內連結時淡入）
+   上方為 favicon（Nolly 頭像）上下跳動，下方為進度條＋百分比；JS 沒有執行時，6 秒後自動隱藏，不會一直擋住頁面 ── */
+.page-loader {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.4rem;
+    background: var(--c1);
+    transition: opacity 0.3s ease, visibility 0.3s;
+    animation: page-loader-timeout 0s 6s forwards;
+}
+
+.page-loader.is-leaving { animation: none; }
+.page-loader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+@keyframes page-loader-timeout {
+    to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+/* Nolly 頭像：上下跳動（往上減速、落下加速，著地時稍微壓扁） */
+.page-loader-icon {
+    display: block;
+    width: 96px;
+    height: 96px;
+    transform-origin: 50% 100%;
+    animation: page-loader-hop 0.7s infinite;
+}
+
+@keyframes page-loader-hop {
+    0%   { transform: translateY(0) scale(1.06, 0.94); animation-timing-function: ease-out; }
+    15%  { transform: translateY(0) scale(1, 1);       animation-timing-function: ease-out; }
+    50%  { transform: translateY(-20px) scale(1, 1);   animation-timing-function: ease-in; }
+    90%  { transform: translateY(0) scale(1, 1); }
+    100% { transform: translateY(0) scale(1.06, 0.94); }
+}
+
+/* 進度條：膠囊形外框＋漸層填色
+   填色固定撐滿整條，由 main.js 以 clip-path 依進度露出（漸層顏色位置固定，不會跟著進度拉伸） */
+.page-loader-progress {
+    width: min(260px, 64vw);
+    height: 22px;
+    padding: 4px;
+    border: 2px solid rgba(181, 167, 213, 0.55);
+    border-radius: 999px;
+}
+
+.page-loader-progress span {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--c7), #7b5bc9, #8f9bd3);
+    clip-path: inset(0 100% 0 0 round 999px);
+}
+
+/* 百分比：數字等寬，跑動時不會左右晃；text-indent 抵銷最後一個字的字距，維持置中 */
+.page-loader-num {
+    margin-top: -0.6rem;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-indent: 3px;
+    color: var(--c5);
+    font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page-loader { transition: none; }
+    .page-loader-icon { animation: none; }
+}
 
 /* 手機版返回首頁：預設隱藏 */
 .mobile-home {
@@ -1038,7 +1089,6 @@ footer {
 
 /* hero：給兩張疊起來的卡片足夠空間 */
     #hero         { height: 250vh; }
-    .hero-content { top: 120vh; }
     .hero-bg      { background-position: 81% 15%; }
     .game-cards-grid { grid-template-columns: 1fr; gap: 1rem; }
     .game-card    { padding: 1.4rem 1.2rem; }
@@ -1052,22 +1102,7 @@ footer {
         grid-template-columns: 1fr;
     }
 
-    .nav-right {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-left: auto;
-    }
-
-    .language-dropdown {
-        display: block;
-    }
-
-    .language-btn {
-        display: flex;
-        align-items: center;
-        gap: 4px;
-    }
+    .language-btn { gap: 4px; }
 
     /* 漢堡選單中的返回首頁顯示 */
     .mobile-home {
@@ -1292,7 +1327,7 @@ footer {
     margin: 0 auto 1.25rem auto;
     padding: 0.25rem 1.5rem;
     font-size: 0.95rem;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--c5);
     letter-spacing: 1px;
     background: rgba(145, 141, 195, 0.00);
@@ -2068,15 +2103,6 @@ footer {
     line-height: 1;
 }
 
-.profile-no-label {
-    display: flex;
-    align-items: center;
-    padding: 0.4rem 0.7rem;
-    font-size: 0.75rem;
-    letter-spacing: 1.5px;
-    color: #45497B;
-}
-
 .profile-no-num {
     padding: 0.4rem 0.75rem;
     background: #45497B;
@@ -2785,6 +2811,10 @@ html:not([lang="zh-TW"]) .profile-reverse-text { font-size: 1.9rem; letter-spaci
 
 /* 手機：每排 2 張；統計改為數字在上，工具列改為搜尋／篩選／排序各一列 */
 @media (max-width: 640px) {
+    /* 頁首小標「NOLLY BIRTHDAY CUP 2026」：手機字距與兩側線條縮短，維持一行 */
+    .title-eyebrow { gap: 0.5rem; font-size: 0.7rem; letter-spacing: 3px; }
+    .title-eyebrow::before,
+    .title-eyebrow::after { width: 20px; }
     .player-hero h1 { font-size: 1.9rem; letter-spacing: 2px; }
     .player-hero-game { font-size: 0.72rem; letter-spacing: 2px; }
     #player-list,

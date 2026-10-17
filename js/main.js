@@ -1,3 +1,58 @@
+// 換頁載入動畫：進度約 2 秒從 0% 跑到 100% 後淡出；點站內連結時淡入，蓋住換頁前的空白
+// 放在檔案最前面，後面的程式出錯也不會讓載入畫面一直擋著
+const pageLoader = document.querySelector('.page-loader');
+if (pageLoader) {
+    const LOADER_MS = 2000;
+    const loaderBar = pageLoader.querySelector('.page-loader-progress span');
+    const loaderNum = pageLoader.querySelector('.page-loader-num');
+    let loaderFrame = 0;
+    let loaderTimer = 0;
+
+    const setProgress = p => {
+        if (loaderBar) loaderBar.style.clipPath = `inset(0 ${100 - p}% 0 0 round 999px)`;
+        if (loaderNum) loaderNum.textContent = p + '%';
+    };
+
+    const hideLoader = () => {
+        cancelAnimationFrame(loaderFrame);
+        clearTimeout(loaderTimer);
+        pageLoader.classList.remove('is-leaving');
+        pageLoader.classList.add('is-hidden');
+    };
+
+    // 先快後慢（ease-out），到 100% 後停一下再淡出
+    const loaderStart = performance.now();
+    const tick = now => {
+        const t = Math.min(Math.max((now - loaderStart) / LOADER_MS, 0), 1);
+        setProgress(Math.round((1 - (1 - t) * (1 - t)) * 100));
+        if (t < 1) loaderFrame = requestAnimationFrame(tick);
+        else loaderTimer = setTimeout(hideLoader, 150);
+    };
+    loaderFrame = requestAnimationFrame(tick);
+
+    // 按上一頁／下一頁從快取還原時，載入畫面還停在離開前的狀態，要收起來
+    window.addEventListener('pageshow', e => { if (e.persisted) hideLoader(); });
+
+    document.addEventListener('click', e => {
+        const a = e.target.closest('a[href]');
+        if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if ((a.target && a.target !== '_self') || a.hasAttribute('download')) return;
+
+        const url = new URL(a.href, location.href);
+        // 外部網站、mailto: 等不同協定，或同一頁的錨點，都不顯示
+        if (url.protocol !== location.protocol || url.origin !== location.origin) return;
+        if (url.pathname === location.pathname && url.search === location.search && url.hash) return;
+
+        cancelAnimationFrame(loaderFrame);
+        clearTimeout(loaderTimer);
+        setProgress(0);
+        pageLoader.classList.remove('is-hidden');
+        pageLoader.classList.add('is-leaving');
+        // 換頁被取消（例如按了停止）時不要一直擋著
+        loaderTimer = setTimeout(hideLoader, 10000);
+    });
+}
+
 const navbar      = document.getElementById('navbar');
 const heroOverlay = document.getElementById('heroOverlay');
 const heroContent = document.querySelector('.hero-content');
