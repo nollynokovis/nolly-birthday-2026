@@ -275,7 +275,7 @@
       "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     },
     {
-      "name": "",
+      "name": "自定義名稱",
       "intro": "",
       "members": [
         { "name": "星辰013", "rank": "Gold 2" },
@@ -285,7 +285,7 @@
         { "name": "AXSE", "rank": "Platinum 1" }
       ],
       "sub": null,
-      "banMaps": []
+      "banMaps": [{ "en": "HAVEN", "zh": "遺落境地" }, { "en": "ICEBOX", "zh": "極地寒港" }]
     },
     {
       "name": "",
