@@ -301,8 +301,8 @@
       "banMaps": []
     },
     {
-      "name": "",
-      "intro": "",
+      "name": "技術不行嘴巴先行",
+      "intro": "隊長是大帥哥",
       "members": [
         { "name": "yoch", "rank": "Platinum 3" },
         { "name": "Hank", "rank": "Diamond 2" },
@@ -311,7 +311,7 @@
         { "name": "梁山伯與豬亂來", "rank": "Platinum" }
       ],
       "sub": null,
-      "banMaps": []
+      "banMaps": [{ "en": "SUMMIT", "zh": "頂峰亭閣" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     },
     {
       "name": "",
