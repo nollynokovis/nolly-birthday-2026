@@ -1,5 +1,5 @@
 {
-  "summary": { "total": 150 },
+  "summary": { "total": 151 },
   "teams": [
     {
       "name": "饒明軒粉絲團",
@@ -47,7 +47,7 @@
         { "name": "ResurGam", "rank": "Diamond 3" },
         { "name": "Cgl", "rank": "Ascendant 1" },
         { "name": "土豆", "rank": "Diamond 2" },
-        { "name": "雷幻滅", "rank": "Diamond 3" },
+        { "name": "雷幻滅", "rank": "Ascendant 1" },
         { "name": "snowone", "rank": "" }
       ],
       "sub": null,
@@ -308,7 +308,7 @@
         { "name": "Hank", "rank": "Diamond 2" },
         { "name": "Door3172", "rank": "Platinum 1" },
         { "name": "max", "rank": "Gold" },
-        null
+        { "name": "梁山伯與豬亂來", "rank": "Platinum" }
       ],
       "sub": null,
       "banMaps": []
@@ -319,7 +319,46 @@
       "members": [
         { "name": "洛洛", "rank": "Bronze 2" },
         { "name": "珊瑚宮安妮", "rank": "" },
-        null,
+        { "name": "柳如煙", "rank": "Platinum 3" },
+        { "name": "Sterben", "rank": "Silver 3" },
+        { "name": "白熊ゆき", "rank": "Gold 2" }
+      ],
+      "sub": null,
+      "banMaps": []
+    },
+    {
+      "name": "",
+      "intro": "",
+      "members": [
+        { "name": "傻眼貓咪盪鞦韆", "rank": "" },
+        { "name": "柒仔", "rank": "Platinum" },
+        { "name": "lighter0_0", "rank": "" },
+        { "name": "拉菲爾拉法", "rank": "" },
+        { "name": "夜火", "rank": "Gold 2" }
+      ],
+      "sub": null,
+      "banMaps": []
+    },
+    {
+      "name": "",
+      "intro": "",
+      "members": [
+        { "name": "qq9977", "rank": "Diamond 3" },
+        { "name": "Andy", "rank": "" },
+        { "name": "塔拉塔拉", "rank": "Unranked" },
+        { "name": "皮威", "rank": "Gold 3" },
+        { "name": "小空", "rank": "" }
+      ],
+      "sub": null,
+      "banMaps": []
+    },
+    {
+      "name": "",
+      "intro": "",
+      "members": [
+        { "name": "老賴", "rank": "Ascendant 1" },
+        { "name": "肉肉OwO", "rank": "" },
+        { "name": "建建Brian", "rank": "Gold 3" },
         null,
         null
       ],
