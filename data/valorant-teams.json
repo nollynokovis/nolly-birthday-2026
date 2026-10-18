@@ -1,5 +1,5 @@
 {
-  "summary": { "total": 143 },
+  "summary": { "total": 150 },
   "teams": [
     {
       "name": "饒明軒粉絲團",
@@ -262,6 +262,19 @@
       "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     },
     {
+      "name": "胜你无需第二剑 豪你不止第二遍",
+      "intro": "无须多言",
+      "members": [
+        { "name": "黑貓", "rank": "Immortal 1" },
+        { "name": "佛兔", "rank": "Ascendant 2" },
+        { "name": "本田鴨子", "rank": "Ascendant 1" },
+        { "name": "伏特加貓", "rank": "Gold 1" },
+        { "name": "日下 みゆき", "rank": "Diamond 2" }
+      ],
+      "sub": { "name": "蒼月冥幽", "rank": "Diamond 2" },
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
+    },
+    {
       "name": "",
       "intro": "",
       "members": [
@@ -269,7 +282,7 @@
         { "name": "憨大星", "rank": "Gold 2" },
         { "name": "仙喵", "rank": "Gold 3" },
         { "name": "Y0sh1no", "rank": "" },
-        null
+        { "name": "AXSE", "rank": "Platinum 1" }
       ],
       "sub": null,
       "banMaps": []
