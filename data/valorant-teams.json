@@ -1,5 +1,5 @@
 {
-  "summary": { "total": 151 },
+  "summary": { "total": 153 },
   "teams": [
     {
       "name": "饒明軒粉絲團",
@@ -288,19 +288,6 @@
       "banMaps": [{ "en": "HAVEN", "zh": "遺落境地" }, { "en": "ICEBOX", "zh": "極地寒港" }]
     },
     {
-      "name": "",
-      "intro": "",
-      "members": [
-        { "name": "劫月", "rank": "Gold 1" },
-        { "name": "餅乾", "rank": "Diamond" },
-        { "name": "吖", "rank": "Platinum 1" },
-        { "name": "sushi cat", "rank": "Diamond 1" },
-        { "name": "annceter", "rank": "Gold 1" }
-      ],
-      "sub": null,
-      "banMaps": []
-    },
-    {
       "name": "技術不行嘴巴先行",
       "intro": "隊長是大帥哥",
       "members": [
@@ -312,6 +299,19 @@
       ],
       "sub": null,
       "banMaps": [{ "en": "SUMMIT", "zh": "頂峰亭閣" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
+    },
+    {
+      "name": "",
+      "intro": "",
+      "members": [
+        { "name": "劫月", "rank": "Gold 1" },
+        { "name": "餅乾", "rank": "Diamond" },
+        { "name": "吖", "rank": "Platinum 1" },
+        { "name": "sushi cat", "rank": "Diamond 1" },
+        { "name": "annceter", "rank": "Gold 1" }
+      ],
+      "sub": null,
+      "banMaps": []
     },
     {
       "name": "",
@@ -359,8 +359,8 @@
         { "name": "老賴", "rank": "Ascendant 1" },
         { "name": "肉肉OwO", "rank": "" },
         { "name": "建建Brian", "rank": "Gold 3" },
-        null,
-        null
+        { "name": "LaiBrian是蘿莉控", "rank": "Ascendant 3" },
+        { "name": "LaiBrain是正太控", "rank": "Diamond 2" }
       ],
       "sub": null,
       "banMaps": []
