@@ -77,7 +77,7 @@
     { "id": 74, "name": "蜜瓜好吃每天吃", "rank": "High Master", "control": "MODERN", "events": ["SOLO", "TEAM"] },
     { "id": 75, "name": "小籠包0001", "rank": "Diamond", "control": "MODERN", "events": ["SOLO"] },
     { "id": 76, "name": "ShunGou", "rank": "High Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
-    { "id": 77, "name": "Jasper", "rank": "Master", "control": "MODERN", "events": ["SOLO"] },
+    { "id": 77, "name": "Jasper", "rank": "High Master", "control": "MODERN", "events": ["SOLO"] },
     { "id": 78, "name": "路克拳狂姬吐司塔", "rank": "Grand Master", "control": "MODERN", "events": ["TEAM"] },
     { "id": 79, "name": "太破啦~", "rank": "Ultimate Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 80, "name": "CHOPO", "rank": "Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
