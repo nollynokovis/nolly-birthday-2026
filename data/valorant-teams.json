@@ -314,17 +314,17 @@
       "banMaps": []
     },
     {
-      "name": "",
-      "intro": "",
+      "name": "不拚槍來拚斗內啊",
+      "intro": "上一世，我為了柳如煙不惜身命，慘遭恩斷義絕板。重來一世，我將成為惡毒女配，別救保平！",
       "members": [
         { "name": "洛洛", "rank": "Bronze 2" },
         { "name": "珊瑚宮安妮", "rank": "" },
         { "name": "柳如煙", "rank": "Platinum 3" },
-        { "name": "Sterben", "rank": "Silver 3" },
+        { "name": "巧粉", "rank": "Bronze 3" },
         { "name": "白熊ゆき", "rank": "Gold 2" }
       ],
-      "sub": null,
-      "banMaps": []
+      "sub": { "name": "Sterben", "rank": "Silver 3" },
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "SUMMIT", "zh": "頂峰亭閣" }]
     },
     {
       "name": "",
