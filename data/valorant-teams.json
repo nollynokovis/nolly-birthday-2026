@@ -168,7 +168,7 @@
         { "name": "啾子", "rank": "Gold 3" }
       ],
       "sub": { "name": "藍色雷霆皮卡丘", "rank": "Gold 3" },
-      "banMaps": [{ "en": "CORRODE", "zh": "晶蝕之地" }, { "en": "PEARL", "zh": "深海遺珠" }]
+      "banMaps": [{ "en": "ABYSS", "zh": "深窟幽境" }, { "en": "ICEBOX", "zh": "極地寒港" }]
     },
     {
       "name": "特戰鬼滅",
