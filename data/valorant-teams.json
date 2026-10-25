@@ -1,5 +1,5 @@
 {
-  "summary": { "total": 153 },
+  "summary": { "total": 154 },
   "teams": [
     {
       "name": "饒明軒粉絲團",
@@ -138,7 +138,7 @@
         { "name": "Sammy", "rank": "Ascendant 2" },
         { "name": "ylun", "rank": "Immortal 3" },
         { "name": "手手", "rank": "Immortal 1" },
-        { "name": "yyc", "rank": "Immortal 2" },
+        { "name": "yyc", "rank": "Ascendant 3" },
         { "name": "choco", "rank": "Immortal 1" }
       ],
       "sub": null,
@@ -293,8 +293,8 @@
       "members": [
         { "name": "yoch", "rank": "Platinum 3" },
         { "name": "Hank", "rank": "Diamond 2" },
-        { "name": "Door3172", "rank": "Platinum 1" },
         { "name": "max", "rank": "Gold" },
+        { "name": "Door3172", "rank": "Platinum 1" },
         { "name": "梁山伯與豬亂來", "rank": "Platinum" }
       ],
       "sub": null,
@@ -320,24 +320,24 @@
         { "name": "洛洛", "rank": "Bronze 2" },
         { "name": "珊瑚宮安妮", "rank": "" },
         { "name": "柳如煙", "rank": "Platinum 3" },
-        { "name": "巧粉", "rank": "Bronze 3" },
-        { "name": "白熊ゆき", "rank": "Gold 2" }
+        { "name": "白熊ゆき", "rank": "Gold 2" },
+        { "name": "巧粉", "rank": "Bronze 3" }
       ],
-      "sub": { "name": "Sterben", "rank": "Silver 3" },
+      "sub": null,
       "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "SUMMIT", "zh": "頂峰亭閣" }]
     },
     {
-      "name": "",
-      "intro": "",
+      "name": "吃土大隊",
+      "intro": "隊長準備買完周邊嘗遍各地的土",
       "members": [
+        { "name": "夜火", "rank": "Gold 3" },
         { "name": "傻眼貓咪盪鞦韆", "rank": "Bronze 1" },
-        { "name": "柒仔", "rank": "Platinum" },
         { "name": "lighter", "rank": "Diamond 3" },
         { "name": "拉菲爾拉法", "rank": "" },
-        { "name": "夜火", "rank": "Gold 3" }
+        { "name": "Sterben", "rank": "Silver 3" }
       ],
-      "sub": null,
-      "banMaps": []
+      "sub": { "name": "柒仔", "rank": "Platinum" },
+      "banMaps": [{ "en": "BREEZE", "zh": "熱帶樂園" }, { "en": "SUMMIT", "zh": "頂峰亭閣" }]
     },
     {
       "name": "",
