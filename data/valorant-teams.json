@@ -343,14 +343,14 @@
       "name": "",
       "intro": "",
       "members": [
-        { "name": "qq9977", "rank": "Diamond 3" },
-        { "name": "Andy", "rank": "Ascendant 3" },
         { "name": "塔拉塔拉", "rank": "Unranked" },
         { "name": "皮威", "rank": "Gold 3" },
-        { "name": "我是TOWA常闇的狗-小空TW", "rank": "Iron" }
+        { "name": "Andy", "rank": "Ascendant 3" },
+        { "name": "NIGHT夜空", "rank": "Iron" },
+        { "name": "蒼淵", "rank": "Diamond 3" }
       ],
       "sub": null,
-      "banMaps": []
+      "banMaps": [{ "en": "ICEBOX", "zh": "極地寒港" }, { "en": "BIND", "zh": "劫境之地" }]
     },
     {
       "name": "",
