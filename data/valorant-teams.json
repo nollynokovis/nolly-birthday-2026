@@ -308,7 +308,7 @@
         { "name": "餅乾", "rank": "Diamond" },
         { "name": "吖", "rank": "Platinum 1" },
         { "name": "sushi cat", "rank": "Diamond 1" },
-        { "name": "annceter", "rank": "Gold 1" }
+        { "name": "Sterben", "rank": "Silver 3" }
       ],
       "sub": null,
       "banMaps": []
@@ -334,14 +334,14 @@
         { "name": "傻眼貓咪盪鞦韆", "rank": "Bronze 1" },
         { "name": "lighter", "rank": "Diamond 3" },
         { "name": "拉菲爾拉法", "rank": "" },
-        { "name": "Sterben", "rank": "Silver 3" }
+        { "name": "柒仔", "rank": "Platinum" }
       ],
-      "sub": { "name": "柒仔", "rank": "Platinum" },
+      "sub": null,
       "banMaps": [{ "en": "BREEZE", "zh": "熱帶樂園" }, { "en": "SUMMIT", "zh": "頂峰亭閣" }]
     },
     {
-      "name": "",
-      "intro": "",
+      "name": "從不覺得打瓦開心過",
+      "intro": "5單人臨時團體 全體一起練習次數0 志在參加",
       "members": [
         { "name": "塔拉塔拉", "rank": "Unranked" },
         { "name": "皮威", "rank": "Gold 3" },
