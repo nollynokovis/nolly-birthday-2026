@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STREET FIGHTER 6 Team List</title>
+    <meta name="description" content="Nolly CUP STREET FIGHTER 6 team list: every 3v3 team's group and roster, in team number order.">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Nolly CUP">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="STREET FIGHTER 6 Team List | Nolly CUP">
+    <meta property="og:description" content="Nolly CUP STREET FIGHTER 6 team list: every 3v3 team's group and roster, in team number order.">
+    <meta name="twitter:card" content="summary">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/style.css?v=20261030h">
+    <script>try{var s=sessionStorage,v=s.getItem('nollyLoader'),f=!s.getItem('nollyVisited');s.removeItem('nollyLoader');s.setItem('nollyVisited','1');if(f||v&&v===(location.pathname.split('/').pop().replace(/\.html$/,'')||'index'))document.documentElement.classList.add('show-loader')}catch(e){}</script>
+</head>
+<body>
+    <div class="page-loader" aria-hidden="true"><img class="page-loader-icon" src="favicon.png" alt="" width="96" height="96"><div class="page-loader-progress"><span></span></div><div class="page-loader-num">0%</div></div>
+
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index-en.html" class="nav-logo">NOLLY<span>CUP</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li class="mobile-home"><a href="schedule-sf6-en.html">BACK TO SCHEDULE</a></li>
+            </ul>
+            <a href="schedule-sf6-en.html" class="btn-nav">BACK TO SCHEDULE</a>
+
+            <div class="nav-right">
+                <div class="language-dropdown">
+                    <button class="language-btn">
+                        English
+                        <span>▾</span>
+                    </button>
+                    <div class="language-menu">
+                        <a href="sf6-teams.html">中文</a>
+                        <a href="sf6-teams-ja.html">日本語</a>
+                        <a href="sf6-teams-en.html">English</a>
+                    </div>
+                </div>
+            </div>
+            <button class="nav-toggle" id="navToggle">&#9776;</button>
+        </div>
+    </nav>
+
+    <section class="section-title player-hero">
+        <div class="section-inner">
+            <span class="title-eyebrow">NOLLY BIRTHDAY CUP 2026</span>
+            <span class="player-hero-game">STREET FIGHTER 6</span>
+            <h1>TEAM LIST</h1>
+            <div class="title-deco"><span></span><span></span><span></span></div>
+        </div>
+    </section>
+
+    <section id="team-list" class="section">
+        <div class="section-inner" id="sf6TeamDirectory">
+            <nav class="directory-switch" aria-label="Switch directory">
+                <a href="teams-en.html">VALORANT</a>
+                <span class="directory-switch-sep" aria-hidden="true">｜</span>
+                <a href="players-en.html">SF6 PLAYERS</a>
+                <span class="directory-switch-sep" aria-hidden="true">｜</span>
+                <a href="sf6-teams-en.html" aria-current="page">SF6 TEAMS</a>
+            </nav>
+            <div class="player-stats">
+                <div class="player-stat">
+                    <span class="player-stat-en">PLAYERS</span>
+                    <span class="player-stat-num" data-sf6-stat="players">-</span>
+                    <span class="player-stat-label">Team Players</span>
+                </div>
+                <div class="player-stat player-stat-teams">
+                    <span class="player-stat-en">TEAMS</span>
+                    <span class="player-stat-num" data-sf6-stat="teams">-</span>
+                    <span class="player-stat-label">Teams</span>
+                </div>
+            </div>
+
+            <div class="player-controls">
+                <div class="player-search">
+                    <label class="visually-hidden" for="sf6TeamSearch">Search player name or team number</label>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                    <input type="search" id="sf6TeamSearch" placeholder="Search player name or team number" autocomplete="off">
+                </div>
+                <div class="player-filters" role="group" aria-label="Filter by group">
+                    <button type="button" class="filter-btn active" data-filter="all" aria-pressed="true">ALL</button>
+                    <button type="button" class="filter-btn" data-filter="A" aria-pressed="false">A</button>
+                    <button type="button" class="filter-btn" data-filter="B" aria-pressed="false">B</button>
+                    <button type="button" class="filter-btn" data-filter="C" aria-pressed="false">C</button>
+                    <button type="button" class="filter-btn" data-filter="D" aria-pressed="false">D</button>
+                </div>
+            </div>
+
+            <p class="player-result" aria-live="polite"></p>
+            <div class="player-grid team-grid"></div>
+            <nav class="pagination" aria-label="Pagination" hidden></nav>
+        </div>
+        <a href="schedule-sf6-en.html" class="btn-goods">BACK TO STREET FIGHTER 6 SCHEDULE</a>
+    </section>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-logo">NOLLY<span>CUP</span></div>
+            <p class="footer-copy">© 2026 Nolly CUP. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js?v=20261021q"></script>
+    <script src="js/sf6-teams.js?v=20261030a"></script>
+</body>
+</html>

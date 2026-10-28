@@ -1,0 +1,85 @@
+{
+  "_source": "data/ALL PARTICIPANTS.csv (2026-10-29 抽籤結果)。null = BYE。valorant 每組 8 格由上到下；sf6Solo 每組 16 格 = 左 1–8 + 右 1–8；sf6Team 每組 8 格 = 左 1–4 + 右 1–4。",
+  "valorant": {
+    "A": ["LJ", "技術不行嘴巴先行", "殺光年糕", "Lamb Gaming TW", "吃土大隊", "劫月", "新鮮現炸", null],
+    "B": ["胜你无需第二剑 豪你不止第二遍", "爆揍諾麗", "不拚槍來拚斗內啊", "饒明軒粉絲團", "Never Win", "老賴", "請主播跟我們說聲加油", null],
+    "C": ["萌新同樂會", "關注益綸謝謝喵", "67總部", "從不覺得打瓦開心過", "不服來快打搶5", "來自企鵝的再臨者", "特戰鬼滅", null],
+    "D": ["自定義名稱", "年年四宮一全部倒第一", "小心從你屁屁來", "五區戰車", "好大的JB", "想贏的時候再贏就好了啊", "冰蜂聖羊乃", null]
+  },
+  "sf6Solo": {
+    "A": [
+      "紗楓Safong", "J_YLIN", "[DLM]", "無聊大二生", "FTSS", "tomsky", "高中牲18HITBOX練習中", null,
+      "asdfc7788", "寶萊塢巨星豬大哥", "颯 沁", "殞落輝焰", "櫻雨 yosakura", "来自东南亚的神秘力量", "起司一絲", null
+    ],
+    "B": [
+      "BHDpoo", "TSUNE HERO", "不太會玩", null, "FukanaSakana", "千蓮楓火", "道心崩壞投", "Rin221",
+      "snowone", null, "Lament", "Lost 清水阿宗", "小米米羔", "yoyoyoyoyos", "FOX小隊怎麼這麼香-狼師檔案", null
+    ],
+    "C": [
+      "台南市最爛DJ(20歲)", "落雨之時", "活網最強", "紅魔館門番紅美鈴", "kevinch0112", "PITO", "温温魚TW", null,
+      "tanhang05", "M．比松．牛肉", "Anoxiaa", "Kraztex", "粗野的失敗者", "Dino", "OnlyBelongToYou", null
+    ],
+    "D": [
+      "Jasper", "☝Harimon☝", "太破啦~", "ShunGou", "YauiHorizon", "夜藍10", "novemberrain", null,
+      "傳奇鼓手安和昴", "四葉ミツキ", "Kasomi", "柚子的皮", "古拉的蝦子", "レゼの犬", "MochiIi", null
+    ],
+    "E": [
+      "Love", "Oscar", "Kira__", null, "CHOPO", "sapiumsebiferum", "Q玉米Q", "Hanabi",
+      "NMSL | 燈神", null, "邪惡的月餅", "大英警察小雪莉", "Justin", "Ahyo", "白狄哈某 18.", null
+    ],
+    "F": [
+      "zkai", "Ruai", "Kayo", "EVOJP#4霍普粉絲的粉絲", "飛火flyfire(18)", "罐貓快遞", "Draken_TW", null,
+      "meha114", "一介新手", "Potato", "こひなた民二億人", "星詠み(*´∀｀)", "lighter", "捲菸捲走我DI", null
+    ],
+    "G": [
+      "Mizi", "Ayase(星詠み)", "we0514", "purpleismine", "Ghost_CJ", "小籠包0001", "youirww", null,
+      "People Vanish", "BLINKbird", "leotsai9999", "Twitch-xti307", "楠小楓的手下敗將(翠荻蘇)", "Rin002", "tuki.(17)様のファン", null
+    ],
+    "H": [
+      "陽光松鼠", "我是TOWA常闇的狗-小空TW", "SILVER0225", null, "KEVIN5276", "伊苟EW", "kaneruan", "beegaxie",
+      "歐卡Orca", null, "dreamko", "誠實ikun_TW", "蜜瓜好吃每天吃", "Elephant", "uvulargecko", null
+    ]
+  },
+  "sf6Team": {
+    "A": [
+      { "no": 1, "members": ["MochiIi", "古拉的蝦子", "youirww"] },
+      { "no": 2, "members": ["Oscar", "CHOPO", "飛火flyfire(18)"] },
+      { "no": 3, "members": ["蜜瓜好吃每天吃", "来自东南亚的神秘力量", "Hanabi"] },
+      { "no": 4, "members": ["FukanaSakana", "snowone", "KEVIN5276"] },
+      { "no": 5, "members": ["陽光松鼠", "SILVER0225", "Ghost_CJ"] },
+      { "no": 6, "members": ["台南市最爛DJ(20歲)", "小米米羔", "四葉ミツキ"] },
+      { "no": 7, "members": ["beegaxie", "Draken_TW", "☝Harimon☝"] },
+      null
+    ],
+    "B": [
+      { "no": 8, "members": ["uvulargecko", "tuki.(17)様のファン", "紅魔館門番紅美鈴"] },
+      { "no": 9, "members": ["kinuko", "kahleong66", "Elephant"] },
+      { "no": 10, "members": ["meha114", "路克拳狂姬吐司塔", "Dino"] },
+      null,
+      { "no": 11, "members": ["Rin221", "一介新手", "ShunGou"] },
+      { "no": 12, "members": ["邪惡的月餅", "FOX小隊怎麼這麼香-狼師檔案", "Lost 清水阿宗"] },
+      { "no": 13, "members": ["Kasomi", "People Vanish", "Twitch-xti307"] },
+      null
+    ],
+    "C": [
+      { "no": 14, "members": ["起司一絲", "夜藍10", "Justin"] },
+      { "no": 15, "members": ["Kraztex", "OnlyBelongToYou", "白狄哈某 18."] },
+      { "no": 16, "members": ["星詠み(*´∀｀)", "レゼの犬", "NMSL | 燈神"] },
+      null,
+      { "no": 17, "members": ["Ayase(星詠み)", "千蓮楓火", "TSUNE HERO"] },
+      { "no": 18, "members": ["颯 沁", "Potato", "FTSS"] },
+      { "no": 19, "members": ["Anoxiaa", "柚子的皮", "高中牲18HITBOX練習中"] },
+      null
+    ],
+    "D": [
+      { "no": 20, "members": ["我是TOWA常闇的狗-小空TW", "粗野的失敗者", "dreamko"] },
+      { "no": 21, "members": ["Q玉米Q", "leotsai9999", "Kayo"] },
+      { "no": 22, "members": ["活網最強", "tanhang05", "Kira__"] },
+      { "no": 23, "members": ["太破啦~", "不太會玩", "yoyoyoyoyos"] },
+      { "no": 24, "members": ["YauiHorizon", "Mizi", "lighter"] },
+      { "no": 25, "members": ["KXZMSR", "落雨之時", "Lament"] },
+      { "no": 26, "members": ["kevinch0112", "歐卡Orca", "[DLM]"] },
+      null
+    ]
+  }
+}

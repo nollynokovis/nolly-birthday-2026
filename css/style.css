@@ -1299,6 +1299,143 @@ footer {
     display: block;
 }
 
+/* 賽程圖疊字（js/bracket.js）：蓋在圖片內容區上（扣掉圖片 3px 外框），
+   內層 .bracket-stage 以原圖 1920×1080 px 排版，再依實際寬度整體縮放（--s），所以圖片縮放時位置不會跑掉 */
+.bracket-layer {
+    display: none;
+    position: absolute;
+    inset: 3px;
+    overflow: hidden;
+    border-radius: 9px;
+    --bracket-hit: var(--c7);
+}
+
+.schedule-image-container[data-bracket="valorant"] .bracket-layer { --bracket-hit: var(--c8); }
+
+.schedule-image-container img.active + .bracket-layer { display: block; }
+
+.bracket-stage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1920px;
+    height: 1080px;
+    transform: scale(var(--s, 0));
+    transform-origin: 0 0;
+}
+
+.bracket-slot {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: var(--pad-y) 0;
+    overflow: hidden;
+    border-radius: var(--radius, 6px);    /* 與圖上框的圓角相同，各賽程的值見 bracket.js 的 LAYOUTS */
+    color: #fff;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.bracket-cell {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--pad-x);
+}
+
+.bracket-name {
+    display: block;
+    min-width: 0;
+    max-width: 100%;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+}
+
+.bracket-name.is-nowrap { white-space: nowrap; }
+
+/* 指定換行位置的名字（bracket.js 的 lines）：行距收緊一點，兩行時字才不會比旁邊單行的名字小太多 */
+.bracket-name[data-lines] { line-height: 1.1; }
+
+/* 可點的名字（連到隊伍／選手個人頁）：滑過時整格淡淡打亮 */
+.bracket-link {
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.bracket-link:hover { background-color: rgba(255, 255, 255, 0.18); }
+.bracket-link:focus-visible { outline: 3px solid #fff; outline-offset: -3px; }
+
+/* 搜尋結果點選後（或從個人頁返回時）標示該格：整格換成主題色（VALORANT 紅、SF6 橘），不閃爍；點畫面其他地方即取消（見 bracket.js） */
+.bracket-slot.is-hit { background-color: var(--bracket-hit); }
+
+/* 賽程頁名字搜尋：輸入框沿用選手名鑑的 .player-search，結果列在下方 */
+.bracket-search {
+    --ctrl-h: 42px;
+    --ctrl-radius: 8px;
+    --ctrl-border: 1.5px solid rgba(181, 167, 213, 0.35);
+    --ctrl-fs: 0.9rem;
+    max-width: 560px;
+    margin: -1.5rem auto 3rem;
+}
+
+.bracket-search-results {
+    list-style: none;
+    margin: 0.5rem 0 0;
+    padding: 0.35rem;
+    max-height: 320px;
+    overflow-y: auto;
+    background: var(--c1);
+    border: var(--ctrl-border);
+    border-radius: var(--ctrl-radius);
+}
+
+.bracket-result {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    padding: 0.55rem 0.8rem;
+    background: none;
+    border: 0;
+    border-radius: 6px;
+    color: var(--c6);
+    font-family: inherit;
+    font-size: var(--ctrl-fs);
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+}
+
+.bracket-result:hover,
+.bracket-result:focus-visible {
+    outline: none;
+    background: rgba(145, 141, 195, 0.18);
+}
+
+.bracket-result-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.bracket-result-meta {
+    flex-shrink: 0;
+    color: var(--c4);
+    font-size: 0.8rem;
+    font-weight: 400;
+}
+
+.bracket-search-empty {
+    padding: 0.55rem 0.8rem;
+    color: var(--c4);
+    font-size: var(--ctrl-fs);
+}
+
 /* Subsection 樣式 */
 .subsection {
     margin-bottom: 4rem;
@@ -1492,8 +1629,7 @@ footer {
 }
 
 .player-stat-solo .player-stat-num { color: var(--c7); }
-.player-stat-team .player-stat-num,
-.player-stat-free .player-stat-num { color: #a58ae8; }
+.player-stat-team .player-stat-num { color: #a58ae8; }
 .player-stat-teams .player-stat-num { color: var(--c8); }
 
 .player-stat-label {
@@ -2293,44 +2429,6 @@ footer {
     color: var(--c5);
 }
 
-/* VALORANT 隊伍個人頁：紀念卡上方的隊員按鈕（teams.js 的 createPlayerLinks），每位隊員一顆、橫向置中排列，連到選手個人頁 */
-.profile-players { margin-bottom: 1.25rem; }
-
-.profile-players-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.6rem;
-    list-style: none;
-}
-
-.profile-player-link {
-    display: inline-flex;
-    align-items: center;
-    max-width: 100%;
-    min-height: 44px;
-    padding: 0.45rem 1.1rem;
-    background: rgba(136, 150, 212, 0.12);
-    border: 1.5px solid rgba(181, 167, 213, 0.35);
-    border-radius: 8px;
-    color: var(--c6);
-    font-weight: 800;
-    line-height: 1.4;
-    letter-spacing: 1px;
-    text-decoration: none;
-    overflow-wrap: anywhere;
-    transition: transform 0.2s, border-color 0.2s, background 0.2s;
-}
-
-.profile-player-link:hover {
-    transform: translateY(-2px);
-    border-color: #B5A7D5;
-    background: rgba(136, 150, 212, 0.22);
-    color: #fff;
-}
-
-.profile-player-link:focus-visible { outline: 3px solid #B5A7D5; outline-offset: 3px; }
-
 /* 主辦（Nolly）個人頁彩蛋：點卡片翻面（players.js 只對主辦產生 .profile-flip）
    每一面同樣式、同牌位緞帶，全部疊在同一格，高度跟著正面資料卡；各面朝向與整體轉動角度由 JS 設定 */
 .profile-flip {
@@ -2858,4 +2956,125 @@ html:not([lang="zh-TW"]) .profile-reverse-text { font-size: 1.9rem; letter-spaci
     .sort-toggle { width: 100%; }
     .sort-toggle svg { margin-left: auto; }
     .sort-menu { left: 0; }
+}
+
+/* ── SF6 團體賽隊伍（sf6-teams.html／sf6-team.html?id=N，內容由 sf6-teams.js 產生）：沿用 VALORANT 隊伍卡片與選手資料卡 ── */
+#sf6-team-profile { padding-top: 2.25rem; }
+
+/* SF6 牌位文字色（同 .player-card[data-tier] 的 --tier-text）；用 data-sf6-tier，不套到 VALORANT 的 .team-member[data-tier] */
+[data-sf6-tier="rookie"]          { --tier-text: #8A8AA0; }
+[data-sf6-tier="iron"]            { --tier-text: #85858C; }
+[data-sf6-tier="bronze"]          { --tier-text: #B8753D; }
+[data-sf6-tier="silver"]          { --tier-text: #818C9F; }
+[data-sf6-tier="gold"]            { --tier-text: #F0C13E; }
+[data-sf6-tier="platinum"]        { --tier-text: #2ca9b9; }
+[data-sf6-tier="diamond"]         { --tier-text: #e68dbe; }
+[data-sf6-tier="master"]          { --tier-text: #1E9D74; }
+[data-sf6-tier="high-master"]     { --tier-text: #5fb1d4; }
+[data-sf6-tier="grand-master"]    { --tier-text: #F2BA35; }
+[data-sf6-tier="ultimate-master"] { --tier-text: #d33159; }
+[data-sf6-tier="legend"]          { --tier-text: #fa7014; }
+.team-member[data-sf6-tier] .team-member-rank,
+.memorial-member[data-sf6-tier] .memorial-member-rank { color: var(--tier-text); }
+
+/* 隊伍卡片／隊伍資料卡的書籤：依組別，同賽程表 A–D 組按鈕選取時（.group-btn[data-group].active）的飽和色；A 紅、C 黃稍微調暗 */
+[data-sf6-group="A"] { --tier: #d8343a; }
+[data-sf6-group="B"] { --tier: #f15a24; }
+[data-sf6-group="C"] { --tier: #eba232; }
+[data-sf6-group="D"] { --tier: #8cc63f; }
+
+/* 隊伍頁 A–D 組篩選按鈕：平常同其他篩選按鈕，選取時改成賽程表組別按鈕（.group-btn[data-group].active）的顏色；「全部」維持原本的紫色 */
+#sf6TeamDirectory .filter-btn[data-filter="A"] { --group-on: #ed1c24; }
+#sf6TeamDirectory .filter-btn[data-filter="B"] { --group-on: #f15a24; }
+#sf6TeamDirectory .filter-btn[data-filter="C"] { --group-on: #fbb03b; }
+#sf6TeamDirectory .filter-btn[data-filter="D"] { --group-on: #8cc63f; }
+#sf6TeamDirectory .filter-btn[data-filter]:not([data-filter="all"]).active {
+    background: var(--group-on);
+    border-color: var(--group-on);
+}
+
+/* 隊伍卡片：上下內距與名單行距加大，卡片高一點、不顯得擁擠（隊員之間不加分隔線） */
+#sf6TeamDirectory .team-card { padding-top: 1.9rem; padding-bottom: 1.6rem; }
+#sf6TeamDirectory .team-card .player-name { margin-bottom: 0.85rem; }
+#sf6TeamDirectory .team-roster { padding-top: 0.5rem; }
+#sf6TeamDirectory .team-member { padding: 0.8rem 0; }
+#sf6TeamDirectory .team-member-name { font-size: 1.0625rem; }
+#sf6TeamDirectory .team-member-rank { font-size: 0.95rem; }
+
+/* 平板／手機：搜尋框獨佔第一列（100% 寬），分組按鈕在第二列等寬排開，間距一致 */
+@media (max-width: 760px) {
+    #sf6TeamDirectory .player-search,
+    #sf6TeamDirectory .player-filters { flex: 1 1 100%; }
+    #sf6TeamDirectory .filter-btn { flex: 1; min-width: 0; padding: 0 0.5rem; }
+}
+
+/* 手機：牌位必要時可換行（名稱較長時兩者不重疊，也不會撐出水平捲軸） */
+@media (max-width: 640px) {
+    #sf6TeamDirectory .team-card { padding-top: 1.5rem; padding-bottom: 1.3rem; }
+    #sf6TeamDirectory .team-card .player-name { margin-bottom: 0.7rem; }
+    #sf6TeamDirectory .team-member { padding: 0.65rem 0; }
+    #sf6TeamDirectory .team-member-name { font-size: 1rem; }
+    #sf6TeamDirectory .team-member-rank { font-size: 0.9rem; }
+    #sf6TeamDirectory .team-roster { column-gap: 0.9rem; }
+    #sf6TeamDirectory .team-member-rank { white-space: normal; }
+}
+
+/* 隊伍個人頁：SF6 直式紀念卡（.player-memorial，sf6-teams.js 的 .sf6-team-memorial），寬度同選手個人頁
+   框內：小字「TEAM NO.」→ 大號兩位數隊伍編號（同選手卡名稱字級）→ 三名隊員一排 → 細線下方參賽項目（欄位名稱在左、項目名稱寫在右側；不放比賽日期） */
+#sf6-team-profile .profile-wrap:has(.player-memorial) { max-width: 640px; }
+.sf6-team-memorial .memorial-no { margin-bottom: calc(10 * var(--u)); }
+.sf6-team-memorial .memorial-name { font-variant-numeric: tabular-nums; }
+.sf6-team-memorial .memorial-members { gap: calc(36 * var(--u)); }
+.sf6-team-memorial .memorial-member-name { font-size: calc(32 * var(--u) * var(--fit, 1)); }
+.sf6-team-memorial .memorial-member-rank { font-size: calc(22 * var(--u)); }
+/* 隊員名稱連到選手個人頁（取代卡片上方的隊員按鈕；SF6 隊伍紀念卡與 VALORANT 隊伍紀念卡 .team-memorial 共用）：
+   從操作模式／身分標籤到牌位一帶（再往外留一點邊）都可點；
+   ::after 是透明的點擊範圍（疊在最上層），::before 墊在文字下方，只在滑過／鍵盤聚焦時加一點柔和投影（無外框、不改底色）；
+   滑過時整格微微上浮＋淡淡投影，呈現稍微凸起的感覺（使用者指定），按下時壓回；
+   名稱顏色不變；平常看不到按鈕底，下載的 PNG 不受影響。
+   VALORANT 卡片是 1920 寬的模板（--u 較小），上浮、外擴與投影另外加大，讓實際大小與 SF6 相近 */
+:is(.team-memorial, .sf6-team-memorial) {
+    --link-lift: 3;
+    --link-pad: 14;
+    --link-blur: 8;
+}
+.team-memorial {
+    --link-lift: 5;
+    --link-pad: 20;
+    --link-blur: 14;
+}
+:is(.team-memorial, .sf6-team-memorial) .memorial-member:has(.memorial-member-link) { position: relative; isolation: isolate; transition: transform 0.15s ease; }
+:is(.team-memorial, .sf6-team-memorial) .memorial-member:has(.memorial-member-link:hover),
+:is(.team-memorial, .sf6-team-memorial) .memorial-member:has(.memorial-member-link:focus-visible) { transform: translateY(calc(var(--link-lift) * -1 * var(--u))); }
+:is(.team-memorial, .sf6-team-memorial) .memorial-member:has(.memorial-member-link:active) { transform: translateY(calc(var(--link-lift) * -0.35 * var(--u))); }
+.memorial-member-link { text-decoration: none; cursor: pointer; }
+.memorial-member-link:focus-visible { outline: none; }
+.memorial-member-link::before,
+.memorial-member-link::after {
+    content: '';
+    position: absolute;
+    /* 右側不往外擴（隊員格本身已撐滿欄寬），與右邊隊員之間留出明顯的空隙 */
+    inset: calc(var(--link-pad) * -1 * var(--u)) 0 calc(var(--link-pad) * -1 * var(--u)) calc(var(--link-pad) * -1 * var(--u));
+    border-radius: calc(var(--link-pad) * 0.85 * var(--u));
+}
+/* 投影分兩層：貼近的一層淡淡收邊，外層大範圍柔和擴散，邊緣漸淡、不生硬 */
+.memorial-member-link::before { z-index: -1; transition: box-shadow 0.2s ease; }
+.memorial-member-link:hover::before,
+.memorial-member-link:focus-visible::before {
+    box-shadow:
+        0 calc(var(--link-lift) * 0.6 * var(--u)) calc(var(--link-blur) * 1.2 * var(--u)) rgba(26, 31, 61, 0.1),
+        0 calc(var(--link-lift) * 2.5 * var(--u)) calc(var(--link-blur) * 3.5 * var(--u)) rgba(26, 31, 61, 0.16);
+}
+.memorial-member-link:active::before {
+    box-shadow:
+        0 calc(var(--link-lift) * 0.3 * var(--u)) calc(var(--link-blur) * 0.8 * var(--u)) rgba(26, 31, 61, 0.1),
+        0 calc(var(--link-lift) * 1 * var(--u)) calc(var(--link-blur) * 2 * var(--u)) rgba(26, 31, 61, 0.14);
+}
+.sf6-team-memorial .memorial-fields { grid-template-columns: minmax(0, 1fr); }
+.sf6-team-memorial .memorial-field-event { flex-direction: row; align-items: center; gap: calc(36 * var(--u)); }
+.sf6-team-memorial .memorial-field-event .memorial-label { flex: none; }
+.sf6-team-memorial .memorial-field-event .memorial-value { min-width: 0; font-size: calc(36 * var(--u)); }
+
+@media (max-width: 640px) {
+    #sf6-team-profile { padding-top: 1.5rem; }
 }

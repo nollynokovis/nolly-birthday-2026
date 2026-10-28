@@ -38,13 +38,14 @@
             notFound: '找不到這支隊伍',
             notFoundHint: '連結可能有誤，請回到參賽隊伍介紹重新選擇。',
             back: '← 返回參賽隊伍介紹',
+            schedule: 'schedule-valo.html',
+            backSchedule: '← 返回賽程表',
             download: '下載參賽紀念卡',
             downloadNote: '※本紀念卡僅供個人收藏及非商業分享使用，請勿擅自修改或用於商業用途。',
             downloading: '圖片產生中…',
             downloadError: '圖片產生失敗，請再試一次',
             title: name => `${name}｜VALORANT 隊伍介紹｜Nolly生日盃`,
             playerProfile: 'valo-player.html',
-            players: '隊員檔案',
             playerFields: { team: '所屬隊伍', rank: '牌位' },
             playerNotFound: '找不到這位選手',
             playerNotFoundHint: '連結可能有誤，請回到隊伍檔案重新選擇。',
@@ -65,13 +66,14 @@
             notFound: 'このチームは見つかりませんでした',
             notFoundHint: 'リンクが正しくない可能性があります。出場チーム紹介からもう一度お選びください。',
             back: '← 出場チーム紹介へ戻る',
+            schedule: 'schedule-valo-ja.html',
+            backSchedule: '← 日程へ戻る',
             download: '参加記念カードをダウンロード',
             downloadNote: '※本記念カードは個人での保存および非営利目的での共有に限りご利用いただけます。無断での改変や商用利用はご遠慮ください。',
             downloading: '画像を作成中…',
             downloadError: '画像の作成に失敗しました。もう一度お試しください',
             title: name => `${name}｜VALORANT チームプロフィール｜Nolly生日杯`,
             playerProfile: 'valo-player-ja.html',
-            players: 'メンバープロフィール',
             playerFields: { team: '所属チーム', rank: 'ランク' },
             playerNotFound: 'この選手は見つかりませんでした',
             playerNotFoundHint: 'リンクが正しくない可能性があります。チームプロフィールからもう一度お選びください。',
@@ -92,13 +94,14 @@
             notFound: 'Team not found',
             notFoundHint: 'The link may be incorrect. Please choose a team from the team list.',
             back: '← BACK TO TEAM LIST',
+            schedule: 'schedule-valo-en.html',
+            backSchedule: '← BACK TO SCHEDULE',
             download: 'DOWNLOAD MEMORIAL CARD',
             downloadNote: '※ This memorial card is for personal collection and non-commercial sharing only. Please do not modify it or use it for commercial purposes.',
             downloading: 'CREATING IMAGE…',
             downloadError: 'Failed to create the image. Please try again.',
             title: name => `${name} | VALORANT Team Profile | Nolly CUP`,
             playerProfile: 'valo-player-en.html',
-            players: 'PLAYER PROFILES',
             playerFields: { team: 'Team', rank: 'Rank' },
             playerNotFound: 'Player not found',
             playerNotFoundHint: 'The link may be incorrect. Please choose a player from the team profile.',
@@ -169,11 +172,10 @@
         try { sessionStorage.setItem(STATE_KEY, JSON.stringify({ ...loadSaved(), ...patch })); } catch (e) { /* 略過 */ }
     };
 
-    // 總報名人數（summary.total）／總組數／未加入隊伍人數（總報名人數 − 已在隊伍中的人數，含候補）
+    // 總報名人數（summary.total，沒填時用隊伍中的人數，含候補）／總組數
     function renderStats(teams, summary) {
         const teamed = teams.reduce((sum, team) => sum + team.players.length, 0);
-        const total = summary && summary.total;
-        const stats = { total: total || teamed, teams: teams.length, free: total ? total - teamed : 0 };
+        const stats = { total: (summary && summary.total) || teamed, teams: teams.length };
         document.querySelectorAll('[data-stat]').forEach(node => {
             node.textContent = stats[node.dataset.stat];
         });
@@ -361,14 +363,24 @@
     const profileId = profile && new URLSearchParams(location.search).get('id');
     const validProfileId = /^\d+$/.test(profileId || '');
     const profileBack = (profile || playerProfile) && document.querySelector('.profile-back');
+    // 從賽程圖點進來時帶 from=<賽程>-<組>-<格>（見 bracket.js），返回連結改回賽程頁的那一格；
+    // 隊伍檔案再點進選手頁時 from 會一路帶著，選手頁返回隊伍檔案後，隊伍檔案的返回仍是賽程頁
+    const fromSchedule = (profile || playerProfile) && new URLSearchParams(location.search).get('from');
+    const validFromSchedule = /^\w+-\w+-\d+$/.test(fromSchedule || '');
+    const fromQuery = validFromSchedule ? `&from=${fromSchedule}` : '';
 
     if (profile) {
-        // 返回隊伍頁：帶回最後的搜尋／排序／分頁（隊伍頁會再捲到這隊的卡片）
-        profileBack.href = t.directory + (loadSaved().search || '') + (validProfileId ? `#team-${profileId}` : '');
+        if (validFromSchedule) {
+            profileBack.href = `${t.schedule}#bracket-${fromSchedule}`;
+            profileBack.textContent = t.backSchedule;
+        } else {
+            // 返回隊伍頁：帶回最後的搜尋／排序／分頁（隊伍頁會再捲到這隊的卡片）
+            profileBack.href = t.directory + (loadSaved().search || '') + (validProfileId ? `#team-${profileId}` : '');
+        }
         // 切換語言時停留在同一隊
         if (profileId) {
             document.querySelectorAll('.language-menu a').forEach(a => {
-                a.href = `${a.getAttribute('href')}?id=${encodeURIComponent(profileId)}`;
+                a.href = `${a.getAttribute('href')}?id=${encodeURIComponent(profileId)}${fromQuery}`;
             });
         }
     }
@@ -380,9 +392,9 @@
     const validPlayerTeamId = /^\d+$/.test(playerTeamId || '');
 
     if (playerProfile) {
-        // 返回這位選手的隊伍檔案；隊伍編號有誤時改回隊伍頁
+        // 返回這位選手的隊伍檔案（從賽程一路點進來時保留 from）；隊伍編號有誤時改回隊伍頁
         if (validPlayerTeamId) {
-            profileBack.href = `${t.profile}?id=${playerTeamId}`;
+            profileBack.href = `${t.profile}?id=${playerTeamId}${fromQuery}`;
         } else {
             profileBack.href = t.directory + (loadSaved().search || '');
             profileBack.textContent = t.back;
@@ -390,6 +402,7 @@
         // 切換語言時停留在同一位選手
         if (playerTeamId || playerSlot) {
             const query = new URLSearchParams({ team: playerTeamId || '', p: playerSlot || '' });
+            if (validFromSchedule) query.set('from', fromSchedule);
             document.querySelectorAll('.language-menu a').forEach(a => {
                 a.href = `${a.getAttribute('href')}?${query}`;
             });
@@ -402,7 +415,7 @@
         box.append(el('p', 'profile-missing-title', title));
         if (hint) box.append(el('p', 'profile-missing-text', hint));
         const back = el('a', 'btn-goods', profileBack.textContent);
-        back.href = profileBack.href.replace(/#.*$/, '');
+        back.href = profileBack.href.replace(/#team-.*$/, '');
         box.append(back);
         profileBack.hidden = true;
         container.replaceChildren(box);
@@ -410,14 +423,20 @@
     }
 
     // 紀念卡的成員格：身分（隊長／隊員／候補）、名稱、牌位；空的欄位顯示「—」
-    function createMemorialMember(player, role) {
+    // 有選手時名稱連到選手個人頁（取代卡片上方的隊員按鈕；整格可點，見 CSS .memorial-member-link）
+    // 網址的 p＝隊內位置（[...members, sub] 的順序，從 1 起算），不受前面空欄位影響
+    function createMemorialMember(player, role, team, slot) {
         const item = el('li', `memorial-member is-${role}`);
         const rank = (player && player.rank) || '';
         const tier = rankTier(rank);
         if (tier) item.dataset.tier = tier;
         if (!player) item.classList.add('is-empty');
 
-        const name = el('span', 'memorial-member-name', (player && player.name) || '—');
+        const name = el(player ? 'a' : 'span', 'memorial-member-name', (player && player.name) || '—');
+        if (player) {
+            name.classList.add('memorial-member-link');
+            name.href = `${t.playerProfile}?team=${team.id}&p=${slot}${fromQuery}`;
+        }
         name.dataset.fit = '';
         item.append(el('span', 'memorial-role', t[role]), name, el('span', 'memorial-member-rank', rank || '—'));
         return item;
@@ -504,9 +523,9 @@
         }
 
         const members = el('ol', 'memorial-members');
-        team.members.forEach((player, i) => members.append(createMemorialMember(player, i === 0 ? 'captain' : 'member')));
+        team.members.forEach((player, i) => members.append(createMemorialMember(player, i === 0 ? 'captain' : 'member', team, i + 1)));
         // 候補放在正式隊員後面（三欄剛好兩排）；沒有候補時不顯示
-        if (team.sub) members.append(createMemorialMember(team.sub, 'sub'));
+        if (team.sub) members.append(createMemorialMember(team.sub, 'sub', team, team.members.length + 1));
 
         const body = el('div', 'memorial-body');
         body.append(head, members, createBanMaps(team.banMaps));
@@ -515,8 +534,8 @@
         info.append(body);
         card.append(bg, info);
 
-        // 卡片上方：隊員按鈕（連到各自的選手個人頁）；下方：「下載 PNG」按鈕，隊名未定時檔名用隊伍編號
-        profile.replaceChildren(createPlayerLinks(team), card,
+        // 卡片下方：「下載 PNG」按鈕，隊名未定時檔名用隊伍編號（隊員連結改在卡片內的隊員格）
+        profile.replaceChildren(card,
             createDownload(card, team.name || `Team-${String(team.id).padStart(2, '0')}`, MEMORIAL_SIZE));
         profile.removeAttribute('aria-busy');
         document.title = t.title(team.name || t.tbd);
@@ -524,24 +543,6 @@
         // 字型載入完成、卡片尺寸改變時重新調整字級
         new ResizeObserver(() => fitMemorial(card)).observe(card);
         document.fonts.ready.then(() => fitMemorial(card));
-    }
-
-    // 隊員按鈕：隊長、隊員、候補各一顆（略過空的欄位），按鈕上只有選手名稱
-    // 網址的 p＝隊內位置（[...members, sub] 的順序，從 1 起算），不受前面空欄位影響
-    function createPlayerLinks(team) {
-        const nav = el('nav', 'profile-players');
-        nav.setAttribute('aria-label', t.players);
-        const list = el('ul', 'profile-players-list');
-        team.slots.forEach((player, i) => {
-            if (!player) return;
-            const link = el('a', 'profile-player-link', player.name);
-            link.href = `${t.playerProfile}?team=${team.id}&p=${i + 1}`;
-            const item = el('li');
-            item.append(link);
-            list.append(item);
-        });
-        nav.append(list);
-        return nav;
     }
 
     // 選手紀念卡的資料欄位（欄位名稱，中文／日文頁下方加英文小標；同 players.js）

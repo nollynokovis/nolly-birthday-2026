@@ -301,7 +301,7 @@
       "banMaps": [{ "en": "SUMMIT", "zh": "頂峰亭閣" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     },
     {
-      "name": "",
+      "name": "劫月",
       "intro": "",
       "members": [
         { "name": "劫月", "rank": "Gold 1" },
@@ -353,7 +353,7 @@
       "banMaps": [{ "en": "ICEBOX", "zh": "極地寒港" }, { "en": "BIND", "zh": "劫境之地" }]
     },
     {
-      "name": "",
+      "name": "老賴",
       "intro": "",
       "members": [
         { "name": "老賴", "rank": "Ascendant 1" },

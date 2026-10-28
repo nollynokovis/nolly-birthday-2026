@@ -48,6 +48,10 @@
             notFound: '找不到這位選手',
             notFoundHint: '連結可能有誤，請回到選手名鑑重新選擇。',
             back: '← 返回選手名鑑',
+            schedule: 'schedule-sf6.html',
+            backSchedule: '← 返回賽程表',
+            teamProfile: 'sf6-team.html',
+            backTeam: '← 返回團體賽檔案',
             title: name => `${name}｜STREET FIGHTER 6 選手介紹｜Nolly生日盃`,
         },
         ja: {
@@ -77,6 +81,10 @@
             notFound: 'この選手は見つかりませんでした',
             notFoundHint: 'リンクが正しくない可能性があります。選手名鑑からもう一度お選びください。',
             back: '← 選手名鑑へ戻る',
+            schedule: 'schedule-sf6-ja.html',
+            backSchedule: '← 日程へ戻る',
+            teamProfile: 'sf6-team-ja.html',
+            backTeam: '← チーム戦チームプロフィールへ戻る',
             title: name => `${name}｜STREET FIGHTER 6 選手プロフィール｜Nolly生日杯`,
         },
         en: {
@@ -106,6 +114,10 @@
             notFound: 'Player not found',
             notFoundHint: 'The link may be incorrect. Please choose a player from the player list.',
             back: '← BACK TO PLAYER LIST',
+            schedule: 'schedule-sf6-en.html',
+            backSchedule: '← BACK TO SCHEDULE',
+            teamProfile: 'sf6-team-en.html',
+            backTeam: '← BACK TO TEAM PROFILE',
             title: name => `${name} | STREET FIGHTER 6 Player Profile | Nolly CUP`,
         },
     };
@@ -427,25 +439,42 @@
     const profileId = profile && new URLSearchParams(location.search).get('id');
     const validProfileId = /^\d+$/.test(profileId || '');
     const profileBack = profile && document.querySelector('.profile-back');
+    // 從賽程圖點進來時帶 from=<賽程>-<組>-<格>（見 bracket.js），返回連結改回賽程頁的那一格
+    const fromSchedule = profile && new URLSearchParams(location.search).get('from');
+    const validFromSchedule = /^\w+-\w+-\d+$/.test(fromSchedule || '');
+    // 從團體賽隊伍個人頁點隊員進來時帶 team=<隊伍編號>（見 sf6-teams.js），返回連結改回該隊伍個人頁；
+    // 隊伍個人頁是從賽程點進去的話，from 也會一起帶著，回到隊伍個人頁後它的返回仍是賽程頁
+    const fromTeam = profile && new URLSearchParams(location.search).get('team');
+    const validFromTeam = /^\d+$/.test(fromTeam || '');
+    const fromQuery = validFromSchedule ? `&from=${fromSchedule}` : '';
 
     if (profile) {
-        // 返回名鑑：帶回名鑑最後的搜尋／篩選／排序／分頁（名鑑會再捲到這位選手的卡片）
-        profileBack.href = t.directory + (loadSaved().search || '') + (validProfileId ? `#player-${profileId}` : '');
+        if (validFromTeam) {
+            profileBack.href = `${t.teamProfile}?id=${fromTeam}${fromQuery}`;
+            profileBack.textContent = t.backTeam;
+        } else if (validFromSchedule) {
+            profileBack.href = `${t.schedule}#bracket-${fromSchedule}`;
+            profileBack.textContent = t.backSchedule;
+        } else {
+            // 返回名鑑：帶回名鑑最後的搜尋／篩選／排序／分頁（名鑑會再捲到這位選手的卡片）
+            profileBack.href = t.directory + (loadSaved().search || '') + (validProfileId ? `#player-${profileId}` : '');
+        }
         // 切換語言時停留在同一位選手
         if (profileId) {
+            const from = (validFromTeam ? `&team=${fromTeam}` : '') + fromQuery;
             document.querySelectorAll('.language-menu a').forEach(a => {
-                a.href = `${a.getAttribute('href')}?id=${encodeURIComponent(profileId)}`;
+                a.href = `${a.getAttribute('href')}?id=${encodeURIComponent(profileId)}${from}`;
             });
         }
     }
 
-    // 找不到選手／載入失敗：訊息＋返回名鑑按鈕（取代上方的返回連結）
+    // 找不到選手／載入失敗：訊息＋返回按鈕（文字與連結同上方的返回連結，並取代它）
     function showProfileMessage(title, hint) {
         const box = el('div', 'profile-missing');
         box.append(el('p', 'profile-missing-title', title));
         if (hint) box.append(el('p', 'profile-missing-text', hint));
-        const back = el('a', 'btn-goods', t.back);
-        back.href = profileBack.href.replace(/#.*$/, '');
+        const back = el('a', 'btn-goods', validFromTeam ? t.backTeam : validFromSchedule ? t.backSchedule : t.back);
+        back.href = profileBack.href.replace(/#player-.*$/, '');
         box.append(back);
         profileBack.hidden = true;
         profile.replaceChildren(box);

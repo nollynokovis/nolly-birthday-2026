@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="css/style.css?v=20261021n">
+    <link rel="stylesheet" href="css/style.css?v=20261030h">
     <script>try{var s=sessionStorage,v=s.getItem('nollyLoader'),f=!s.getItem('nollyVisited');s.removeItem('nollyLoader');s.setItem('nollyVisited','1');if(f||v&&v===(location.pathname.split('/').pop().replace(/\.html$/,'')||'index'))document.documentElement.classList.add('show-loader')}catch(e){}</script>
 </head>
 <body>
@@ -85,7 +85,7 @@
                     </div>
                 </div>
             </div>
-            <a href="teams-ja.html" class="btn-players">全 <span data-stat="teams">-</span> チームを見る →</a>
+            <a href="teams-ja.html" class="btn-players">全 <span data-stat="teams">-</span> チームを見る</a>
         </div>
     </section>
 
@@ -96,8 +96,13 @@
                 <h2 class="sec-title">日程</h2>
                 <div class="sec-line"></div>
             </div>
-            <div class="reg-info">
-                <h3>10月28日（水）20:00〜 組み合わせ抽選配信を行います</h3>
+            <div class="bracket-search">
+                <div class="player-search">
+                    <label class="visually-hidden" for="bracketSearch">選手・チームを検索</label>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                    <input type="search" id="bracketSearch" placeholder="選手・チームを検索" autocomplete="off">
+                </div>
+                <ul class="bracket-search-results" hidden></ul>
             </div>
 
             <div class="subsection" id="valo-prelim">
@@ -111,7 +116,7 @@
                     <button class="group-btn" data-group="D">D組</button>
                 </div>
 
-                <div class="schedule-image-container">
+                <div class="schedule-image-container" data-bracket="valorant">
                     <img src="img/1x/VALO預賽A組.webp" width="1920" height="1080" srcset="img/1x/VALO預賽A組.webp 1920w, img/0.5x/VALO預賽A組@0.5x.webp 960w" class="prize-img" alt="valo-prelim-schedule-A" loading="lazy">
                     <img src="img/1x/VALO預賽B組.webp" width="1920" height="1080" srcset="img/1x/VALO預賽B組.webp 1920w, img/0.5x/VALO預賽B組@0.5x.webp 960w" class="prize-img" alt="valo-prelim-schedule-B" loading="lazy">
                     <img src="img/1x/VALO預賽C組.webp" width="1920" height="1080" srcset="img/1x/VALO預賽C組.webp 1920w, img/0.5x/VALO預賽C組@0.5x.webp 960w" class="prize-img" alt="valo-prelim-schedule-C" loading="lazy">
@@ -151,6 +156,7 @@
     </footer>
 
     <script src="js/main.js?v=20261021q"></script>
-    <script src="js/teams.js?v=20261021a"></script>
+    <script src="js/teams.js?v=20261030a"></script>
+    <script src="js/bracket.js?v=20261030h"></script>
 </body>
 </html>

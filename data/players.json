@@ -103,7 +103,7 @@
     { "id": 100, "name": "KXZMSR", "rank": "Diamond", "control": "MODERN", "events": ["TEAM"] },
     { "id": 101, "name": "来自东南亚的神秘力量", "rank": "Grand Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 102, "name": "我是TOWA常闇的狗-小空TW", "rank": "Master", "control": "MODERN", "events": ["SOLO", "TEAM"] },
-    { "id": 103, "name": "EVPJP#4霍普粉絲的粉絲", "rank": "Ultimate Master", "control": "MODERN", "events": ["SOLO"] },
+    { "id": 103, "name": "EVOJP#4霍普粉絲的粉絲", "rank": "Ultimate Master", "control": "MODERN", "events": ["SOLO"] },
     { "id": 104, "name": "Rin002", "rank": "Master", "control": "CLASSIC", "events": ["SOLO"] },
     { "id": 105, "name": "Potato", "rank": "Ultimate Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 106, "name": "傳奇鼓手安和昴", "rank": "High Master", "control": "CLASSIC", "events": ["SOLO"] },
