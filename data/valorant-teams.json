@@ -1,5 +1,5 @@
 {
-  "summary": { "total": 154 },
+  "summary": { "total": 155 },
   "teams": [
     {
       "name": "饒明軒粉絲團",
@@ -111,11 +111,11 @@
       "members": [
         { "name": "普拿疼aa", "rank": "Diamond 1" },
         { "name": "Qbol", "rank": "Platinum 1" },
-        { "name": "羽瀾", "rank": "Diamond 2" },
+        { "name": "七七", "rank": "Gold 1" },
         { "name": "0.0", "rank": "Diamond 2" },
         { "name": "朽木あまぎ", "rank": "Diamond 3" }
       ],
-      "sub": null,
+      "sub": { "name": "羽瀾", "rank": "Diamond 2" },
       "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "SUMMIT", "zh": "頂峰亭閣" }]
     },
     {
@@ -301,7 +301,7 @@
       "banMaps": [{ "en": "SUMMIT", "zh": "頂峰亭閣" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     },
     {
-      "name": "劫月",
+      "name": "不知道叫什么",
       "intro": "",
       "members": [
         { "name": "劫月", "rank": "Gold 1" },
@@ -310,8 +310,8 @@
         { "name": "sushi cat", "rank": "Diamond 1" },
         { "name": "Sterben", "rank": "Silver 3" }
       ],
-      "sub": null,
-      "banMaps": []
+      "sub": { "name": "annceter", "rank": "Gold 1" },
+      "banMaps": [{ "en": "FRACTURE", "zh": "天漠之峽" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     },
     {
       "name": "不拚槍來拚斗內啊",
@@ -353,8 +353,8 @@
       "banMaps": [{ "en": "ICEBOX", "zh": "極地寒港" }, { "en": "BIND", "zh": "劫境之地" }]
     },
     {
-      "name": "老賴",
-      "intro": "",
+      "name": "我們是個Team !",
+      "intro": "絞盡腦汁想出來的名字",
       "members": [
         { "name": "老賴", "rank": "Ascendant 1" },
         { "name": "肉肉OwO", "rank": "" },
@@ -363,7 +363,7 @@
         { "name": "LaiBrain是正太控", "rank": "Diamond 2" }
       ],
       "sub": null,
-      "banMaps": []
+      "banMaps": [{ "en": "ICEBOX", "zh": "極地寒港" }, { "en": "BREEZE", "zh": "熱帶樂園" }]
     }
   ]
 }
