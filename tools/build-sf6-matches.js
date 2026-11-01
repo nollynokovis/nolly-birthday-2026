@@ -149,7 +149,7 @@ const writeResults = (cfg, built) => {
     if (fs.existsSync(path.join(ROOT, file))) return console.log(`${file}：已存在，不覆寫`);
     const real = built.matches.filter(m => m.team1 !== null && m.team2 !== null);
     const head = [
-        `  "_note": ${JSON.stringify(`${cfg.event === 'sf6-individual' ? 'SF6 個人賽' : 'SF6 團體賽'}比賽結果（比賽當天手動更新；網頁每 60 秒讀一次）。只記錄勝負，不記比分。改完可在本機執行 node tools/validate-results.js 檢查。`)},`,
+        `  "_note": ${JSON.stringify(`${cfg.event === 'sf6-individual' ? 'SF6 個人賽' : 'SF6 團體賽'}比賽結果（比賽當天手動更新；網頁每 5 分鐘讀一次）。只記錄勝負，不記比分。改完可在本機執行 node tools/validate-results.js 檢查。`)},`,
         `  "_fields": ${JSON.stringify('currentGroup：目前進行中的組別（"A"…，決賽階段是 "Final"），沒有填 null。currentMatch：目前進行中的場次編號，沒有填 null。matches：status＝"scheduled"（尚未開始）／"live"（進行中，同時只能有一場，且要和 currentMatch 相同）／"completed"（已完成）；winner＝"team1"／"team2"（勝方，對應比賽結構裡的左右兩邊）或 null。填了 winner 就算完成、勝者自動晉級；對手還沒確定的場次不能先填 winner。BYE 的場次自動晉級，不用列在這裡。')},`,
         '  "currentGroup": null,',
         '  "currentMatch": null,',

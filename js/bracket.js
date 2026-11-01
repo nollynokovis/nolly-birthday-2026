@@ -1,8 +1,8 @@
 // 賽程圖疊字＋名字搜尋：把 data/brackets.json 的抽籤結果疊在預賽賽程圖（.schedule-image-container[data-bracket]）的空白框上，
 // 並提供賽程頁的名字搜尋（.bracket-search）。原始圖片不動：每張圖後面插一層 .bracket-layer，只在該圖 .active 時顯示（見 CSS）
 // brackets.json 的 results（晉級結果）疊在之後各輪與決賽圖的框上，比賽當天只要改 JSON（no-cache 讀取，不必改版本號）
-// VALORANT 賽程頁例外：晉級格跟著下方比賽時間表的 valorant-schedule.json（每 60 秒自動更新）走；
-// SF6 賽程頁的晉級格跟著 sf6-*-results.json（js/sf6-live.js，每 60 秒自動更新）走，見「晉級格的自動更新」
+// VALORANT 賽程頁例外：晉級格跟著下方比賽時間表的 valorant-schedule.json（自動更新）走；
+// SF6 賽程頁的晉級格跟著 sf6-*-results.json（js/sf6-live.js，自動更新）走，見「晉級格的自動更新」
 // 分組切換仍由 main.js 的 .group-buttons 負責；搜尋結果點下去時就是代按對應的分組按鈕
 // 圖上的名字可點：VALORANT 連到隊伍個人頁（team.html?id=N），SF6 個人賽連到選手個人頁（player.html?id=N），
 // SF6 團體賽整格連到隊伍個人頁（sf6-team.html?id=N）

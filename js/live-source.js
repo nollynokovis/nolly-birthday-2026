@@ -1,4 +1,4 @@
-// 賽事資料來源（Data Source）：讀取 data/*.json，並每 60 秒檢查一次有沒有更新
+// 賽事資料來源（Data Source）：讀取 data/*.json，並每 5 分鐘（300 秒）檢查一次有沒有更新
 // 畫面（js/match-schedule.js、js/sf6-live.js）只拿到解析好的資料，不自己 fetch；以後改成 D1 API 只要換這一支
 //   NollyLive.load(url)：讀一次（隊伍、選手、抽籤這類當天不會變的資料）
 //   NollyLive.watch(url, { onData, onError })：定期讀取
@@ -8,7 +8,7 @@
 //     - 分頁在背景時暫停，回到頁面（或按上一頁從快取還原）時立刻檢查；只有一個計時器
 //     - 路徑以目前頁面為基準解析（各語系的賽程頁都在網站根目錄，Cloudflare Pages 不帶 .html 的網址也一樣）
 (() => {
-    const POLL_MS = 60 * 1000;
+    const POLL_MS = 300 * 1000;    // 檢查間隔：5 分鐘（要調整只改這裡，所有賽事頁一起生效）
 
     const load = url => fetch(url, { cache: 'no-cache' }).then(res => {
         if (!res.ok) throw new Error(`${url}: HTTP ${res.status}`);

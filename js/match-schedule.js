@@ -6,7 +6,7 @@
 // MATCH 編號點下去會切到上方對應的賽程圖並捲過去（組別由 brackets.json 的抽籤結果判斷，見 groupResolver）；
 // 反過來，賽程圖上的對戰代號（bracket.js 畫的 A1、E1…）點下去會切到這裡那一場並短暫標示（見 showMatch）
 // 比賽結果（score1／score2／winner）：確認勝方後顯示比分、下一場的「A1 勝者」自動換成勝隊（見 resultOf、sideResolver）
-// 自動更新：每 60 秒重新讀一次 JSON（js/live-source.js 的 NollyLive.watch：分頁在背景時暫停，回到頁面立刻檢查），資料有變才更新畫面，不改目前的 Tab、搜尋與捲動位置
+// 自動更新：定期重新讀一次 JSON（間隔見 js/live-source.js 的 POLL_MS；NollyLive.watch：分頁在背景時暫停，回到頁面立刻檢查），資料有變才更新畫面，不改目前的 Tab、搜尋與捲動位置
 // 比賽狀態：MATCH 編號旁的小標記（灰點＝尚未開始、紅點＝進行中、灰勾＝已結束），見 statusOf
 (() => {
     const root = document.querySelector('.match-schedule');
@@ -77,7 +77,7 @@
         return node;
     };
 
-    // 資料有問題時給開發者看的提醒（console），同一句只出現一次，每 60 秒更新時不會一直重複
+    // 資料有問題時給開發者看的提醒（console），同一句只出現一次，每次自動更新時不會一直重複
     const warned = new Set();
     const warn = msg => {
         if (warned.has(msg)) return;
@@ -461,7 +461,7 @@
     });
 
     // ── 資料讀取與驗證 ────────────────────────────────────────
-    // 讀檔與每 60 秒的自動更新由 js/live-source.js（NollyLive）負責，這裡只處理拿到的資料
+    // 讀檔與自動更新由 js/live-source.js（NollyLive）負責，這裡只處理拿到的資料
 
     // 檢查 JSON 結構：matches 要是陣列，每一場至少要有 matchId（不重複）、date（YYYY-MM-DD）、team1、team2 這兩個欄位（值可以是 null＝BYE）
     // 結構有問題的場次略過（console 警告）；但如果因此讓目前畫面上已有的場次消失（存檔到一半、打錯字），整份不套用、保留上一次成功的資料
@@ -571,7 +571,7 @@
         render();
     };
 
-    // 每 60 秒讀一次最新的賽程 JSON（NollyLive.watch：同時只有一個請求、檔案沒變不呼叫、背景分頁暫停）
+    // 定期讀一次最新的賽程 JSON（NollyLive.watch：同時只有一個請求、檔案沒變不呼叫、背景分頁暫停）
     // 失敗（部署中、網路中斷、HTTP 錯誤、JSON 格式錯誤、資料驗證不過）時保留目前畫面，等下一次再試；只有還沒有任何資料時才顯示錯誤訊息
     const onSchedule = async json => {
         if (!teams) {

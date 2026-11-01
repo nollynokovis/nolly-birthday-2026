@@ -1,6 +1,6 @@
 // SF6 即時賽況（UI Renderer）：schedule-sf6*.html 的組別按鈕進度標記，
 // 並把晉級結果交給 bracket.js 更新賽程圖疊字（nolly-bracket:update 事件）、把同一份計算結果交給對戰一覽（js/sf6-schedule.js，nolly-sf6:update 事件）
-//   資料來源：js/live-source.js（NollyLive）——比賽結構 data/sf6-*-matches.json 讀一次，結果 data/sf6-*-results.json 每 60 秒檢查
+//   資料來源：js/live-source.js（NollyLive）——比賽結構 data/sf6-*-matches.json 讀一次，結果 data/sf6-*-results.json 定期檢查（間隔見 live-source.js 的 POLL_MS）
 //   賽事邏輯：js/sf6-logic.js（NollySF6Logic）——勝方、晉級、BYE、組別進度都在那裡算，這裡只負責畫面
 // 結果資料格式錯誤（JSON 壞掉、場次編號或 status／winner 打錯）時整份不套用，畫面保留上一次成功的資料；
 // 其他資料問題（還沒確定對手就填勝方、LIVE 互相矛盾等）略過有問題的部分並在 console 提醒，詳細可在本機跑 node tools/validate-results.js
@@ -38,7 +38,7 @@
         return node;
     };
 
-    // console 提醒同一句只出現一次（每 60 秒更新時不會一直重複）
+    // console 提醒同一句只出現一次（每次自動更新時不會一直重複）
     const warned = new Set();
     const warn = msg => {
         if (warned.has(msg)) return;
