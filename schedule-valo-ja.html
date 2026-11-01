@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="css/style.css?v=20261030h">
+    <link rel="stylesheet" href="css/style.css?v=20261101r">
     <script>try{var s=sessionStorage,v=s.getItem('nollyLoader'),f=!s.getItem('nollyVisited');s.removeItem('nollyLoader');s.setItem('nollyVisited','1');if(f||v&&v===(location.pathname.split('/').pop().replace(/\.html$/,'')||'index'))document.documentElement.classList.add('show-loader')}catch(e){}</script>
 </head>
 <body>
@@ -128,7 +128,28 @@
                 <h3 class="subsection-title">決勝日程</h3>
                 <p class="subsection-subtitle">日時：2026.11.08（日）20:00〜</p>
                 <p class="subsection-note">※決勝はNollyのチャンネルにて全試合配信予定です</p>
-                <img src="img/1x/VALO決賽.webp" width="1920" height="1080" srcset="img/1x/VALO決賽.webp 1920w, img/0.5x/VALO決賽@0.5x.webp 960w" class="prize-img" alt="valo-finals-schedule" loading="lazy">
+                <div class="schedule-image-container" data-bracket="valorant" data-group="Final">
+                    <img src="img/1x/VALO決賽.webp" width="1920" height="1080" srcset="img/1x/VALO決賽.webp 1920w, img/0.5x/VALO決賽@0.5x.webp 960w" class="prize-img active" alt="valo-finals-schedule" loading="lazy">
+                </div>
+            </div>
+
+            <div class="subsection match-schedule" id="valo-match-schedule">
+                <div class="match-schedule-header">
+                    <span class="sec-en">MATCH SCHEDULE</span>
+                    <h3 class="subsection-title">試合スケジュール</h3>
+                    <p class="match-test" hidden></p>
+                </div>
+                <div class="match-stages" role="group" aria-label="ラウンドを選択"></div>
+                <p class="match-stage-info"></p>
+                <table class="match-table">
+                    <thead>
+                        <tr><th scope="col">MATCH</th><th scope="col">TEAMS</th><th scope="col">MAP</th><th scope="col">CHECK-IN</th><th scope="col">START</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <p class="match-note">※ 時間はすべて台湾時間（UTC+8）です。指定の集合時間までにDiscordでチェックインしてください。実際の試合開始時間は大会の進行状況により変更される場合があります。Discordのお知らせをご確認ください。</p>
+                <p class="match-note">※ 各試合のマップと攻守は、試合開始前に抽選で決定・発表されます。最新情報はDiscordのお知らせをご確認ください。</p>
+                <p class="match-note match-live" hidden>試合結果は60秒ごとに自動更新されます</p>
             </div>
 
         </div>
@@ -157,6 +178,7 @@
 
     <script src="js/main.js?v=20261021q"></script>
     <script src="js/teams.js?v=20261030a"></script>
-    <script src="js/bracket.js?v=20261030h"></script>
+    <script src="js/bracket.js?v=20261101c"></script>
+    <script src="js/match-schedule.js?v=20261101l"></script>
 </body>
 </html>
