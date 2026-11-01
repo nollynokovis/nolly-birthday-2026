@@ -103,6 +103,10 @@ a.nav-logo:hover span { color: #fff; }
 }
 .nav-links a:hover { background: var(--c3); }
 
+/* 沒有 href 的下拉選單觸發項目（子頁面的「賽事」）：只展開選單、不跳轉，游標與一般連結一致 */
+.nav-dropdown > a:not([href]) { cursor: pointer; }
+.nav-dropdown > a:not([href]):focus-visible { outline: 2px solid var(--c4); outline-offset: 2px; }
+
 .nav-dropdown {
     position: relative;
 }
@@ -144,7 +148,7 @@ a.nav-logo:hover span { color: #fff; }
     white-space: nowrap;
 }
 
-/* 首頁「賽事」選單：單層，遊戲名稱為分類標題（不是連結），兩個遊戲之間用細線分隔
+/* 下拉選單（首頁「賽事」選單的設計，全站的 .nav-submenu 都加上 .nav-event-menu 共用）：單層，遊戲名稱為分類標題（不是連結），兩個遊戲之間用細線分隔
    原本 .nav-submenu 的 padding-top 是滑鼠移入的緩衝區；這裡改用 margin＋::before 緩衝，背景與外框才不會蓋到空隙 */
 .nav-event-menu {
     min-width: 0;
@@ -1079,7 +1083,7 @@ footer {
     .nav-submenu li,
     .nav-submenu li:first-child { background: none; border: none; }
     .nav-submenu a { padding: 0.35rem 0.65rem; }
-    /* 首頁賽事選單：在漢堡選單中直接展開（點擊操作、不靠 hover），連結加高方便點擊 */
+    /* 下拉選單（.nav-event-menu）：在漢堡選單中直接展開（點擊操作、不靠 hover），連結加高方便點擊 */
     .nav-event-menu { width: auto; margin: 0.25rem 0.65rem 0.4rem; padding: 0.35rem; }
     .nav-event-menu::before { display: none; }
     .nav-event-menu a { padding: 0.65rem 0.75rem; }
@@ -1542,6 +1546,21 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
 
 .match-schedule-header .subsection-title { margin-bottom: 0; }
 
+/* 對戰一覽／時間表上方的搜尋欄（VALORANT、SF6 共用）：輸入框沿用 .player-search（同頁面上方的搜尋欄），只篩選下方的表格 */
+.match-search {
+    --ctrl-h: 42px;
+    --ctrl-radius: 8px;
+    --ctrl-border: 1.5px solid rgba(181, 167, 213, 0.35);
+    --ctrl-fs: 0.9rem;
+    display: flex;
+    max-width: 560px;
+    margin: -0.75rem auto 1.75rem;
+}
+
+@media (max-width: 640px) {
+    .match-search { margin: -0.5rem auto 1.25rem; }
+}
+
 .match-test {
     margin-top: 0.75rem;
     color: var(--c8);
@@ -1928,6 +1947,269 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
         padding: 1.2rem var(--match-inset) 0.5rem;
         border-bottom: 1px solid var(--match-line);
     }
+}
+
+/* ── 比賽／組別狀態標記（VALORANT MATCH 編號旁、SF6 組別按鈕與對戰一覽）──
+   純 CSS 圖形、不用表情符號：灰點＝尚未開始、紅點＝進行中、灰勾＝已完成 */
+.status-mark {
+    display: inline-block;
+    flex-shrink: 0;
+    width: 8px;
+    height: 8px;
+    margin-left: 0.5rem;
+    border-radius: 50%;
+    vertical-align: middle;
+}
+
+.status-mark.is-scheduled { background: rgba(255, 255, 255, 0.3); }
+.status-mark.is-live { background: var(--c8); }
+
+.status-mark.is-completed {
+    width: 5px;
+    height: 9px;
+    border: solid rgba(255, 255, 255, 0.45);
+    border-width: 0 2px 2px 0;
+    border-radius: 0;
+    transform: translateY(-2px) rotate(45deg);
+}
+
+/* SF6 組別按鈕：標記放在按鈕右上角（不佔寬度，出現或消失時按鈕列不會跳動）；
+   按鈕底色各組不同，紅點加白框、勾用深灰，才看得清楚；尚未開始不加標記 */
+.group-btn { position: relative; }
+
+.group-btn .status-mark {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin: 0;
+}
+
+.group-btn .status-mark.is-live {
+    width: 11px;     /* 全站 box-sizing: border-box，含 1.5px 白框，紅色約 8px */
+    height: 11px;
+    border: 1.5px solid #fff;
+}
+
+.group-btn .status-mark.is-completed {
+    top: 4px;
+    right: 7px;
+    border-color: rgba(30, 32, 50, 0.7);
+}
+
+/* 賽程圖疊字：已完成比賽的敗方字變灰（SF6，見 bracket.js 的 is-lose）；框是深藍底，灰色稍亮一點才看得清楚 */
+.bracket-slot.is-lose { color: #a3a5b1; }
+
+/* ── SF6 MATCH SCHEDULE（對戰一覽，js/sf6-schedule.js）──
+   放在賽程圖區塊下方；分頁沿用 VALORANT 時間表的文字型 Tab（.match-stages），表格同樣是編輯式：透明底、細線、白字、少量紫色
+   三欄：MATCH（狀態標記＋場次編號）｜ROUND｜PLAYERS／TEAMS（兩邊各佔一半、名字置中，VS 固定在中間）；640px 以下改成直式資訊列 */
+.sf6-schedule-info {
+    padding: 1rem var(--match-inset) 0.25rem;
+}
+
+/* 導覽列「對戰一覽」連到這裡：留出固定導覽列的高度（同 .subsection） */
+.sf6-schedule { scroll-margin-top: 100px; }
+
+.sf6-schedule-title {
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.sf6-schedule-time {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 0.6rem;
+    margin-top: 0.25rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-variant-numeric: tabular-nums;
+}
+
+.sf6-schedule-date,
+.sf6-schedule-stage { color: rgba(255, 255, 255, 0.8); }
+.sf6-schedule-sep { color: var(--match-muted); }
+
+.sf6-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sf6-table th {
+    padding: 1.1rem 0.75rem 0.6rem;
+    border-bottom: 1px solid var(--match-line);
+    color: var(--match-muted);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-align: left;
+}
+
+/* MATCH、ROUND 縮到剛好放得下內容，其餘寬度都給對戰雙方 */
+.sf6-table th:nth-child(1),
+.sf6-table th:nth-child(2) { width: 1%; white-space: nowrap; }
+.sf6-table th:nth-child(3) { text-align: center; }
+
+.sf6-table td {
+    height: 56px;
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--match-line);
+    vertical-align: middle;
+}
+
+.sf6-table th:first-child,
+.sf6-table td:first-child { padding-left: var(--match-inset); }
+.sf6-table th:last-child,
+.sf6-table td:last-child { padding-right: var(--match-inset); }
+
+.sf6-table tbody tr { transition: background-color 0.4s; }
+
+@media (hover: hover) {
+    .sf6-table tbody tr:not(.sf6-empty):hover { background: rgba(255, 255, 255, 0.025); }
+}
+
+.sf6-match { white-space: nowrap; }
+
+.sf6-match-id {
+    display: inline-flex;
+    align-items: center;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    font-variant-numeric: tabular-nums;
+}
+
+.sf6-match-id .status-mark { margin: 0 0.55rem 0 0; }
+
+/* 對戰一覽的組別分頁：分頁名稱前的狀態標記（進行中＝紅點、全部比完＝灰勾，同下方每一場的標記） */
+.sf6-schedule .match-stage-btn .status-mark {
+    align-self: center;
+    margin: 0 0.45rem 0 0;
+}
+
+/* 場次編號連結（切到上方對應的賽程圖）：平常和一般文字一樣，滑過時才出現細紫底線 */
+.sf6-match-link {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    transition: text-decoration-color 0.2s;
+}
+
+.sf6-match-link:hover { text-decoration-color: rgba(123, 91, 201, 1.0); }
+.sf6-match-link:focus-visible { outline: 2px solid var(--c6); outline-offset: 3px; }
+
+/* 狀態文字只在手機版顯示（桌面版看編號旁的標記） */
+.sf6-status-text { display: none; }
+
+.sf6-round {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.sf6-versus {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: 1rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+}
+
+/* 兩邊各佔一半、在各自那一半裡置中（隊名下的隊員也置中） */
+.sf6-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 0;
+    text-align: center;
+}
+
+.sf6-name {
+    color: #fff;
+    font-weight: 700;
+}
+
+.sf6-members {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.72rem;
+    line-height: 1.4;
+}
+
+/* 還沒確定的一邊（R1-1 勝者）灰色；已完成時敗方變灰、勝方維持白字 */
+.sf6-side.is-pending .sf6-name { color: var(--match-muted); font-weight: 600; }
+.sf6-side.is-lose .sf6-name,
+.sf6-side.is-lose .sf6-members { color: #8e909c; }    /* 敗方：灰色 */
+
+.sf6-vs {
+    color: var(--c4);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.sf6-table .sf6-empty td {
+    height: auto;
+    padding: 2.5rem 1rem;
+    color: var(--match-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+@media (max-width: 640px) {
+    .sf6-table,
+    .sf6-table tbody { display: block; }
+    .sf6-table thead { display: none; }
+
+    /* 一場一列：[● R2-1　組內8強 ……… 進行中] / 選手（直排）VS 選手 */
+    .sf6-table tr {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        grid-template-areas:
+            "match round"
+            "sides sides";
+        column-gap: 0.75rem;
+        row-gap: 0.4rem;
+        padding: 0.8rem var(--match-inset);
+        border-bottom: 1px solid var(--match-line);
+    }
+
+    .sf6-table td,
+    .sf6-table td:first-child,
+    .sf6-table td:last-child {
+        min-width: 0;
+        height: auto;
+        padding: 0;
+        border-bottom: 0;
+    }
+
+    .sf6-match { grid-area: match; }
+    .sf6-round { grid-area: round; align-self: center; }
+    .sf6-sides { grid-area: sides; }
+
+    .sf6-status-text {
+        display: inline;
+        margin-left: 0.6rem;
+        color: var(--match-muted);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    /* 手機版不用左右對稱：兩邊上下排列，VS 夾在中間，三行置中 */
+    .sf6-versus {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: center;
+        row-gap: 0.1rem;
+    }
+
+    .sf6-table tr.sf6-empty { display: block; }
+    .sf6-table .sf6-empty td { display: block; padding: 2rem 1rem; }
 }
 
 /* ── PLAYER LIST (SF6 選手名鑑) ── */

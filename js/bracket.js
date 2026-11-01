@@ -1,7 +1,8 @@
 // 賽程圖疊字＋名字搜尋：把 data/brackets.json 的抽籤結果疊在預賽賽程圖（.schedule-image-container[data-bracket]）的空白框上，
 // 並提供賽程頁的名字搜尋（.bracket-search）。原始圖片不動：每張圖後面插一層 .bracket-layer，只在該圖 .active 時顯示（見 CSS）
 // brackets.json 的 results（晉級結果）疊在之後各輪與決賽圖的框上，比賽當天只要改 JSON（no-cache 讀取，不必改版本號）
-// VALORANT 賽程頁例外：晉級格跟著下方比賽時間表的 valorant-schedule.json（每 60 秒自動更新）走，見「VALORANT 晉級格的自動更新」
+// VALORANT 賽程頁例外：晉級格跟著下方比賽時間表的 valorant-schedule.json（每 60 秒自動更新）走；
+// SF6 賽程頁的晉級格跟著 sf6-*-results.json（js/sf6-live.js，每 60 秒自動更新）走，見「晉級格的自動更新」
 // 分組切換仍由 main.js 的 .group-buttons 負責；搜尋結果點下去時就是代按對應的分組按鈕
 // 圖上的名字可點：VALORANT 連到隊伍個人頁（team.html?id=N），SF6 個人賽連到選手個人頁（player.html?id=N），
 // SF6 團體賽整格連到隊伍個人頁（sf6-team.html?id=N）
@@ -295,15 +296,21 @@
     const index = [];    // { name, key, meta, button, img, slot }
     const slotsByAt = new Map();    // '<賽程>-<組>-<格>' → { button, img, slot }，從個人頁回來時用
 
-    // ── VALORANT 晉級格的自動更新 ─────────────────────────────
-    // 頁面上有比賽時間表時，match-schedule.js 每次讀到有變化的 valorant-schedule.json 會發出 valorant-schedule:update，
+    // ── 晉級格的自動更新（VALORANT、SF6） ──────────────────────
+    // VALORANT：頁面上有比賽時間表時，match-schedule.js 每次讀到有變化的 valorant-schedule.json 會發出 valorant-schedule:update，
     // detail＝Map(比賽編號 → { sides: [隊伍 1, 隊伍 2], winner })，都是已確定的隊名（還沒確定是 null），判斷規則與時間表相同
     // 收到後 VALORANT 各圖第一輪之後的格子改用這份資料（不再看 brackets.json 的 results）；預賽圖第一輪的抽籤不動：
     //   有對戰代號的一欄＝這一欄各場的兩隊（例如預賽圖的 16強欄＝E1、E2 的兩隊，輪空直接晉級的隊伍也會出現），
     //   最後一欄（晉級決賽／冠軍）＝前一欄各場的勝隊。哪一場在哪一欄由 LAYOUTS／FINAL_LAYOUTS 的 codes 決定（由左到右每兩格一場）
-    // 只重畫內容有變的欄；還沒顯示的圖等第一次顯示時再量字（同 fitLayer）
+    // SF6：js/sf6-live.js 每次讀到有變化的 sf6-*-results.json 會發出 nolly-bracket:update，
+    //   detail＝{ kind: 'sf6Solo'|'sf6Team', images: { 組別: [各欄 { ids, lost }] } }（由 js/sf6-logic.js 算好）
+    //   ids＝這一欄由上到下（左側先、右側後）的參賽者 ID（選手 id／隊伍編號，還沒確定是 null；null 整欄＝不動，用在預賽圖第一欄的抽籤）
+    //   lost＝這一欄哪幾格是已完成比賽的敗方（字變淡，見 CSS 的 .bracket-slot.is-lose）
+    //   收到後 SF6 各圖之後各輪的格子改用這份資料（不再看 brackets.json 的 results）
+    // 只重畫內容有變的欄（敗方標記只切換 class）；還沒顯示的圖等第一次顯示時再量字（同 fitLayer）
     let live = null;
-    const liveImages = [];    // { img, button, group, isFinal, layout, columns, columnSlots, stage, layer, firstCode, linkOf, atOf, starts, keys }
+    const liveByKind = {};    // SF6：kind → nolly-bracket:update 的 detail
+    const liveImages = [];    // { kind, img, button, group, isFinal, layout, columns, columnSlots, stage, layer, firstCode, linkOf, atOf, starts, keys, entryOf }
 
     const liveEntries = (info, data) => {
         const codes = info.layout.codes && info.layout.codes.names[info.group];
@@ -322,23 +329,38 @@
         });
     };
 
+    // 每張圖各欄要顯示的內容：[{ entries（null＝不動）, lost（null＝不標）}]
+    const liveColumns = info => {
+        if (info.kind === 'valorant') return live ? liveEntries(info, live).map(entries => ({ entries, lost: null })) : [];
+        const detail = liveByKind[info.kind];
+        const columns = detail && detail.images[info.group];
+        if (!columns) return [];
+        return columns.map(column => ({
+            entries: column.ids ? column.ids.map(id => id == null ? null : info.entryOf(id)) : null,
+            lost: column.lost || null,
+        }));
+    };
+
     const applyLive = () => {
-        if (!live) return;
         liveImages.forEach(info => {
             let changed = false;
-            liveEntries(info, live).forEach((entries, c) => {
-                if (!entries) return;
-                const key = JSON.stringify(entries);
-                if (info.keys[c] === key) return;
-                info.keys[c] = key;
-                changed = true;
-                const n0 = info.starts[c];
-                info.columnSlots[c].forEach((slot, i) => {
-                    if (slot) slot.remove();
-                    slotsByAt.delete(info.atOf(n0 + i));
-                });
-                info.columnSlots[c] = makeSlots(info.stage, info.layout, { ...info.columns[c], entries }, info.linkOf, n0, info.firstCode);
-                info.columnSlots[c].forEach((slot, i) => { if (slot) slotsByAt.set(info.atOf(n0 + i), { button: info.button, img: info.img, slot }); });
+            liveColumns(info).forEach(({ entries, lost }, c) => {
+                if (!info.columns[c]) return;
+                if (entries) {
+                    const key = JSON.stringify(entries);
+                    if (info.keys[c] !== key) {
+                        info.keys[c] = key;
+                        changed = true;
+                        const n0 = info.starts[c];
+                        info.columnSlots[c].forEach((slot, i) => {
+                            if (slot) slot.remove();
+                            slotsByAt.delete(info.atOf(n0 + i));
+                        });
+                        info.columnSlots[c] = makeSlots(info.stage, info.layout, { ...info.columns[c], entries }, info.linkOf, n0, info.firstCode);
+                        info.columnSlots[c].forEach((slot, i) => { if (slot) slotsByAt.set(info.atOf(n0 + i), { button: info.button, img: info.img, slot }); });
+                    }
+                }
+                if (lost) info.columnSlots[c].forEach((slot, i) => { if (slot) slot.classList.toggle('is-lose', Boolean(lost[i])); });
             });
             if (changed) {
                 delete info.layer.dataset.fitted;
@@ -349,6 +371,11 @@
 
     document.addEventListener('valorant-schedule:update', e => {
         live = e.detail;
+        applyLive();
+    });
+    document.addEventListener('nolly-bracket:update', e => {
+        if (!e.detail || !e.detail.kind) return;
+        liveByKind[e.detail.kind] = e.detail;
         applyLive();
     });
 
@@ -372,6 +399,13 @@
             : kind === 'sf6Team'
                 ? team => team.no ? `${t.sf6TeamPage}?id=${team.no}` : null
                 : name => playerIds.has(name) ? `${t.playerPage}?id=${playerIds.get(name)}` : null;
+        // 晉級格自動更新用：SF6 的參賽者 ID → 這張圖的格子內容（個人賽＝選手名、團體賽＝隊伍資料）
+        const playerNames = kind === 'sf6Solo' ? new Map([...playerIds].map(([name, id]) => [id, name])) : null;
+        const teamsByNo = kind === 'sf6Team' ? new Map(Object.values(bracket).flat().filter(Boolean).map(team => [team.no, team])) : null;
+        const entryOf = kind === 'sf6Solo' ? id => playerNames.get(id) || null
+            : kind === 'sf6Team' ? no => teamsByNo.get(no) || null
+            : null;
+
         // 沒有分組按鈕的圖（VALORANT、SF6 個人賽的決賽）由容器的 data-group 指定是哪一組
         const row = buttonRowOf(container);
         const buttons = row ? [...row.querySelectorAll('.group-btn')] : [];
@@ -400,11 +434,9 @@
             const built = createLayer(img, layout, columns, linkOf, group);
             const slots = built.slots;
             slots.forEach((slot, n) => { if (slot) slotsByAt.set(atOf(n), { button, img, slot }); });
-            if (kind === 'valorant') {
-                const starts = [];
-                columns.forEach((column, c) => starts.push(c ? starts[c - 1] + columns[c - 1].slots.length : 0));
-                liveImages.push({ ...built, img, button, group, isFinal, layout, columns, linkOf, atOf, starts, keys: [] });
-            }
+            const starts = [];
+            columns.forEach((column, c) => starts.push(c ? starts[c - 1] + columns[c - 1].slots.length : 0));
+            liveImages.push({ ...built, kind, img, button, group, isFinal, layout, columns, linkOf, atOf, starts, keys: [], entryOf });
             if (isFinal) return;    // 搜尋結果只指到預賽抽籤的位置
 
             const add = (name, meta, slot) => index.push({ name, key: normalize(name), meta: meta.join(' · '), kind, button, img, slot });

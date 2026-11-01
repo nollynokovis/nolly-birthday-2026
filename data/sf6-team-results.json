@@ -1,0 +1,33 @@
+{
+  "_note": "SF6 團體賽比賽結果（比賽當天手動更新；網頁每 60 秒讀一次）。只記錄勝負，不記比分。改完可在本機執行 node tools/validate-results.js 檢查。",
+  "_fields": "currentGroup：目前進行中的組別（\"A\"…，決賽階段是 \"Final\"），沒有填 null。currentMatch：目前進行中的場次編號，沒有填 null。matches：status＝\"scheduled\"（尚未開始）／\"live\"（進行中，同時只能有一場，且要和 currentMatch 相同）／\"completed\"（已完成）；winner＝\"team1\"／\"team2\"（勝方，對應比賽結構裡的左右兩邊）或 null。填了 winner 就算完成、勝者自動晉級；對手還沒確定的場次不能先填 winner。BYE 的場次自動晉級，不用列在這裡。",
+  "currentGroup": null,
+  "currentMatch": null,
+  "matches": {
+    "A-R1-1": { "status": "scheduled", "winner": null },
+    "A-R1-2": { "status": "scheduled", "winner": null },
+    "A-R1-3": { "status": "scheduled", "winner": null },
+    "A-R2-1": { "status": "scheduled", "winner": null },
+    "A-R2-2": { "status": "scheduled", "winner": null },
+    "A-R3-1": { "status": "scheduled", "winner": null },
+    "B-R1-1": { "status": "scheduled", "winner": null },
+    "B-R1-3": { "status": "scheduled", "winner": null },
+    "B-R2-1": { "status": "scheduled", "winner": null },
+    "B-R2-2": { "status": "scheduled", "winner": null },
+    "B-R3-1": { "status": "scheduled", "winner": null },
+    "C-R1-1": { "status": "scheduled", "winner": null },
+    "C-R1-3": { "status": "scheduled", "winner": null },
+    "C-R2-1": { "status": "scheduled", "winner": null },
+    "C-R2-2": { "status": "scheduled", "winner": null },
+    "C-R3-1": { "status": "scheduled", "winner": null },
+    "D-R1-1": { "status": "scheduled", "winner": null },
+    "D-R1-2": { "status": "scheduled", "winner": null },
+    "D-R1-3": { "status": "scheduled", "winner": null },
+    "D-R2-1": { "status": "scheduled", "winner": null },
+    "D-R2-2": { "status": "scheduled", "winner": null },
+    "D-R3-1": { "status": "scheduled", "winner": null },
+    "F-SF-1": { "status": "scheduled", "winner": null },
+    "F-SF-2": { "status": "scheduled", "winner": null },
+    "F-F": { "status": "scheduled", "winner": null }
+  }
+}

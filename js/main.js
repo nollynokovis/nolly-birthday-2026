@@ -1,4 +1,5 @@
-// 換頁載入動畫：只在網站第一次打開，以及「語言切換」、「首頁 ⇄ 賽程／參賽者／規則／周邊」、「參賽者 → 賽程」時出現，其他換頁都不顯示；
+// 換頁載入動畫：只在網站第一次打開，以及「語言切換」、「首頁 ⇄ 賽程／參賽者／規則／周邊」、「VALORANT ⇄ SF6 互相切換」時出現，其他換頁都不顯示
+// （同一個遊戲內的賽程頁、隊伍頁、選手頁之間不顯示）；
 // 這類換頁兩次相隔不到 2 秒時，第二次不顯示（其他換頁不列入計算）
 // 點連結時淡入蓋住換頁前的空白，並在 sessionStorage 記下目的頁；
 // 目的頁由 <head> 內的小段程式加上 html.show-loader，進度約 1.5 秒從 0% 跑到 100% 後淡出
@@ -19,10 +20,19 @@ const pageInfo = pathname => {
     return { name, base: m[1], lang: m[2] || '' };
 };
 
+// 各頁屬於哪個遊戲（賽程頁、隊伍／選手介紹頁與個人頁）；VALORANT ⇄ SF6 互相切換時顯示轉場
+const GAME_PAGES = {
+    valo: ['schedule-valo', 'teams', 'team', 'valo-player'],
+    sf6: ['schedule-sf6', 'players', 'sf6-teams', 'player', 'sf6-team'],
+};
+const gameOf = base => Object.keys(GAME_PAGES).find(game => GAME_PAGES[game].includes(base)) || null;
+
 const wantsLoader = (from, to) => {
     if (from.base === to.base) return from.lang !== to.lang;
-    // 從隊伍／參賽者介紹回到賽程
-    if (['teams', 'players'].includes(from.base) && to.base.startsWith('schedule-')) return true;
+    // VALORANT ⇄ SF6 互相切換（導覽列的賽事選單）；同一個遊戲內的賽程頁、隊伍頁、選手頁之間互相切換不顯示轉場
+    const fromGame = gameOf(from.base);
+    const toGame = gameOf(to.base);
+    if (fromGame && toGame && fromGame !== toGame) return true;
     return (from.base === 'index' && LOADER_HUB_PAGES.includes(to.base))
         || (to.base === 'index' && LOADER_HUB_PAGES.includes(from.base));
 };
@@ -123,7 +133,8 @@ window.addEventListener('scroll', () => {
 const navToggle = document.getElementById('navToggle');
 const navLinks  = document.getElementById('navLinks');
 navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-navLinks.querySelectorAll('a').forEach(a => {
+// 沒有 href 的項目（子頁面導覽列的「賽事」下拉選單觸發項目，只負責展開選單）點了不收起漢堡選單
+navLinks.querySelectorAll('a[href]').forEach(a => {
     a.addEventListener('click', () => navLinks.classList.remove('open'));
 });
 

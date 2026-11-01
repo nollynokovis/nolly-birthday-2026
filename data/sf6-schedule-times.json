@@ -1,0 +1,23 @@
+{
+  "_note": "SF6 對戰一覽（MATCH SCHEDULE）上方的組別時間（js/sf6-schedule.js 讀取）。所有時間為台灣時間（UTC+8）。2026-11-01 依賽程圖片標題列與 schedule-sf6*.html 的日期整理；無法確認的填 null（畫面顯示「未定」），確認後直接改這裡。",
+  "_fields": "每個賽事項目（sf6-individual／sf6-team）底下以分頁為單位（A…、Final）：date＝比賽日（YYYY-MM-DD）；checkInTime＝集合時間；startTime／endTime＝比賽時段（HH:MM）。時間照賽程圖的寫法記錄，跨過午夜的時段沿用圖上的寫法（例如「24:00」「1:00」），date 仍是當天的比賽日。決賽階段如果不同場次的集合時間不同，可加 sessions（陣列，每段寫 rounds＝比賽結構的輪次代碼陣列，例如 QF、SF，以及 checkInTime、startTime、endTime），有 sessions 時分段顯示。",
+  "_checkInRule": "2026-11-01 使用者確認：集合時間＝比賽開始前 10 分鐘，於 Discord 報到。個人賽決賽與團體賽原本沒有寫集合時間的，依此規則補上（個人賽決賽圖上寫的 CHECK-IN 24:50 有誤，正確是 19:50）。",
+  "sf6-individual": {
+    "A": { "date": "2026-11-14", "checkInTime": "17:50", "startTime": "18:00", "endTime": "19:00" },
+    "B": { "date": "2026-11-14", "checkInTime": "18:50", "startTime": "19:00", "endTime": "20:00" },
+    "C": { "date": "2026-11-14", "checkInTime": "19:50", "startTime": "20:00", "endTime": "21:00" },
+    "D": { "date": "2026-11-14", "checkInTime": "20:50", "startTime": "21:00", "endTime": "22:00" },
+    "E": { "date": "2026-11-14", "checkInTime": "21:50", "startTime": "22:00", "endTime": "23:00" },
+    "F": { "date": "2026-11-14", "checkInTime": "22:50", "startTime": "23:00", "endTime": "24:00" },
+    "G": { "date": "2026-11-14", "checkInTime": "23:50", "startTime": "24:00", "endTime": "1:00" },
+    "H": { "date": "2026-11-14", "checkInTime": "24:50", "startTime": "1:00", "endTime": "2:00" },
+    "Final": { "date": "2026-11-15", "checkInTime": "19:50", "startTime": "20:00", "endTime": "21:00" }
+  },
+  "sf6-team": {
+    "A": { "date": "2026-11-15", "checkInTime": "20:50", "startTime": "21:00", "endTime": "22:00" },
+    "B": { "date": "2026-11-15", "checkInTime": "21:50", "startTime": "22:00", "endTime": "23:00" },
+    "C": { "date": "2026-11-15", "checkInTime": "22:50", "startTime": "23:00", "endTime": "24:00" },
+    "D": { "date": "2026-11-15", "checkInTime": "23:50", "startTime": "24:00", "endTime": "1:00" },
+    "Final": { "date": "2026-11-15", "checkInTime": "24:50", "startTime": "1:00", "endTime": "1:30" }
+  }
+}

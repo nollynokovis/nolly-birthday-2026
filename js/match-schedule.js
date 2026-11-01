@@ -2,11 +2,12 @@
 // （32強／16強／8強／4強／決賽，對應 JSON 的 round）切換；Tab 下方顯示這個階段的比賽日期（跨日時顯示範圍，表格內再依日期分段）
 // 各階段內依日期 → 開賽時間 → 比賽編號排序。桌面版是 <table>，手機版由 CSS 改排成直式資訊列（見 style.css 的 .match-table）
 // 跟著賽程頁上方的搜尋欄（#bracketSearch，下拉結果與賽程圖標示仍由 bracket.js 負責）一起篩選：
-// 比賽編號、隊名、選手名（透過 valorant-teams.json 找到所屬隊伍）；搜尋時各 Tab 顯示符合的場數，目前的階段沒有結果時自動切到第一個有結果的階段
+// 隊名、選手名（透過 valorant-teams.json 找到所屬隊伍；不搜場次編號）；搜尋時各 Tab 顯示符合的場數，目前的階段沒有結果時自動切到第一個有結果的階段
 // MATCH 編號點下去會切到上方對應的賽程圖並捲過去（組別由 brackets.json 的抽籤結果判斷，見 groupResolver）；
 // 反過來，賽程圖上的對戰代號（bracket.js 畫的 A1、E1…）點下去會切到這裡那一場並短暫標示（見 showMatch）
 // 比賽結果（score1／score2／winner）：確認勝方後顯示比分、下一場的「A1 勝者」自動換成勝隊（見 resultOf、sideResolver）
-// 自動更新：每 60 秒重新讀一次 JSON（分頁在背景時暫停，回到頁面立刻檢查），資料有變才更新畫面，不改目前的 Tab、搜尋與捲動位置（見 poll）
+// 自動更新：每 60 秒重新讀一次 JSON（js/live-source.js 的 NollyLive.watch：分頁在背景時暫停，回到頁面立刻檢查），資料有變才更新畫面，不改目前的 Tab、搜尋與捲動位置
+// 比賽狀態：MATCH 編號旁的小標記（灰點＝尚未開始、紅點＝進行中、灰勾＝已結束），見 statusOf
 (() => {
     const root = document.querySelector('.match-schedule');
     if (!root) return;
@@ -14,7 +15,6 @@
     const SCHEDULE_URL = 'data/valorant-schedule.json';
     const TEAMS_URL    = 'data/valorant-teams.json';
     const BRACKETS_URL = 'data/brackets.json';
-    const POLL_MS      = 60 * 1000;
     const STAGES       = ['R32', 'R16', 'QF', 'SF', 'F'];    // Tab 由左到右；預設顯示第一個（32強）
     const PRELIM       = ['R32', 'R16'];    // 在預賽 A–D 組賽程圖上的階段；8強之後在決賽圖上（同 bracket.js 的 LAYOUTS／FINAL_LAYOUTS）
 
@@ -25,6 +25,7 @@
             rounds: { R32: '32強', R16: '16強', QF: '8強', SF: '4強', F: '決賽' },
             final: '決賽',
             winner: id => `${id} 勝者`,
+            status: { scheduled: '尚未開始', live: '進行中', completed: '已完成' },
             bracket: g => g === 'Final' ? '查看決賽賽程圖' : `查看${g}組賽程圖`,
             empty: '找不到符合的比賽',
             none: '這個階段的賽程尚未公布',
@@ -36,6 +37,7 @@
             rounds: { R32: 'ベスト32', R16: 'ベスト16', QF: '準々決勝', SF: '準決勝', F: '決勝' },
             final: '決勝',
             winner: id => `${id} 勝者`,
+            status: { scheduled: '開始前', live: '進行中', completed: '終了' },
             bracket: g => g === 'Final' ? '決勝の対戦表を見る' : `${g}組の対戦表を見る`,
             empty: '該当する試合が見つかりません',
             none: 'このラウンドの試合日程はまだ発表されていません',
@@ -47,6 +49,7 @@
             rounds: { R32: 'Round of 32', R16: 'Round of 16', QF: 'Quarterfinals', SF: 'Semifinals', F: 'Final' },
             final: 'FINAL',
             winner: id => `Winner of ${id}`,
+            status: { scheduled: 'Upcoming', live: 'Live', completed: 'Completed' },
             bracket: g => g === 'Final' ? 'View the finals bracket' : `View the Group ${g} bracket`,
             empty: 'No matching matches found',
             none: 'The schedule for this round has not been announced yet',
@@ -62,7 +65,10 @@
     const testNote  = root.querySelector('.match-test');
     const liveNote  = root.querySelector('.match-live');
     const tbody     = root.querySelector('.match-table tbody');
-    const input     = document.getElementById('bracketSearch');
+    const input     = document.getElementById('bracketSearch');    // 頁面上方的搜尋欄（賽程圖的下拉結果與標示由 bracket.js 負責）
+    const filter    = root.querySelector('.match-search input');   // 時間表上方的搜尋欄：只篩選時間表
+    // 篩選文字以時間表上方的搜尋欄為準；在頁面上方搜尋時文字會同步帶過來（見 apply），兩邊顯示一致
+    const queryText = () => normalize(filter ? filter.value : input ? input.value : '');
 
     const el = (tag, className, text) => {
         const node = document.createElement(tag);
@@ -115,7 +121,7 @@
         setRows([messageRows.get(key)]);
     };
 
-    let matches = [];    // { data, label, sides, result, keys, group, sig }（group：A–D／Final／null＝不加連結；sig：這一列顯示內容的摘要）
+    let matches = [];    // { data, label, sides, result, status, keys, group, sig }（group：A–D／Final／null＝不加連結；sig：這一列顯示內容的摘要）
     let current = STAGES[0];
     let stageButtons = [];
 
@@ -149,6 +155,20 @@
             return null;
         }
         return { winner, scores: [score1, score2] };
+    };
+
+    // 比賽狀態（MATCH 編號旁的標記）：有正式結果＝completed；否則看 JSON 的 status（"live"＝進行中，其他＝尚未開始）
+    // status 與 winner 矛盾時以結果為準並在 console 警告（tools/validate-results.js 也會列出）
+    const statusOf = (data, result) => {
+        if (data.status !== undefined && !['scheduled', 'live', 'completed'].includes(data.status)) {
+            warn(`${data.matchId} 的 status「${data.status}」只能是 scheduled、live、completed`);
+        }
+        if (result) {
+            if (data.status && data.status !== 'completed') warn(`${data.matchId} 已有勝方，但 status 是 ${data.status}（顯示為已結束）`);
+            return 'completed';
+        }
+        if (data.status === 'completed') warn(`${data.matchId} 的 status 是 completed，但沒有有效的勝方（顯示為尚未開始）`);
+        return data.status === 'live' ? 'live' : 'scheduled';
     };
 
     // ── 對戰隊伍 ──────────────────────────────────────────────
@@ -274,6 +294,12 @@
         } else {
             id.append(el('span', 'match-tag', match.label));
         }
+        // 比賽狀態：編號旁的小標記（純 CSS 圖形，見 style.css 的 .status-mark），讀螢幕軟體念狀態文字
+        const mark = el('span', `status-mark is-${match.status}`);
+        mark.setAttribute('role', 'img');
+        mark.setAttribute('aria-label', t.status[match.status]);
+        mark.title = t.status[match.status];
+        id.append(mark);
 
         // 隊伍 1｜VS｜隊伍 2：VS 固定在中間，兩隊各佔一半（見 style.css 的 .match-versus）
         // 攻守（attackSide＝"team1"／"team2"，另一隊自動是防守方）：ATK／DEF 小字放在隊名外側（隊伍 1 的左邊、隊伍 2 的右邊）
@@ -368,7 +394,7 @@
     };
 
     const render = () => {
-        const query = normalize(input ? input.value : '');
+        const query = queryText();
         const found = query ? matches.filter(match => isHit(match, query)) : matches;
 
         stageButtons.forEach(({ stage, button, count }) => {
@@ -396,7 +422,7 @@
 
     // 搜尋時目前的階段沒有符合的比賽，就切到第一個有結果的階段（手動按 Tab 時不自動切換；自動更新也不會切換）
     const onSearch = () => {
-        const query = normalize(input.value);
+        const query = queryText();
         if (query && !matches.some(match => match.data.round === current && isHit(match, query))) {
             const stage = STAGES.find(s => matches.some(match => match.data.round === s && isHit(match, query)));
             if (stage) current = stage;
@@ -411,9 +437,12 @@
     const showMatch = matchId => {
         const match = matches.find(m => m.data.matchId === matchId);
         if (!match) return false;
-        if (input && input.value && !isHit(match, normalize(input.value))) {
-            input.value = '';
-            input.dispatchEvent(new Event('input'));    // bracket.js 的下拉結果與這裡的篩選一起清掉
+        if (queryText() && !isHit(match, queryText())) {
+            if (filter) filter.value = '';
+            if (input && input.value) {
+                input.value = '';
+                input.dispatchEvent(new Event('input'));    // bracket.js 的下拉結果一起清掉
+            }
         }
         current = match.data.round;
         render();
@@ -432,21 +461,7 @@
     });
 
     // ── 資料讀取與驗證 ────────────────────────────────────────
-    const getJSON = url => fetch(url, { cache: 'no-cache' }).then(res => {
-        if (!res.ok) throw new Error(`${url}: ${res.status}`);
-        return res.json();
-    });
-
-    // 賽程 JSON 每次都加上時間參數並略過快取，Cloudflare 與瀏覽器都不會拿舊檔案回來；
-    // 路徑以目前頁面為基準解析（三個語系的賽程頁都在網站根目錄，Cloudflare Pages 的 /schedule-valo 這種不帶 .html 的網址也一樣）
-    const fetchSchedule = () => {
-        const url = new URL(SCHEDULE_URL, document.baseURI);
-        url.searchParams.set('t', Date.now());
-        return fetch(url.href, { cache: 'no-store' }).then(res => {
-            if (!res.ok) throw new Error(`${SCHEDULE_URL}: HTTP ${res.status}`);
-            return res.json();
-        });
-    };
+    // 讀檔與每 60 秒的自動更新由 js/live-source.js（NollyLive）負責，這裡只處理拿到的資料
 
     // 檢查 JSON 結構：matches 要是陣列，每一場至少要有 matchId（不重複）、date（YYYY-MM-DD）、team1、team2 這兩個欄位（值可以是 null＝BYE）
     // 結構有問題的場次略過（console 警告）；但如果因此讓目前畫面上已有的場次消失（存檔到一半、打錯字），整份不套用、保留上一次成功的資料
@@ -516,13 +531,14 @@
                 const label = labelOf(data.matchId);
                 const sides = sidesFor(data);
                 const result = results.get(data.matchId);
-                // 搜尋：編號、隊名、選手名；勝隊已晉級的位置也保留「A1 勝者」，搜尋 A1 仍找得到下一場
-                const keys = [label, data.matchId, ...sides.flatMap(side => [side.text, ...side.members, side.ref ? t.winner(labelOf(side.ref)) : ''])]
+                // 搜尋：只比對已確定的隊名與選手名（含替補）；不比對場次編號，也不比對「A1 勝者」這類還沒確定的位置
+                const keys = sides.filter(side => side.kind === 'team').flatMap(side => [side.text, ...side.members])
                     .filter(Boolean).map(normalize);
                 const group = groupOf(data);
-                const sig = JSON.stringify([label, group, sides.map(side => [side.text, side.kind]), result,
+                const status = statusOf(data, result);
+                const sig = JSON.stringify([label, group, status, sides.map(side => [side.text, side.kind]), result,
                     data.map, data.attackSide, data.checkInTime, data.startTime]);
-                return { data, label, sides, result, keys, group, sig };
+                return { data, label, sides, result, status, keys, group, sig };
             });
 
         if (!started) {
@@ -538,9 +554,16 @@
                 stagesBox.append(button);
                 return { stage, button, count };
             });
-            if (input) input.addEventListener('input', onSearch);
+            // 頁面上方的搜尋欄：文字同步帶進時間表的搜尋欄再篩選；時間表的搜尋欄：只篩選時間表
+            if (input) input.addEventListener('input', () => {
+                if (filter) filter.value = input.value;
+                onSearch();
+            });
+            if (filter) filter.addEventListener('input', onSearch);
             if (liveNote) liveNote.hidden = false;
-            if (input && input.value) onSearch();
+            // 瀏覽器還原了頁面上方搜尋欄的文字時，一併帶進時間表的搜尋欄
+            if (filter && input && input.value && !filter.value) filter.value = input.value;
+            if (queryText()) onSearch();
             else render();
             return;
         }
@@ -548,56 +571,31 @@
         render();
     };
 
-    // 讀一次最新資料；同時只會有一個請求，前一次還沒回來時直接沿用
-    // 失敗（部署中、網路中斷、HTTP 錯誤、JSON 格式錯誤）時保留目前畫面，等下一次再試；只有還沒有任何資料時才顯示錯誤訊息
-    let inFlight = null;
-    const refresh = () => inFlight || (inFlight = (async () => {
-        try {
-            if (!teams) {
-                const [teamData, brackets] = await Promise.all([
-                    getJSON(TEAMS_URL),
-                    draw === undefined ? getJSON(BRACKETS_URL).catch(err => { console.error(err); return null; }) : null,
-                ]);
-                if (!teamData || !Array.isArray(teamData.teams)) throw new Error(`${TEAMS_URL}: teams 不是陣列`);
-                if (draw === undefined) draw = (brackets && brackets.valorant) || null;
-                teams = teamData.teams;
-            }
-            const schedule = sanitize(await fetchSchedule(), shownIds);
-            const key = JSON.stringify(schedule);
-            if (key === lastKey) return;
-            apply(schedule);
-            lastKey = key;
-            shownIds = new Set(schedule.matches.map(data => data.matchId));
-        } catch (err) {
-            console.error(err);
-            if (!started) showMessage('match-empty', t.error);
-        } finally {
-            inFlight = null;
+    // 每 60 秒讀一次最新的賽程 JSON（NollyLive.watch：同時只有一個請求、檔案沒變不呼叫、背景分頁暫停）
+    // 失敗（部署中、網路中斷、HTTP 錯誤、JSON 格式錯誤、資料驗證不過）時保留目前畫面，等下一次再試；只有還沒有任何資料時才顯示錯誤訊息
+    const onSchedule = async json => {
+        if (!teams) {
+            const [teamData, brackets] = await Promise.all([
+                NollyLive.load(TEAMS_URL),
+                draw === undefined ? NollyLive.load(BRACKETS_URL).catch(err => { console.error(err); return null; }) : null,
+            ]);
+            if (!teamData || !Array.isArray(teamData.teams)) throw new Error(`${TEAMS_URL}: teams 不是陣列`);
+            if (draw === undefined) draw = (brackets && brackets.valorant) || null;
+            teams = teamData.teams;
         }
-    })());
-
-    // ── 每 60 秒自動更新 ──────────────────────────────────────
-    // 只有一個計時器：每次讀完才排下一次；分頁在背景時不排，回到頁面時立刻讀一次再重新開始計時
-    let timer = 0;
-    const poll = () => {
-        clearTimeout(timer);
-        timer = 0;
-        return refresh().finally(() => {
-            clearTimeout(timer);
-            timer = document.hidden ? 0 : setTimeout(poll, POLL_MS);
-        });
+        const schedule = sanitize(json, shownIds);
+        const key = JSON.stringify(schedule);
+        if (key === lastKey) return;
+        apply(schedule);
+        lastKey = key;
+        shownIds = new Set(schedule.matches.map(data => data.matchId));
     };
 
-    document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            clearTimeout(timer);
-            timer = 0;
-        } else {
-            poll();
-        }
+    NollyLive.watch(SCHEDULE_URL, {
+        onData: onSchedule,
+        onError: err => {
+            console.error(err);
+            if (!started) showMessage('match-empty', t.error);
+        },
     });
-    // 按上一頁從快取還原頁面時也立刻檢查一次
-    window.addEventListener('pageshow', e => { if (e.persisted) poll(); });
-
-    poll();
 })();

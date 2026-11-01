@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="css/style.css?v=20261101b">
+    <link rel="stylesheet" href="css/style.css?v=20261101zb">
     <script>try{var s=sessionStorage,v=s.getItem('nollyLoader'),f=!s.getItem('nollyVisited');s.removeItem('nollyLoader');s.setItem('nollyVisited','1');if(f||v&&v===(location.pathname.split('/').pop().replace(/\.html$/,'')||'index'))document.documentElement.classList.add('show-loader')}catch(e){}</script>
 </head>
 <body>
@@ -25,15 +25,33 @@
         <div class="nav-container">
             <a href="index.html" class="nav-logo">NOLLY<span>生日盃</span></a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#player-introduction">參賽者<em>PLAYERS</em></a></li>
                 <li class="nav-dropdown">
-                    <a href="#individual-schedule">個人賽 ▾<em>INDIVIDUAL</em></a>
-                    <ul class="nav-submenu">
-                        <li><a href="#individual-prelim">預賽賽程</a></li>
-                        <li><a href="#individual-finals">決賽賽程</a></li>
+                    <a tabindex="0" role="button" aria-haspopup="true">賽事 ▾<em>EVENT</em></a>
+                    <ul class="nav-submenu nav-event-menu">
+                        <li class="nav-submenu-label">VALORANT</li>
+                        <li><a href="schedule-valo.html">賽程表</a></li>
+                        <li><a href="teams.html">參賽隊伍</a></li>
+                        <li class="nav-submenu-label">STREET FIGHTER 6</li>
+                        <li><a href="schedule-sf6.html">賽程表</a></li>
+                        <li><a href="players.html">參賽選手</a></li>
                     </ul>
                 </li>
-                <li><a href="#team-schedule">團體賽<em>TEAM</em></a></li>
+                <li class="nav-dropdown">
+                    <a href="#individual-schedule">個人賽 ▾<em>INDIVIDUAL</em></a>
+                    <ul class="nav-submenu nav-event-menu">
+                        <li><a href="#individual-prelim">預賽賽程</a></li>
+                        <li><a href="#individual-finals">決賽賽程</a></li>
+                        <li><a href="#individual-match-schedule">對戰一覽</a></li>
+                    </ul>
+                </li>
+                <li class="nav-dropdown">
+                    <a href="#team-schedule">團體賽 ▾<em>TEAM</em></a>
+                    <ul class="nav-submenu nav-event-menu">
+                        <li><a href="#team-schedule">團體賽賽程</a></li>
+                        <li><a href="#team-match-schedule">對戰一覽</a></li>
+                    </ul>
+                </li>
+                <li><a href="#player-introduction">參賽者<em>PLAYERS</em></a></li>
                 <li><a href="#prizes">獎品<em>PRIZES</em></a></li>
             </ul>
 
@@ -59,11 +77,148 @@
             <span class="title-eyebrow">NOLLY BIRTHDAY CUP</span>
             <h1>STREET FIGHTER 6</h1>
             <div class="title-deco"><span></span><span></span><span></span></div>
-            <nav class="directory-switch" aria-label="賽程切換">
-                <a href="schedule-valo.html">VALORANT</a>
+            <nav class="directory-switch" aria-label="賽程與名鑑切換">
+                <a href="schedule-sf6.html" aria-current="page">賽程表</a>
                 <span class="directory-switch-sep" aria-hidden="true">｜</span>
-                <a href="schedule-sf6.html" aria-current="page">STREET FIGHTER 6</a>
+                <a href="players.html">參賽選手</a>
+                <span class="directory-switch-sep" aria-hidden="true">｜</span>
+                <a href="sf6-teams.html">參賽隊伍</a>
             </nav>
+        </div>
+    </section>
+
+    <section id="individual-schedule" class="section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="sec-en">INDIVIDUAL SCHEDULE</span>
+                <h2 class="sec-title">個人賽賽程</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="bracket-search" data-scope="sf6Solo">
+                <div class="player-search">
+                    <label class="visually-hidden" for="bracketSearchSolo">搜尋選手名稱</label>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                    <input type="search" id="bracketSearchSolo" placeholder="搜尋選手名稱" autocomplete="off">
+                </div>
+                <ul class="bracket-search-results" hidden></ul>
+            </div>
+
+            <div class="subsection" id="individual-prelim">
+                <h3 class="subsection-title">預賽賽程</h3>
+                <p class="subsection-subtitle">日期：2026.11.14(六) 18:00-2:00</p>
+                <div class="group-buttons">
+                    <button class="group-btn active" data-group="A">A組</button>
+                    <button class="group-btn" data-group="B">B組</button>
+                    <button class="group-btn" data-group="C">C組</button>
+                    <button class="group-btn" data-group="D">D組</button>
+                    <button class="group-btn" data-group="E">E組</button>
+                    <button class="group-btn" data-group="F">F組</button>
+                    <button class="group-btn" data-group="G">G組</button>
+                    <button class="group-btn" data-group="H">H組</button>
+                </div>
+
+                <div class="schedule-image-container" data-bracket="sf6Solo">
+                    <img id="scheduleImage" src="img/1x/個人賽A組.webp" width="1920" height="1080" srcset="img/1x/個人賽A組.webp 1920w, img/0.5x/個人賽A組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
+                    <img id="scheduleImageB" src="img/1x/個人賽B組.webp" width="1920" height="1080" srcset="img/1x/個人賽B組.webp 1920w, img/0.5x/個人賽B組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
+                    <img id="scheduleImageC" src="img/1x/個人賽C組.webp" width="1920" height="1080" srcset="img/1x/個人賽C組.webp 1920w, img/0.5x/個人賽C組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
+                    <img id="scheduleImageD" src="img/1x/個人賽D組.webp" width="1920" height="1080" srcset="img/1x/個人賽D組.webp 1920w, img/0.5x/個人賽D組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
+                    <img id="scheduleImageE" src="img/1x/個人賽E組.webp" width="1920" height="1080" srcset="img/1x/個人賽E組.webp 1920w, img/0.5x/個人賽E組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
+                    <img id="scheduleImageF" src="img/1x/個人賽F組.webp" width="1920" height="1080" srcset="img/1x/個人賽F組.webp 1920w, img/0.5x/個人賽F組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
+                    <img id="scheduleImageG" src="img/1x/個人賽G組.webp" width="1920" height="1080" srcset="img/1x/個人賽G組.webp 1920w, img/0.5x/個人賽G組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
+                    <img id="scheduleImageH" src="img/1x/個人賽H組.webp" width="1920" height="1080" srcset="img/1x/個人賽H組.webp 1920w, img/0.5x/個人賽H組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
+
+                </div>
+            </div>
+
+            <div class="subsection" id="individual-finals">
+                <h3 class="subsection-title">決賽賽程</h3>
+                <p class="subsection-subtitle">日期：2026.11.15(日) 20:00-21:00</p>
+                <div class="schedule-image-container" data-bracket="sf6Solo" data-group="Final">
+                    <img src="img/1x/個人賽決賽.webp" width="1920" height="1080" srcset="img/1x/個人賽決賽.webp 1920w, img/0.5x/個人賽決賽@0.5x.webp 960w" class="prize-img active" alt="individual-finals-schedule" loading="lazy">
+                </div>
+            </div>
+
+            <div class="match-schedule sf6-schedule" id="individual-match-schedule" data-live-event="sf6Solo" hidden>
+                <div class="match-schedule-header">
+                    <span class="sec-en">MATCH SCHEDULE</span>
+                    <h3 class="subsection-title">對戰一覽</h3>
+                </div>
+                <div class="match-search">
+                    <div class="player-search">
+                        <label class="visually-hidden" for="matchSearchSolo">搜尋選手名稱</label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                        <input type="search" id="matchSearchSolo" placeholder="搜尋選手名稱" autocomplete="off">
+                    </div>
+                </div>
+                <div class="match-stages" role="group" aria-label="選擇組別"></div>
+                <div class="sf6-schedule-info"></div>
+                <table class="sf6-table">
+                    <thead>
+                        <tr><th scope="col">MATCH</th><th scope="col">ROUND</th><th scope="col">PLAYERS</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <p class="match-note">※ 所有時間均為台灣時間（UTC+8）。請於集合時間（比賽開始前 10 分鐘）至 Discord 報到。24:00 之後的時間為隔天凌晨。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="team-schedule" class="section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="sec-en">TEAM SCHEDULE</span>
+                <h2 class="sec-title">團體賽賽程</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="bracket-search" data-scope="sf6Team">
+                <div class="player-search">
+                    <label class="visually-hidden" for="bracketSearchTeam">搜尋選手名稱</label>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                    <input type="search" id="bracketSearchTeam" placeholder="搜尋選手名稱" autocomplete="off">
+                </div>
+                <ul class="bracket-search-results" hidden></ul>
+            </div>
+
+            <p class="subsection-subtitle">日期：2026.11.15(日) 21:00-1:30</p>
+
+            <div class="group-buttons">
+                <button class="group-btn active" data-group="A">A組</button>
+                <button class="group-btn" data-group="B">B組</button>
+                <button class="group-btn" data-group="C">C組</button>
+                <button class="group-btn" data-group="D">D組</button>
+                <button class="group-btn" data-group="Final">決賽</button>
+            </div>
+
+            <div class="schedule-image-container" data-bracket="sf6Team">
+                <img src="img/1x/團體賽A組.webp" width="1920" height="1080" srcset="img/1x/團體賽A組.webp 1920w, img/0.5x/團體賽A組@0.5x.webp 960w" class="prize-img" alt="team-schedule-A" loading="lazy">
+                <img src="img/1x/團體賽B組.webp" width="1920" height="1080" srcset="img/1x/團體賽B組.webp 1920w, img/0.5x/團體賽B組@0.5x.webp 960w" class="prize-img" alt="team-schedule-B" loading="lazy">
+                <img src="img/1x/團體賽C組.webp" width="1920" height="1080" srcset="img/1x/團體賽C組.webp 1920w, img/0.5x/團體賽C組@0.5x.webp 960w" class="prize-img" alt="team-schedule-C" loading="lazy">
+                <img src="img/1x/團體賽D組.webp" width="1920" height="1080" srcset="img/1x/團體賽D組.webp 1920w, img/0.5x/團體賽D組@0.5x.webp 960w" class="prize-img" alt="team-schedule-D" loading="lazy">
+                <img src="img/1x/團體賽決賽.webp" width="1920" height="1080" srcset="img/1x/團體賽決賽.webp 1920w, img/0.5x/團體賽決賽@0.5x.webp 960w" class="prize-img" alt="team-finals-schedule" loading="lazy">
+            </div>
+
+            <div class="match-schedule sf6-schedule" id="team-match-schedule" data-live-event="sf6Team" hidden>
+                <div class="match-schedule-header">
+                    <span class="sec-en">MATCH SCHEDULE</span>
+                    <h3 class="subsection-title">對戰一覽</h3>
+                </div>
+                <div class="match-search">
+                    <div class="player-search">
+                        <label class="visually-hidden" for="matchSearchTeam">搜尋選手名稱</label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                        <input type="search" id="matchSearchTeam" placeholder="搜尋選手名稱" autocomplete="off">
+                    </div>
+                </div>
+                <div class="match-stages" role="group" aria-label="選擇組別"></div>
+                <div class="sf6-schedule-info"></div>
+                <table class="sf6-table">
+                    <thead>
+                        <tr><th scope="col">MATCH</th><th scope="col">ROUND</th><th scope="col">TEAMS</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                <p class="match-note">※ 所有時間均為台灣時間（UTC+8）。請於集合時間（比賽開始前 10 分鐘）至 Discord 報到。24:00 之後的時間為隔天凌晨。</p>
+            </div>
         </div>
     </section>
 
@@ -118,97 +273,6 @@
         </div>
     </section>
 
-    <section id="individual-schedule" class="section">
-        <div class="section-inner">
-            <div class="section-header">
-                <span class="sec-en">INDIVIDUAL SCHEDULE</span>
-                <h2 class="sec-title">個人賽賽程</h2>
-                <div class="sec-line"></div>
-            </div>
-            <div class="bracket-search" data-scope="sf6Solo">
-                <div class="player-search">
-                    <label class="visually-hidden" for="bracketSearchSolo">搜尋個人賽選手名稱</label>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-                    <input type="search" id="bracketSearchSolo" placeholder="搜尋個人賽選手名稱" autocomplete="off">
-                </div>
-                <ul class="bracket-search-results" hidden></ul>
-            </div>
-
-            <div class="subsection" id="individual-prelim">
-                <h3 class="subsection-title">預賽賽程</h3>
-                <p class="subsection-subtitle">日期：2026.11.14(六) 18:00-2:00</p>
-                <div class="group-buttons">
-                    <button class="group-btn active" data-group="A">A組</button>
-                    <button class="group-btn" data-group="B">B組</button>
-                    <button class="group-btn" data-group="C">C組</button>
-                    <button class="group-btn" data-group="D">D組</button>
-                    <button class="group-btn" data-group="E">E組</button>
-                    <button class="group-btn" data-group="F">F組</button>
-                    <button class="group-btn" data-group="G">G組</button>
-                    <button class="group-btn" data-group="H">H組</button>
-                </div>
-
-                <div class="schedule-image-container" data-bracket="sf6Solo">
-                    <img id="scheduleImage" src="img/1x/個人賽A組.webp" width="1920" height="1080" srcset="img/1x/個人賽A組.webp 1920w, img/0.5x/個人賽A組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
-                    <img id="scheduleImageB" src="img/1x/個人賽B組.webp" width="1920" height="1080" srcset="img/1x/個人賽B組.webp 1920w, img/0.5x/個人賽B組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
-                    <img id="scheduleImageC" src="img/1x/個人賽C組.webp" width="1920" height="1080" srcset="img/1x/個人賽C組.webp 1920w, img/0.5x/個人賽C組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
-                    <img id="scheduleImageD" src="img/1x/個人賽D組.webp" width="1920" height="1080" srcset="img/1x/個人賽D組.webp 1920w, img/0.5x/個人賽D組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
-                    <img id="scheduleImageE" src="img/1x/個人賽E組.webp" width="1920" height="1080" srcset="img/1x/個人賽E組.webp 1920w, img/0.5x/個人賽E組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
-                    <img id="scheduleImageF" src="img/1x/個人賽F組.webp" width="1920" height="1080" srcset="img/1x/個人賽F組.webp 1920w, img/0.5x/個人賽F組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
-                    <img id="scheduleImageG" src="img/1x/個人賽G組.webp" width="1920" height="1080" srcset="img/1x/個人賽G組.webp 1920w, img/0.5x/個人賽G組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
-                    <img id="scheduleImageH" src="img/1x/個人賽H組.webp" width="1920" height="1080" srcset="img/1x/個人賽H組.webp 1920w, img/0.5x/個人賽H組@0.5x.webp 960w" class="prize-img" alt="individual-schedule" loading="lazy">
-
-                </div>
-            </div>
-
-            <div class="subsection" id="individual-finals">
-                <h3 class="subsection-title">決賽賽程</h3>
-                <p class="subsection-subtitle">日期：2026.11.15(日) 20:00-21:00</p>
-                <div class="schedule-image-container" data-bracket="sf6Solo" data-group="Final">
-                    <img src="img/1x/個人賽決賽.webp" width="1920" height="1080" srcset="img/1x/個人賽決賽.webp 1920w, img/0.5x/個人賽決賽@0.5x.webp 960w" class="prize-img active" alt="individual-finals-schedule" loading="lazy">
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="team-schedule" class="section">
-        <div class="section-inner">
-            <div class="section-header">
-                <span class="sec-en">TEAM SCHEDULE</span>
-                <h2 class="sec-title">團體賽賽程</h2>
-                <div class="sec-line"></div>
-            </div>
-            <div class="bracket-search" data-scope="sf6Team">
-                <div class="player-search">
-                    <label class="visually-hidden" for="bracketSearchTeam">搜尋團體賽選手名稱</label>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-                    <input type="search" id="bracketSearchTeam" placeholder="搜尋團體賽選手名稱" autocomplete="off">
-                </div>
-                <ul class="bracket-search-results" hidden></ul>
-            </div>
-
-            <p class="subsection-subtitle">日期：2026.11.15(日) 21:00-1:30</p>
-
-            <div class="group-buttons">
-                <button class="group-btn active" data-group="A">A組</button>
-                <button class="group-btn" data-group="B">B組</button>
-                <button class="group-btn" data-group="C">C組</button>
-                <button class="group-btn" data-group="D">D組</button>
-                <button class="group-btn" data-group="Final">決賽</button>
-            </div>
-
-            <div class="schedule-image-container" data-bracket="sf6Team">
-                <img src="img/1x/團體賽A組.webp" width="1920" height="1080" srcset="img/1x/團體賽A組.webp 1920w, img/0.5x/團體賽A組@0.5x.webp 960w" class="prize-img" alt="team-schedule-A" loading="lazy">
-                <img src="img/1x/團體賽B組.webp" width="1920" height="1080" srcset="img/1x/團體賽B組.webp 1920w, img/0.5x/團體賽B組@0.5x.webp 960w" class="prize-img" alt="team-schedule-B" loading="lazy">
-                <img src="img/1x/團體賽C組.webp" width="1920" height="1080" srcset="img/1x/團體賽C組.webp 1920w, img/0.5x/團體賽C組@0.5x.webp 960w" class="prize-img" alt="team-schedule-C" loading="lazy">
-                <img src="img/1x/團體賽D組.webp" width="1920" height="1080" srcset="img/1x/團體賽D組.webp 1920w, img/0.5x/團體賽D組@0.5x.webp 960w" class="prize-img" alt="team-schedule-D" loading="lazy">
-                <img src="img/1x/團體賽決賽.webp" width="1920" height="1080" srcset="img/1x/團體賽決賽.webp 1920w, img/0.5x/團體賽決賽@0.5x.webp 960w" class="prize-img" alt="team-finals-schedule" loading="lazy">
-            </div>
-
-        </div>
-    </section>
-
     <section id="prizes" class="section section-alt">
         <div class="section-inner">
             <div class="section-header">
@@ -241,10 +305,14 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=20261021q"></script>
+    <script src="js/main.js?v=20261101d"></script>
     <script src="js/slide.js?v=20261021a"></script>
     <script src="js/players.js?v=20261030a"></script>
     <script src="js/sf6-teams.js?v=20261030a"></script>
-    <script src="js/bracket.js?v=20261101a"></script>
+    <script src="js/bracket.js?v=20261101d"></script>
+    <script src="js/live-source.js?v=20261101a"></script>
+    <script src="js/sf6-logic.js?v=20261101a"></script>
+    <script src="js/sf6-live.js?v=20261101e"></script>
+    <script src="js/sf6-schedule.js?v=20261101e"></script>
 </body>
 </html>

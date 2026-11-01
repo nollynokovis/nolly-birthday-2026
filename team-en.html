@@ -15,16 +15,25 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="css/style.css?v=20261101b">
+    <link rel="stylesheet" href="css/style.css?v=20261101za">
 </head>
 <body>
     <nav id="navbar">
         <div class="nav-container">
             <a href="index-en.html" class="nav-logo">NOLLY<span>CUP</span></a>
             <ul class="nav-links" id="navLinks">
-                <li class="mobile-home"><a href="schedule-valo-en.html">BACK TO SCHEDULE</a></li>
+                <li class="nav-dropdown">
+                    <a tabindex="0" role="button" aria-haspopup="true">EVENTS ▾</a>
+                    <ul class="nav-submenu nav-event-menu">
+                        <li class="nav-submenu-label">VALORANT</li>
+                        <li><a href="schedule-valo-en.html">Schedule</a></li>
+                        <li><a href="teams-en.html">Teams</a></li>
+                        <li class="nav-submenu-label">STREET FIGHTER 6</li>
+                        <li><a href="schedule-sf6-en.html">Schedule</a></li>
+                        <li><a href="players-en.html">Players</a></li>
+                    </ul>
+                </li>
             </ul>
-            <a href="schedule-valo-en.html" class="btn-nav">BACK TO SCHEDULE</a>
 
             <div class="nav-right">
                 <div class="language-dropdown">
@@ -66,7 +75,7 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=20261021q"></script>
+    <script src="js/main.js?v=20261101d"></script>
     <script src="js/teams.js?v=20261030a"></script>
 </body>
 </html>

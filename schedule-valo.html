@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="css/style.css?v=20261101r">
+    <link rel="stylesheet" href="css/style.css?v=20261101zb">
     <script>try{var s=sessionStorage,v=s.getItem('nollyLoader'),f=!s.getItem('nollyVisited');s.removeItem('nollyLoader');s.setItem('nollyVisited','1');if(f||v&&v===(location.pathname.split('/').pop().replace(/\.html$/,'')||'index'))document.documentElement.classList.add('show-loader')}catch(e){}</script>
 </head>
 <body>
@@ -25,14 +25,26 @@
         <div class="nav-container">
             <a href="index.html" class="nav-logo">NOLLY<span>生日盃</span></a>
             <ul class="nav-links" id="navLinks">
-                <li><a href="#team-introduction">參賽隊伍<em>TEAMS</em></a></li>
                 <li class="nav-dropdown">
-                    <a href="#schedule">賽程 ▾<em>SCHEDULE</em></a>
-                    <ul class="nav-submenu">
-                        <li><a href="#valo-prelim">預賽賽程</a></li>
-                        <li><a href="#valo-finals">決賽賽程</a></li>
+                    <a tabindex="0" role="button" aria-haspopup="true">賽事 ▾<em>EVENT</em></a>
+                    <ul class="nav-submenu nav-event-menu">
+                        <li class="nav-submenu-label">VALORANT</li>
+                        <li><a href="schedule-valo.html">賽程表</a></li>
+                        <li><a href="teams.html">參賽隊伍</a></li>
+                        <li class="nav-submenu-label">STREET FIGHTER 6</li>
+                        <li><a href="schedule-sf6.html">賽程表</a></li>
+                        <li><a href="players.html">參賽選手</a></li>
                     </ul>
                 </li>
+                <li class="nav-dropdown">
+                    <a href="#schedule">賽程 ▾<em>SCHEDULE</em></a>
+                    <ul class="nav-submenu nav-event-menu">
+                        <li><a href="#valo-prelim">預賽賽程</a></li>
+                        <li><a href="#valo-finals">決賽賽程</a></li>
+                        <li><a href="#valo-match-schedule">對戰一覽</a></li>
+                    </ul>
+                </li>
+                <li><a href="#team-introduction">參賽隊伍<em>TEAMS</em></a></li>
                 <li><a href="#prizes">獎品<em>PRIZES</em></a></li>
             </ul>
 
@@ -58,34 +70,11 @@
             <span class="title-eyebrow">NOLLY BIRTHDAY CUP</span>
             <h1>VALORANT</h1>
             <div class="title-deco"><span></span><span></span><span></span></div>
-            <nav class="directory-switch" aria-label="賽程切換">
-                <a href="schedule-valo.html" aria-current="page">VALORANT</a>
+            <nav class="directory-switch" aria-label="賽程與名鑑切換">
+                <a href="schedule-valo.html" aria-current="page">賽程表</a>
                 <span class="directory-switch-sep" aria-hidden="true">｜</span>
-                <a href="schedule-sf6.html">STREET FIGHTER 6</a>
+                <a href="teams.html">參賽隊伍</a>
             </nav>
-        </div>
-    </section>
-
-    <section id="team-introduction" class="section">
-        <div class="section-inner">
-            <div class="section-header">
-                <span class="sec-en">TEAMS</span>
-                <h2 class="sec-title">參賽隊伍</h2>
-                <div class="sec-line"></div>
-                <div class="player-stats">
-                    <div class="player-stat">
-                        <span class="player-stat-en">PLAYERS</span>
-                        <span class="player-stat-num" data-stat="total">-</span>
-                        <span class="player-stat-label">總報名人數</span>
-                    </div>
-                    <div class="player-stat player-stat-teams">
-                        <span class="player-stat-en">TEAMS</span>
-                        <span class="player-stat-num" data-stat="teams">-</span>
-                        <span class="player-stat-label">總組數</span>
-                    </div>
-                </div>
-            </div>
-            <a href="teams.html" class="btn-players">查看全部 <span data-stat="teams">-</span> 支隊伍</a>
         </div>
     </section>
 
@@ -139,6 +128,13 @@
                     <h3 class="subsection-title">比賽時間表</h3>
                     <p class="match-test" hidden></p>
                 </div>
+                <div class="match-search">
+                    <div class="player-search">
+                        <label class="visually-hidden" for="matchSearchValo">搜尋隊伍或選手名稱</label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                        <input type="search" id="matchSearchValo" placeholder="搜尋隊伍或選手名稱" autocomplete="off">
+                    </div>
+                </div>
                 <div class="match-stages" role="group" aria-label="選擇比賽階段"></div>
                 <p class="match-stage-info"></p>
                 <table class="match-table">
@@ -152,6 +148,29 @@
                 <p class="match-note match-live" hidden>賽事結果每 60 秒自動更新</p>
             </div>
 
+        </div>
+    </section>
+
+    <section id="team-introduction" class="section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="sec-en">TEAMS</span>
+                <h2 class="sec-title">參賽隊伍</h2>
+                <div class="sec-line"></div>
+                <div class="player-stats">
+                    <div class="player-stat">
+                        <span class="player-stat-en">PLAYERS</span>
+                        <span class="player-stat-num" data-stat="total">-</span>
+                        <span class="player-stat-label">總報名人數</span>
+                    </div>
+                    <div class="player-stat player-stat-teams">
+                        <span class="player-stat-en">TEAMS</span>
+                        <span class="player-stat-num" data-stat="teams">-</span>
+                        <span class="player-stat-label">總組數</span>
+                    </div>
+                </div>
+            </div>
+            <a href="teams.html" class="btn-players">查看全部 <span data-stat="teams">-</span> 支隊伍</a>
         </div>
     </section>
 
@@ -176,9 +195,10 @@
         </div>
     </footer>
 
-    <script src="js/main.js?v=20261021q"></script>
+    <script src="js/main.js?v=20261101d"></script>
     <script src="js/teams.js?v=20261030a"></script>
-    <script src="js/bracket.js?v=20261101c"></script>
-    <script src="js/match-schedule.js?v=20261101l"></script>
+    <script src="js/bracket.js?v=20261101d"></script>
+    <script src="js/live-source.js?v=20261101a"></script>
+    <script src="js/match-schedule.js?v=20261101o"></script>
 </body>
 </html>
