@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="css/style.css?v=20261101b">
+    <link rel="stylesheet" href="css/style.css?v=20261103y">
     <script>try{var s=sessionStorage,v=s.getItem('nollyLoader'),f=!s.getItem('nollyVisited');s.removeItem('nollyLoader');s.setItem('nollyVisited','1');if(f||v&&v===(location.pathname.split('/').pop().replace(/\.html$/,'')||'index'))document.documentElement.classList.add('show-loader')}catch(e){}</script>
 </head>
 <body>
@@ -26,6 +26,7 @@
             <ul class="nav-links" id="navLinks">
                 <li><a href="#valorant-rules">VALORANTルール</a></li>
                 <li><a href="#sf6-solo-rules">SF6ルール</a></li>
+                <li><a href="#stream-rules">配信・録画</a></li>
             </ul>
 
             <div class="nav-right">
@@ -68,9 +69,10 @@
                 <p>・5v5 シングルエリミネーション 1本先取</p>
                 <p>・予選の対戦組み合わせは抽選で決定します</p>
                 <p>・敗者は敗退、勝者は次のラウンドへ進出します</p>
-                <p>・延長戦に突入した場合はサドンデスで行います（通常マッチと同様）</p>
-                <p>・すべての公式試合は原則としてNollyチャンネルで配信します</p>
-                <p>・実際の日程は最終的なエントリーチーム数に応じて調整します</p>
+                <p>・予選〜ベスト8：通常ラウンドが12-12の同点になった場合は延長戦に突入し、サドンデスで行います（通常マッチと同様）</p>
+                <p>・準決勝・決勝：通常ラウンドが12-12の同点になった場合は延長戦に突入し、デュース制（2ラウンド差）で行います。先に相手を2ラウンドリードしたチームの勝利となります。延長戦の各ラウンドでは両チームが交互に攻守を入れ替えます。引き分けはありません</p>
+                <p>・各チーム2回のタイムアウトを取ることができます</p>
+                <p>・予選〜ベスト8の試合は同時進行となり、主催者が抽選で1試合を選んで配信します。準決勝・決勝は全試合配信します</p>
 
                 <br>
 
@@ -90,7 +92,6 @@
 
                 <br>
 
-                <p>※最終的なエントリーチーム数が2日間の日程で対応できる範囲を超えた場合、主催者は実際のエントリー状況に応じて参加チームまたは日程を調整します。詳細は別途お知らせします。ご了承ください。</p>
                 <p>※エントリー完了後、大会用のDiscordチャンネルにご招待します。日程表や各種お知らせはそちらで告知します。</p>
                 <p>※大会当日はVALORANTのルームコードをDiscordで告知しますので、通知をご確認ください。</p>
 
@@ -115,7 +116,7 @@
 
                 <br>
 
-                <p>※Discordに各チーム用のボイスチャンネルを用意します。ゲーム内ボイスチャットは使用しません。</p>
+                <p>※Discordに各チーム用のボイスチャンネルを用意します。チーム内ボイスチャットは自由に使用できますが、ゲーム内マイクで敵チームと会話することは禁止します（紫色のゲーム内マイクは使用禁止）。</p>
 
 
                 <p>※ルールに定めのない特殊な状況が発生した場合は、公平性と大会の進行状況に基づき主催者が判断します。</p>
@@ -166,7 +167,6 @@
                 <p>・参加人数が3の倍数でない場合は、追加募集または補欠の手配を優先します。それでもチームを編成できない場合は、主催者が別途調整します</p>
 
                 <br>
-                <p>※最終的なエントリー人数が2日間の日程で対応できる範囲を超えた場合、主催者は実際のエントリー状況に応じて参加者または日程を調整します。詳細は別途お知らせします。ご了承ください。</p>
                 <p>※エントリー完了後、大会用のDiscordチャンネルにご招待します。日程表や各種お知らせはそちらで告知します。</p>
                 <p>※大会当日はルームパスワードをDiscordで告知しますので、通知をご確認ください。</p>
 
@@ -201,11 +201,85 @@
                 <p>※主催者は実際の状況に応じて日程およびルールを変更する権利を有します。重大な変更がある場合は大会前にお知らせします。</p>
 
             </div>
+        </div>
+    </section>
+
+    <section id="stream-rules" class="section section-alt">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="sec-en">RULES</span>
+                <h2 class="sec-title">配信・録画</h2>
+                <div class="sec-line"></div>
+            </div>
+
+            <div class="valo-rules">
+
+                <h3>【概要】</h3>
+                <p>・今大会では、参加者が自分の視点で配信・録画を行うことを歓迎します</p>
+                <p>・事前の報告や申請は不要です。配信を行うかどうかは参加者が自由に決められます</p>
+                <p>・配信を行う場合は、以下の事項を守ってください</p>
+
+                <br>
+
+                <h3>【配信タイトル・概要欄】</h3>
+                <p>・配信タイトルには「#Nolly盃」のタグまたは関連する言葉を入れてください</p>
+                <p>・配信の概要欄または固定コメントに、本大会の配信であることを明記し、公式配信のリンクを記載してください</p>
+                <p>・概要欄の記載例は以下のとおりです。形式は自由に変更して構いません</p>
+                <div class="rules-sample">
+                    <p>本配信は「Nolly盃2026」参加選手の個人視点です。</p>
+                    <p>▶大会主催：Nolly <a href="https://www.youtube.com/@nollynokovis" target="_blank" rel="noopener">https://www.youtube.com/@nollynokovis</a></p>
+                    <p>▶公式配信：（公式配信のリンクは大会前にお知らせします）</p>
+                    <p>▶大会公式サイト：<a href="https://nolly-birthday-2026.pages.dev/" target="_blank" rel="noopener">https://nolly-birthday-2026.pages.dev/</a></p>
+                </div>
+
+                <br>
+
+                <h3>【ゴースティング】</h3>
+                <p>・試合期間中、対戦相手の配信を視聴すること、またはその他の方法で対戦相手のリアルタイム情報を入手することを禁止します</p>
+                <p>・違反した場合は、直ちに参加資格を失います</p>
+
+                <br>
+
+                <h3>【配信ディレイ】</h3>
+                <p>・配信ディレイを設定するかどうかは制限しません</p>
+                <p>・ディレイなしで配信するとゴースティングを受けるリスクがあるため、各参加者がリスクを判断のうえ決定してください</p>
+
+                <br>
+
+                <h3>【VALORANT チーム内ボイスチャット】</h3>
+                <p>・チーム内ボイスチャットは自由に使用できます</p>
+                <p>・ゲーム内マイクで敵チームと会話することは禁止します（紫色のゲーム内マイクは使用禁止）</p>
+
+                <br>
+
+                <h3>【BGM・画像などの素材】</h3>
+                <p>・BGMや画像などの素材の使用は制限しませんが、著作権および配信プラットフォームの規約に適合しているかは各自で確認してください</p>
+
+                <br>
+
+                <h3>【配信に関する禁止事項】</h3>
+                <p>・公式配信を装う行為、または視聴者が公式配信と誤認しやすい方法での宣伝を禁止します</p>
+                <p>・公式配信をそのまま転載（再配信）することを禁止します</p>
+                <p>・他の参加者を尊重し、悪意ある攻撃、差別、その他不適切な発言を行わないでください</p>
+
+                <br>
+
+                <h3>【公式ロゴ】</h3>
+                <p>・主催者は、今大会の公式ロゴ（影あり・影なしの2種類）を提供します。どちらを使用するかは自由です</p>
+                <p>・ロゴのダウンロード：<a href="https://xgf.nu/eUzo" target="_blank" rel="noopener">https://xgf.nu/eUzo</a></p>
+                <p>・配信のサムネイルや配信画面に使用できます（使用は任意です）</p>
+                <p>・ロゴの大きさや位置は自由に調整できますが、変形や元のデザインの改変は禁止します</p>
+                <p>・本大会と無関係な用途での使用、または視聴者が公式配信と誤認する使い方は禁止します</p>
+
+                <br>
+
+                <p>※ご不明な点があれば、いつでも主催者までお問い合わせください。</p>
+
+            </div>
 
             <a href="index-ja.html" class="btn-goods">生日杯へ戻る</a>
         </div>
     </section>
-
     <footer>
         <div class="footer-inner">
             <div class="footer-logo">NOLLY<span>生日杯</span></div>

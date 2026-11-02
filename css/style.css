@@ -958,7 +958,10 @@ a.nav-logo:hover span { color: #fff; }
 
 .valo-rules h3 { color: var(--c5); font-size: 1rem; letter-spacing: 2px; margin-bottom: 1rem; padding-left: 1.2em; text-indent: -1.2em; }
 .valo-rules p { color: var(--c5); font-size: 0.9rem; margin-bottom: 0.3rem; line-height: 1.6; }
-
+.valo-rules a { color: var(--c4); overflow-wrap: anywhere; }
+/* 直播規範的「資訊欄範例」：縮排、左側一條細線，標出可以直接複製使用的文字 */
+.valo-rules .rules-sample { margin: 0.7rem 0 0.9rem 1.2em; padding: 0.3rem 0 0.3rem 1rem; border-left: 2px solid var(--c3); }
+.valo-rules .rules-sample p { overflow-wrap: anywhere; }
 /* ── FOOTER ── */
 footer {
     border-top: 1px solid rgba(145, 141, 195, 0.1);
