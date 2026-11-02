@@ -1413,6 +1413,8 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
     margin: -1.5rem auto 3rem;
 }
 
+/* VALORANT 賽程頁：搜尋欄在「預賽賽程」區塊裡、ABCD 組按鈕上方（搜尋結果會切換下方的組別按鈕與賽程圖），不需要上提的負邊界 */
+#valo-prelim .bracket-search { margin: 0 auto 1.75rem; }
 .bracket-search-results {
     list-style: none;
     margin: 0.5rem 0 0;
@@ -1527,6 +1529,316 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
     font-size: 1.1rem;
     font-weight: 700;
     letter-spacing: 2px;
+}
+
+/* ── EVENT SCHEDULE（VALORANT 賽事時刻表，js/event-schedule.js）──
+   Editorial Timeline：標題、日期頁籤、時間軸、底部資訊放在同一個 880px 容器，左右邊界與內距（--es-px）一致；
+   不用大卡片、陰影或發光，只靠字級、細線、局部淡底與紫色深淺分層：
+   正式比賽＝紅色（--c8）實心圓點＋大時間，組別接在標題後面；公開抽籤＝紫色實心菱形，字級較小、沒有底色；直播、賽前準備、閉幕＝單行淡色小字。
+   每個項目由 --es-lh（名稱單行行高）與 --es-pad（上下內距）算出節點位置，時間、名稱、節點的第一行永遠對齊 */
+.event-schedule {
+    --es-line: rgba(255, 255, 255, 0.12);
+    --es-muted: rgba(255, 255, 255, 0.5);
+    --es-purple: #7b5bc9;
+    --es-px: 1.1rem;
+    --es-time-w: 6.5rem;
+    --es-node-w: 3rem;
+    --es-shift: 36px;    /* 桌面版整個時間軸（時間、節點、細線、名稱）一起往右的位移，頁籤不動；手機版為 0 */
+    max-width: 880px;
+    margin: 0 auto 6rem;
+}
+
+/* 標題後面接一條細線延伸到容器右緣 */
+.es-header { margin-bottom: 2.25rem; }
+
+.es-title {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin: 0;
+    color: var(--c6);
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    line-height: 1.3;
+}
+
+.es-title::after {
+    content: '';
+    flex: 1;
+    min-width: 1rem;
+    height: 1px;
+    background: var(--es-line);
+}
+
+/* 日期頁籤：文字型 Tab，選取中下方一條細紫線（同 VALORANT 比賽時間表的階段 Tab） */
+.es-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--es-line);
+}
+
+.es-tab {
+    position: relative;
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    min-width: 0;
+    min-height: 56px;
+    padding: 0.7rem 0.4rem;
+    background: none;
+    border: 0;
+    color: rgba(255, 255, 255, 0.45);
+    font-family: inherit;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+/* 選取中的底線：蓋在 Tab 列的 1px 底線上 */
+.es-tab::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: transparent;
+    transition: background-color 0.2s;
+}
+
+.es-tab:hover { color: var(--c6); }
+.es-tab:focus-visible { outline: 2px solid var(--c6); outline-offset: -2px; }
+.es-tab[aria-selected="true"] { color: #fff; }
+.es-tab[aria-selected="true"]::after { background: var(--es-purple); }
+
+.es-tab-date {
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.es-tab-date small {
+    margin-left: 0.4em;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.es-tab-name {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.es-panel:focus-visible { outline: 2px solid var(--c6); outline-offset: 2px; }
+
+.es-day-title {
+    margin: 0;
+    padding: 2.1rem var(--es-px) 1rem;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.es-day-title:lang(en) { text-transform: uppercase; }
+
+.es-list {
+    margin: 0;
+    padding: 0 0 0 var(--es-shift);
+    list-style: none;
+}
+
+/* 一列＝[時間｜節點｜標題（比賽的組別接在標題後面）]；時間軸細線畫在節點那一欄的正中央 */
+.es-item {
+    --es-ny: calc(var(--es-pad) + var(--es-lh) / 2);    /* 節點中心離列上緣的距離 */
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--es-time-w) var(--es-node-w) minmax(0, 1fr);
+    padding: var(--es-pad) var(--es-px);
+    margin: var(--es-gap, 0px) 0;
+}
+
+/* 細線：每一列各畫一段（往上下延伸到列與列之間的空隙），第一列從節點開始、最後一列到節點結束 */
+.es-item::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--es-gap, 0px) * -1);
+    bottom: calc(var(--es-gap, 0px) * -1);
+    left: calc(var(--es-px) + var(--es-time-w) + var(--es-node-w) / 2);
+    width: 1px;
+    background: var(--es-line);
+}
+
+.es-item:first-child::before { top: var(--es-ny); }
+.es-item:last-child::before { bottom: auto; height: calc(var(--es-ny) + var(--es-gap, 0px)); }
+.es-item:first-child:last-child::before { display: none; }
+
+.es-time {
+    line-height: var(--es-lh);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.es-node {
+    position: relative;    /* 蓋在細線上 */
+    justify-self: center;
+    box-sizing: border-box;
+    width: var(--es-ns);
+    height: var(--es-ns);
+    margin-top: calc((var(--es-lh) - var(--es-ns)) / 2);
+}
+
+.es-body {
+    min-width: 0;
+    line-height: var(--es-lh);
+    overflow-wrap: anywhere;
+}
+
+/* 正式比賽：大時間、粗標題、紅色圓點（沒有底色與強調線），組別或場次接在標題後面 */
+.es-match {
+    --es-lh: 2rem;
+    --es-pad: 1rem;
+    --es-ns: 11px;
+    --es-gap: 0.5rem;
+}
+
+.es-match .es-time { color: #fff; font-size: 2rem; font-weight: 800; }
+.es-match .es-node { background: var(--c8); border-radius: 50%; }
+/* 標題與組別代號並排，組別在標題旁的正中央（flex 置中；窄螢幕放不下時整個代號換到下一行） */
+.es-match .es-body { display: flex; flex-wrap: wrap; align-items: center; column-gap: 1rem; color: #fff; font-size: 1.35rem; font-weight: 800; letter-spacing: 1px; }
+
+/* 比賽標題連結（點下去跳到比賽時間表）：平常和一般標題完全一樣，沒有底線；滑鼠滑過時才淡淡地變淡一點，鍵盤聚焦時有外框 */
+.es-link {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.2s;
+}
+
+@media (hover: hover) {
+    .es-link:hover { opacity: 0.7; }
+}
+
+.es-link:focus-visible { outline: 2px solid var(--c6); outline-offset: 4px; }
+.es-aside {
+    color: var(--c5);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    position: relative;
+    top: 2px;    /* 視覺上再往下微調一點，與標題字的中線對齊 */
+    white-space: nowrap;
+}
+
+/* 公開抽籤：紫色實心菱形，字級小於比賽、沒有底色 */
+.es-draw { --es-lh: 1.7rem; --es-pad: 0.95rem; --es-ns: 8px; }
+.es-draw .es-time { color: var(--c4); font-size: 1.1rem; font-weight: 700; }
+.es-draw .es-node { background: var(--es-purple); transform: rotate(45deg); }
+.es-draw .es-body { color: var(--c5); font-size: 0.95rem; font-weight: 600; }
+
+/* 直播開始、賽前準備、閉幕：單行、淡色小字、空心小點 */
+.es-other { --es-lh: 1.5rem; --es-pad: 0.7rem; --es-ns: 7px; }
+.es-other .es-time { color: var(--es-muted); font-size: 0.8rem; font-weight: 700; }
+.es-other .es-node { background: var(--c1); border: 1.5px solid rgba(255, 255, 255, 0.35); border-radius: 50%; }
+.es-other .es-body { color: rgba(255, 255, 255, 0.65); font-size: 0.88rem; font-weight: 700; }
+
+/* 底部：時區與報到時間是兩列精簡的資訊（小型英文標籤＋主要文字），桌面版左右排列、手機版上下排列；只用上方一條細線，不加底色或外框 */
+.es-foot { margin-top: 3rem; }
+
+.es-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem 2rem;
+    padding: 1.4rem var(--es-px) 0;
+    border-top: 1px solid var(--es-line);
+}
+
+.es-fact {
+    display: grid;
+    grid-template-columns: 6.25rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0.15rem 0.75rem;
+}
+
+.es-fact-label {
+    color: var(--c4);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.es-fact-value {
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+}
+
+.es-fact-text {
+    grid-column: 2;
+    color: var(--es-muted);
+    font-size: 0.82rem;
+    line-height: 1.8;
+}
+.es-notes {
+    margin: 1rem 0 0;
+    padding: 0 var(--es-px);
+    list-style: none;
+    color: var(--c4);
+    font-size: 0.85rem;
+    line-height: 2;
+}
+
+.es-notes li {
+    position: relative;
+    padding-left: 1.3em;
+}
+
+.es-notes li::before {
+    content: '※';
+    position: absolute;
+    left: 0;
+}
+
+/* 手機版不是等比例縮小：時間欄與節點欄變窄、底部欄位上下排列 */
+@media (max-width: 640px) {
+    .event-schedule {
+        --es-px: 0.8rem;
+        --es-time-w: 4.4rem;
+        --es-node-w: 1.8rem;
+        --es-shift: 0px;
+        margin-bottom: 4rem;
+    }
+    .es-header { margin-bottom: 1.5rem; }
+    .es-title { gap: 0.9rem; font-size: 1.4rem; letter-spacing: 1px; }
+
+    .es-tab-date { font-size: 1.1rem; }
+    .es-tab-date small { margin-left: 0.3em; font-size: 0.56rem; letter-spacing: 1px; }
+    .es-tab-name { font-size: 0.7rem; letter-spacing: 1px; }
+
+    .es-day-title { padding-top: 1.6rem; font-size: 0.72rem; letter-spacing: 1px; }
+
+    .es-match { --es-lh: 1.85rem; --es-pad: 0.9rem; }
+    .es-match .es-time { font-size: 1.5rem; }
+    .es-match .es-body { font-size: 1.1rem; letter-spacing: 0.5px; }
+    .es-match .es-body { column-gap: 0.7rem; }
+    .es-aside { font-size: 0.95rem; }
+
+    .es-draw { --es-lh: 1.6rem; --es-pad: 0.8rem; }
+    .es-draw .es-time { font-size: 0.95rem; }
+    .es-draw .es-body { font-size: 0.9rem; }
+    .es-other { --es-lh: 1.45rem; --es-pad: 0.65rem; }
+    .es-other .es-time { font-size: 0.74rem; }
+
+    .es-facts { grid-template-columns: 1fr; gap: 1.1rem; padding-top: 1.2rem; }
+    .es-fact { grid-template-columns: 5.75rem minmax(0, 1fr); }
+    .es-fact-label { letter-spacing: 2px; }
 }
 
 /* ── MATCH SCHEDULE（VALORANT 比賽時間表，js/match-schedule.js）──
@@ -1857,8 +2169,8 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
     margin-top: 1.25rem;
     padding: 0 var(--match-inset);
     color: var(--c4);
-    font-size: 0.78rem;
-    line-height: 1.8;
+    font-size: 0.88rem;
+    line-height: 1.9;
 }
 
 .match-note + .match-note { margin-top: 0.25rem; }
@@ -1866,7 +2178,7 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
 /* 「賽事結果每 60 秒自動更新」：比注意事項再小、再淡一點（js 開始自動更新後才顯示） */
 .match-note.match-live {
     color: var(--match-muted);
-    font-size: 0.72rem;
+    font-size: 0.8rem;
 }
 
 @media (max-width: 640px) {

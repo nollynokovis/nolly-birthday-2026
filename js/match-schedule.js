@@ -430,7 +430,7 @@
         render();
     };
 
-    // 賽程圖上的對戰代號（bracket.js 的 a.bracket-code，data-match＝比賽編號）點下去：
+    // 賽程圖上的對戰代號（bracket.js 的 a.bracket-code，data-match＝比賽編號）、賽事日程裡比賽的標題連結（event-schedule.js 的 a.es-link）點下去：
     // 切到那一場的階段 Tab、捲到那一列並短暫標示；目前的搜尋會把那一場篩掉時先清空搜尋
     // 時間表上沒有的場次（輪空）或資料還沒載入時不攔截，照連結原本的 # 捲到時間表
     let targetTimer = 0;
@@ -456,7 +456,7 @@
     };
 
     document.addEventListener('click', e => {
-        const code = e.target.closest('a.bracket-code[data-match]');
+        const code = e.target.closest('a.bracket-code[data-match], a.es-link[data-match]');
         if (code && showMatch(code.dataset.match)) e.preventDefault();
     });
 

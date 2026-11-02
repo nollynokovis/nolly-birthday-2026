@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="css/style.css?v=20261101zb">
+    <link rel="stylesheet" href="css/style.css?v=20261103x">
     <script>try{var s=sessionStorage,v=s.getItem('nollyLoader'),f=!s.getItem('nollyVisited');s.removeItem('nollyLoader');s.setItem('nollyVisited','1');if(f||v&&v===(location.pathname.split('/').pop().replace(/\.html$/,'')||'index'))document.documentElement.classList.add('show-loader')}catch(e){}</script>
 </head>
 <body>
@@ -39,6 +39,7 @@
                 <li class="nav-dropdown">
                     <a href="#schedule">日程 ▾<em>SCHEDULE</em></a>
                     <ul class="nav-submenu nav-event-menu">
+                        <li><a href="#valo-event-schedule">大会日程</a></li>
                         <li><a href="#valo-prelim">予選日程</a></li>
                         <li><a href="#valo-finals">決勝日程</a></li>
                         <li><a href="#valo-match-schedule">対戦一覧</a></li>
@@ -85,19 +86,24 @@
                 <h2 class="sec-title">日程</h2>
                 <div class="sec-line"></div>
             </div>
-            <div class="bracket-search">
-                <div class="player-search">
-                    <label class="visually-hidden" for="bracketSearch">選手・チームを検索</label>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
-                    <input type="search" id="bracketSearch" placeholder="選手・チームを検索" autocomplete="off">
+            <div class="subsection event-schedule" id="valo-event-schedule">
+                <div class="es-header">
+                    <h3 class="es-title">VALORANT 大会日程</h3>
                 </div>
-                <ul class="bracket-search-results" hidden></ul>
+                <div class="es-mount"></div>
             </div>
-
             <div class="subsection" id="valo-prelim">
                 <h3 class="subsection-title">予選日程</h3>
                 <p class="subsection-subtitle">日時：2026.11.07（土）20:00〜</p>
                 <p class="subsection-note">※時間の都合上、一部の試合は同時進行となります。ご了承ください</p>
+                <div class="bracket-search">
+                    <div class="player-search">
+                        <label class="visually-hidden" for="bracketSearch">選手・チームを検索</label>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+                        <input type="search" id="bracketSearch" placeholder="選手・チームを検索" autocomplete="off">
+                    </div>
+                    <ul class="bracket-search-results" hidden></ul>
+                </div>
                 <div class="group-buttons">
                     <button class="group-btn active" data-group="A">A組</button>
                     <button class="group-btn" data-group="B">B組</button>
@@ -199,6 +205,7 @@
     <script src="js/teams.js?v=20261030a"></script>
     <script src="js/bracket.js?v=20261101d"></script>
     <script src="js/live-source.js?v=20261101b"></script>
-    <script src="js/match-schedule.js?v=20261101o"></script>
+    <script src="js/match-schedule.js?v=20261103v"></script>
+    <script src="js/event-schedule.js?v=20261103v"></script>
 </body>
 </html>
