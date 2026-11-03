@@ -220,7 +220,7 @@
         { "name": "Levin", "rank": "Immortal 1" }
       ],
       "sub": { "name": "Silver 3", "rank": "Gold 2" },
-      "banMaps": [{ "en": "BREEZE", "zh": "熱帶樂園" }, { "en": "FRACTURE", "zh": "天漠之峽" }]
+      "banMaps": [{ "en": "SUMMIT", "zh": "頂峰亭閣" }, { "en": "ICEBOX", "zh": "極地寒港" }]
     },
     {
       "name": "好大的JB",
