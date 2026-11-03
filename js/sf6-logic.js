@@ -214,12 +214,15 @@
         if (live.length > 1) add('error', `同時有 ${live.length} 場是 live：${live.join('、')}`);
         if (live.length >= 1 && !live.includes(currentId)) add('error', `${live.join('、')} 是 live，但 currentMatch 是 ${currentId || 'null'}`);
 
-        // 組別進度：所有要實際比的場次（BYE 不算）都有正式勝方＝完成；有場次在進行、已有結果或 currentGroup 是這組＝進行中
-        const groups = new Map(groupNames.map(group => {
+        // 組別進度：有填 currentGroup 時只看它——順序在它前面的組別＝完成、它自己＝進行中、後面＝尚未開始（不用在每一場寫 completed）；
+        // 沒填（null）時才看場次：所有要實際比的場次（BYE 不算）都有正式勝方＝完成；有場次在進行或已有結果＝進行中
+        const currentIndex = groupNames.indexOf(currentGroup);
+        const groups = new Map(groupNames.map((group, i) => {
+            if (currentIndex >= 0) return [group, i < currentIndex ? 'completed' : i === currentIndex ? 'live' : 'scheduled'];
             const real = [...matches.values()].filter(m => m.def.group === group && m.status !== 'bye');
             if (real.length === 0) return [group, 'scheduled'];
             if (real.every(m => m.status === 'completed')) return [group, 'completed'];
-            if (currentGroup === group || real.some(m => m.status === 'live' || m.status === 'completed')) return [group, 'live'];
+            if (real.some(m => m.status === 'live' || m.status === 'completed')) return [group, 'live'];
             return [group, 'scheduled'];
         }));
 

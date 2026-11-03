@@ -1,5 +1,5 @@
 // SF6 對戰一覽（MATCH SCHEDULE）：schedule-sf6*.html 的 .sf6-schedule（個人賽 9 個分頁：A–H 組＋決賽階段；團體賽 5 個分頁：A–D 組＋決賽階段）
-//   每場：MATCH（狀態標記＋場次編號，分頁內簡化成 R1-1、QF-1、3RD、FINAL）｜ROUND（組內16強…冠軍決賽）｜PLAYERS／TEAMS（左右對稱，VS 固定在中間）
+//   每場：MATCH（場次編號，分頁內簡化成 R1-1、QF-1、3RD、FINAL；不加狀態標記）｜ROUND（組內16強…冠軍決賽）｜PLAYERS／TEAMS（左右對稱，VS 固定在中間）
 //   BYE 的場次不列出（晉級結果照樣帶到後面的場次）；不顯示比分
 // 資料：比賽結構＋結果的計算由 js/sf6-live.js（js/sf6-logic.js）完成，以 nolly-sf6:update 交過來——和組別進度、賽程圖疊字是同一份結果，
 //   這裡不另外讀結果、不另外輪詢；組別時間讀 data/sf6-schedule-times.json 一次（當天不會變）
@@ -174,7 +174,7 @@
             const matchCell = el('td', 'sf6-match');
             const target = bracketTarget(kind, item.def.group);
             const label = target ? el('a', 'sf6-match-id sf6-match-link') : el('span', 'sf6-match-id');
-            label.append(statusMark(item.status), item.label);
+            label.append(item.label);
             if (target) {
                 label.href = `#${(target.scrollTo.id || '')}`;
                 label.title = t.bracket(item.def.group);
@@ -183,7 +183,7 @@
                     showBracket(target);
                 });
             }
-            matchCell.append(label, el('span', 'sf6-status-text', t.status[item.status]));
+            matchCell.append(label);
 
             const versus = el('div', 'sf6-versus');
             item.sides.forEach((side, i) => {
@@ -209,8 +209,8 @@
 
         const isHit = (item, query) => item.keys.some(key => key.includes(query));
 
-        // 分頁上的組別狀態（與組別按鈕同一份判斷，見 js/sf6-logic.js 的 groups）：進行中＝紅點、全部比完＝灰勾、尚未開始不加
-        // 標記放在分頁名稱前面，和下方每一場編號前的標記同一種圖形；狀態沒變就不動 DOM
+        // 分頁上的組別狀態（與組別按鈕同一份判斷，見 js/sf6-logic.js 的 groups）：進行中＝紅點、全部比完＝灰勾、尚未開始不加；狀態只顯示在分頁上，每一場不加標記
+        // 標記放在分頁名稱前面；狀態沒變就不動 DOM
         const renderTabMark = (button, status) => {
             const old = button.querySelector('.status-mark');
             const want = status === 'live' || status === 'completed' ? status : null;
