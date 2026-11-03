@@ -1534,10 +1534,10 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
     letter-spacing: 2px;
 }
 
-/* ── EVENT SCHEDULE（VALORANT 賽事時刻表，js/event-schedule.js）──
+/* ── EVENT SCHEDULE（賽事時刻表，js/event-schedule.js；VALORANT 與 SF6 共用）──
    Editorial Timeline：標題、日期頁籤、時間軸、底部資訊放在同一個 880px 容器，左右邊界與內距（--es-px）一致；
    不用大卡片、陰影或發光，只靠字級、細線、局部淡底與紫色深淺分層：
-   正式比賽＝紅色（--c8）實心圓點＋大時間，組別接在標題後面；公開抽籤＝紫色實心菱形，字級較小、沒有底色；直播、賽前準備、閉幕＝單行淡色小字。
+   正式比賽＝紅色（VALORANT，--c8）／橘色（SF6，--c7）實心圓點＋大時間，組別接在標題後面；公開抽籤、晉級公布＝紫色空心菱形，字級較小、沒有底色；冠軍、得獎者公布＝紫色實心菱形；直播、賽前準備、閉幕＝單行淡色小字。
    每個項目由 --es-lh（名稱單行行高）與 --es-pad（上下內距）算出節點位置，時間、名稱、節點的第一行永遠對齊 */
 .event-schedule {
     --es-line: rgba(255, 255, 255, 0.12);
@@ -1681,9 +1681,23 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
 .es-item:first-child:last-child::before { display: none; }
 
 .es-time {
+    position: relative;
     line-height: var(--es-lh);
     text-align: right;
     font-variant-numeric: tabular-nums;
+}
+
+/* 跨過午夜的時間（SF6）：隔天的日期放在時間正下方，用絕對定位吃上下內距，不撐高那一列 */
+.es-time-next {
+    position: absolute;
+    top: var(--es-lh);
+    right: 0;
+    color: var(--es-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+    white-space: nowrap;
 }
 
 .es-node {
@@ -1711,6 +1725,7 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
 
 .es-match .es-time { color: #fff; font-size: 2rem; font-weight: 800; }
 .es-match .es-node { background: var(--c8); border-radius: 50%; }
+.event-schedule[data-event="sf6"] .es-match .es-node { background: var(--c7); }    /* SF6 的比賽圓點用橘色（--c7），不用 VALORANT 紅 */
 /* 標題與組別代號並排，組別在標題旁的正中央（flex 置中；窄螢幕放不下時整個代號換到下一行） */
 .es-match .es-body { display: flex; flex-wrap: wrap; align-items: center; column-gap: 1rem; color: #fff; font-size: 1.35rem; font-weight: 800; letter-spacing: 1px; }
 
@@ -1737,11 +1752,17 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
     white-space: nowrap;
 }
 
-/* 公開抽籤：紫色實心菱形，字級小於比賽、沒有底色 */
+/* 階段結果（公開抽籤、各組晉級公布）：紫色空心菱形，字級小於比賽、沒有底色；時間淡紫、名稱次要文字色 */
 .es-draw { --es-lh: 1.7rem; --es-pad: 0.95rem; --es-ns: 8px; }
 .es-draw .es-time { color: var(--c4); font-size: 1.1rem; font-weight: 700; }
-.es-draw .es-node { background: var(--es-purple); transform: rotate(45deg); }
+.es-draw .es-node { background: transparent; border: 1.5px solid var(--es-purple); transform: rotate(45deg); }
 .es-draw .es-body { color: var(--c5); font-size: 0.95rem; font-weight: 600; }
+
+/* 最終結果（冠軍、得獎者公布）：紫色實心菱形、較亮的紫色時間、淡紫白名稱；字級與字重介於比賽（大、800）與階段結果（小、600）之間 */
+.es-result { --es-lh: 1.9rem; --es-pad: 0.95rem; --es-ns: 10px; }
+.es-result .es-time { color: #a98bf0; font-size: 1.35rem; font-weight: 700; }
+.es-result .es-node { background: var(--es-purple); transform: rotate(45deg); }
+.es-result .es-body { color: var(--c6); font-size: 1.1rem; font-weight: 700; }
 
 /* 直播開始、賽前準備、閉幕：單行、淡色小字、空心小點 */
 .es-other { --es-lh: 1.5rem; --es-pad: 0.7rem; --es-ns: 7px; }
@@ -1836,6 +1857,9 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
     .es-draw { --es-lh: 1.6rem; --es-pad: 0.8rem; }
     .es-draw .es-time { font-size: 0.95rem; }
     .es-draw .es-body { font-size: 0.9rem; }
+    .es-result { --es-lh: 1.7rem; --es-pad: 0.85rem; }
+    .es-result .es-time { font-size: 1.15rem; }
+    .es-result .es-body { font-size: 1rem; }
     .es-other { --es-lh: 1.45rem; --es-pad: 0.65rem; }
     .es-other .es-time { font-size: 0.74rem; }
 

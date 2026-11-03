@@ -15,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="stylesheet" href="css/style.css?v=20261103j">
+    <link rel="stylesheet" href="css/style.css?v=20261103n">
     <script>try{var s=sessionStorage,v=s.getItem('nollyLoader'),f=!s.getItem('nollyVisited');s.removeItem('nollyLoader');s.setItem('nollyVisited','1');if(f||v&&v===(location.pathname.split('/').pop().replace(/\.html$/,'')||'index'))document.documentElement.classList.add('show-loader')}catch(e){}</script>
 </head>
 <body>
@@ -38,6 +38,7 @@
                         <li><a href="rules-ja.html">ルール</a></li>
                     </ul>
                 </li>
+                <li><a href="#sf6-event-schedule">タイムテーブル<em>TIMETABLE</em></a></li>
                 <li class="nav-dropdown">
                     <a href="#individual-schedule">個人戦 ▾<em>INDIVIDUAL</em></a>
                     <ul class="nav-submenu nav-event-menu">
@@ -86,6 +87,22 @@
                 <span class="directory-switch-sep" aria-hidden="true">｜</span>
                 <a href="sf6-teams-ja.html">出場チーム</a>
             </nav>
+        </div>
+    </section>
+
+    <section id="schedule" class="section">
+        <div class="section-inner">
+            <div class="section-header">
+                <span class="sec-en">SCHEDULE</span>
+                <h2 class="sec-title">日程</h2>
+                <div class="sec-line"></div>
+            </div>
+            <div class="subsection event-schedule" id="sf6-event-schedule" data-event="sf6">
+                <div class="es-header">
+                    <h3 class="es-title">TIMETABLE</h3>
+                </div>
+                <div class="es-mount"></div>
+            </div>
         </div>
     </section>
 
@@ -315,5 +332,6 @@
     <script src="js/sf6-logic.js?v=20261101a"></script>
     <script src="js/sf6-live.js?v=20261101e"></script>
     <script src="js/sf6-schedule.js?v=20261101e"></script>
+    <script src="js/event-schedule.js?v=20261103zd"></script>
 </body>
 </html>
