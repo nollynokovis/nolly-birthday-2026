@@ -13,7 +13,7 @@
     // 個人頁欄位的英文小標（中文／日文頁顯示在欄位名稱下方）
     const FIELDS_EN    = { rank: 'HIGHEST RANK', control: 'CONTROL TYPE', events: 'EVENTS' };
     // 主辦個人頁彩蛋最後一面的按鈕連結
-    const HOST_LINK    = 'https://7.gigafile.nu/0109-d835ab6a27fd5d7d8f30b2928905329e';
+    const HOST_LINK    = 'https://xgf.nu/AU8Nb';
     // 選手個人頁的參賽紀念卡背景模板（SF6 專用直式版，原始尺寸 1080×1350；下方空白框放選手資訊，見 CSS .player-memorial）
     const MEMORIAL_BG   = 'img/1x/參賽者紀念卡sf6.webp?v=20261020f';
     const MEMORIAL_SIZE = { width: 1080, height: 1350 };
