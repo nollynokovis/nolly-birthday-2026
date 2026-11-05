@@ -11,7 +11,7 @@
         { "name": "仰望蝦頭派搭配獰檬油醋佐宓汁肋排", "rank": "Immortal 1" },
         { "name": "牛牛225", "rank": "Ascendant 2" }
       ],
-      "sub": { "name": "Akashiya", "rank": "Platinum 2" },
+      "sub": { "name": "Zalyenss", "rank": "Radiant" },
       "banMaps": [{ "en": "ICEBOX", "zh": "極地寒港" }, { "en": "ABYSS", "zh": "深窟幽境" }]
     },
     {
@@ -220,7 +220,7 @@
         { "name": "Levin", "rank": "Immortal 1" }
       ],
       "sub": { "name": "Silver 3", "rank": "Gold 2" },
-      "banMaps": [{ "en": "SUMMIT", "zh": "頂峰亭閣" }, { "en": "ICEBOX", "zh": "極地寒港" }]
+      "banMaps": [{ "en": "BREEZE", "zh": "熱帶樂園" }, { "en": "FRACTURE", "zh": "天漠之峽" }]
     },
     {
       "name": "好大的JB",
