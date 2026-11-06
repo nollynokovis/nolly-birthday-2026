@@ -30,7 +30,7 @@
     { "id": 27, "name": "高中牲18HITBOX練習中", "rank": "High Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 28, "name": "飛火flyfire(18)", "rank": "Ultimate Master", "control": "MODERN", "events": ["SOLO", "TEAM"] },
     { "id": 29, "name": "Dino", "rank": "Diamond", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
-    { "id": 30, "name": "小米米羔", "rank": "Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
+    { "id": 30, "name": "小米米羔", "rank": "High Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 31, "name": "asdfc7788", "rank": "Master", "control": "CLASSIC", "events": ["SOLO"] },
     { "id": 32, "name": "Kasomi", "rank": "Diamond", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 33, "name": "白狄哈某 18.", "rank": "Ultimate Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
