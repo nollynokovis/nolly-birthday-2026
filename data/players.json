@@ -17,7 +17,7 @@
     { "id": 14, "name": "MochiIi", "rank": "High Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 15, "name": "YauiHorizon", "rank": "Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 16, "name": "活網最強", "rank": "Ultimate Master", "control": "MODERN", "events": ["SOLO", "TEAM"] },
-    { "id": 17, "name": "寶萊塢巨星豬大哥", "rank": "Master", "control": "CLASSIC", "events": ["SOLO"] },
+    { "id": 17, "name": "豬大哥哥", "rank": "Master", "control": "CLASSIC", "events": ["SOLO"] },
     { "id": 18, "name": "大英警察小雪莉", "rank": "Diamond", "control": "CLASSIC", "events": ["SOLO"] },
     { "id": 19, "name": "People Vanish", "rank": "Ultimate Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
     { "id": 20, "name": "tanhang05", "rank": "Master", "control": "CLASSIC", "events": ["SOLO", "TEAM"] },
