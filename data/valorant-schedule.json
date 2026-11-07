@@ -17,7 +17,7 @@
     { "matchId": "C4", "date": "2026-11-07", "round": "R32", "checkInTime": "", "startTime": "", "team1": 14, "team2": null, "status": "scheduled", "map": null, "attackSide": null, "score1": null, "score2": null, "winner": null },
     { "matchId": "D1", "date": "2026-11-07", "round": "R32", "checkInTime": "20:50", "startTime": "21:00", "team1": 22, "team2": 5, "status": "scheduled", "map": "PEARL 深海遺珠", "attackSide": "team2", "score1": null, "score2": null, "winner": "team2" },
     { "matchId": "D2", "date": "2026-11-07", "round": "R32", "checkInTime": "20:50", "startTime": "21:00", "team1": 20, "team2": 2, "status": "scheduled", "map": "ASCENT 義境空島", "attackSide": "team1", "score1": 3, "score2": 13, "winner": "team2" },
-    { "matchId": "D3", "date": "2026-11-07", "round": "R32", "checkInTime": "20:50", "startTime": "21:00", "team1": 18, "team2": 9, "status": "scheduled", "map": "ASCENT 義境空島", "attackSide": "team1", "score1": null, "score2": null, "winner": null },
+    { "matchId": "D3", "date": "2026-11-07", "round": "R32", "checkInTime": "20:50", "startTime": "21:00", "team1": 18, "team2": 9, "status": "scheduled", "map": "ASCENT 義境空島", "attackSide": "team1", "score1": 13, "score2": 5, "winner": "team1" },
     { "matchId": "D4", "date": "2026-11-07", "round": "R32", "checkInTime": "", "startTime": "", "team1": 7, "team2": null, "status": "scheduled", "map": null, "attackSide": null, "score1": null, "score2": null, "winner": null },
 
     { "matchId": "E1", "date": "2026-11-07", "round": "R16", "checkInTime": "21:50", "startTime": "22:00", "team1": { "winner": "A1" }, "team2": { "winner": "A2" }, "status": "scheduled", "map": "ICEBOX 極地寒港", "attackSide": "team1", "score1": null, "score2": null, "winner": null },
