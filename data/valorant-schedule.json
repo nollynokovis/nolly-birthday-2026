@@ -37,6 +37,6 @@
     { "matchId": "H1", "date": "2026-11-08", "round": "SF", "checkInTime": "20:50", "startTime": "21:00", "team1": { "winner": "G1" }, "team2": { "winner": "G2" }, "status": "scheduled", "map": "HAVEN 遺落境地", "attackSide": "team2", "score1": 13, "score2": 15, "winner": "team2" },
     { "matchId": "H2", "date": "2026-11-08", "round": "SF", "checkInTime": "21:50", "startTime": "22:00", "team1": { "winner": "G3" }, "team2": { "winner": "G4" }, "status": "scheduled", "map": "ICEBOX 極地寒港", "attackSide": "team2", "score1": 9, "score2": 13, "winner": "team2" },
 
-    { "matchId": "FINAL", "date": "2026-11-08", "round": "F", "checkInTime": "22:50", "startTime": "23:00", "team1": { "winner": "H1" }, "team2": { "winner": "H2" }, "status": "live", "map": "SUNSET 日落之城", "attackSide": "team1", "score1": null, "score2": null, "winner": null }
+    { "matchId": "FINAL", "date": "2026-11-08", "round": "F", "checkInTime": "22:50", "startTime": "23:00", "team1": { "winner": "H1" }, "team2": { "winner": "H2" }, "status": "live", "map": "SUNSET 日落之城", "attackSide": "team1", "score1": 7, "score2": 13, "winner": "team2" }
   ]
 }
