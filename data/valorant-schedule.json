@@ -34,8 +34,8 @@
     { "matchId": "G3", "date": "2026-11-08", "round": "QF", "checkInTime": "19:50", "startTime": "20:00", "team1": { "winner": "F1" }, "team2": { "winner": "F2" }, "status": "scheduled", "map": "HAVEN 遺落境地", "attackSide": "team1", "score1": 13, "score2": 3, "winner": "team1" },
     { "matchId": "G4", "date": "2026-11-08", "round": "QF", "checkInTime": "19:50", "startTime": "20:00", "team1": { "winner": "F3" }, "team2": { "winner": "F4" }, "status": "scheduled", "map": "BIND 劫境之地", "attackSide": "team1", "score1": 13, "score2": 5, "winner": "team1" },
 
-    { "matchId": "H1", "date": "2026-11-08", "round": "SF", "checkInTime": "20:50", "startTime": "21:00", "team1": { "winner": "G1" }, "team2": { "winner": "G2" }, "status": "scheduled", "map": null, "attackSide": null, "score1": null, "score2": null, "winner": null },
-    { "matchId": "H2", "date": "2026-11-08", "round": "SF", "checkInTime": "21:50", "startTime": "22:00", "team1": { "winner": "G3" }, "team2": { "winner": "G4" }, "status": "scheduled", "map": null, "attackSide": null, "score1": null, "score2": null, "winner": null },
+    { "matchId": "H1", "date": "2026-11-08", "round": "SF", "checkInTime": "20:50", "startTime": "21:00", "team1": { "winner": "G1" }, "team2": { "winner": "G2" }, "status": "scheduled", "map": "HAVEN 遺落境地", "attackSide": "team2", "score1": null, "score2": null, "winner": null },
+    { "matchId": "H2", "date": "2026-11-08", "round": "SF", "checkInTime": "21:50", "startTime": "22:00", "team1": { "winner": "G3" }, "team2": { "winner": "G4" }, "status": "scheduled", "map": "ICEBOX 極地寒港", "attackSide": "team2", "score1": null, "score2": null, "winner": null },
 
     { "matchId": "FINAL", "date": "2026-11-08", "round": "F", "checkInTime": "22:50", "startTime": "23:00", "team1": { "winner": "H1" }, "team2": { "winner": "H2" }, "status": "scheduled", "map": null, "attackSide": null, "score1": null, "score2": null, "winner": null }
   ]
