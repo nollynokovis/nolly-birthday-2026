@@ -72,7 +72,7 @@
     "F-R1-3": { "status": "scheduled", "winner": null },
     "F-R1-5": { "status": "scheduled", "winner": null },
     "F-R1-6": { "status": "scheduled", "winner": null },
-    "F-R1-7": { "status": "scheduled", "winner": "team1" },
+    "F-R1-7": { "status": "scheduled", "winner": null },
     "F-R2-1": { "status": "scheduled", "winner": null },
     "F-R2-2": { "status": "scheduled", "winner": null },
     "F-R2-3": { "status": "scheduled", "winner": null },
