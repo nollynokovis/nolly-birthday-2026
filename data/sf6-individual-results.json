@@ -1,7 +1,7 @@
 {
   "_note": "SF6 個人賽比賽結果（比賽當天手動更新；網頁每 5 分鐘讀一次）。只記錄勝負，不記比分。改完可在本機執行 node tools/validate-results.js 檢查。",
   "_fields": "currentGroup：目前進行中的組別（\"A\"…，決賽階段是 \"Final\"），沒有填 null。分頁與組別按鈕的狀態只看這個欄位：順序在它前面的組別＝已完成（灰勾）、它自己＝進行中（紅點）、後面＝尚未開始，不用在每一場寫 completed；全部結束後改回 null，會改看各場是否都有 winner。currentMatch：目前進行中的場次編號，沒有填 null。matches：status＝\"scheduled\"（尚未開始）／\"live\"（進行中，同時只能有一場，且要和 currentMatch 相同）／\"completed\"（已完成）；winner＝\"team1\"／\"team2\"（勝方，對應比賽結構裡的左右兩邊）或 null。填了 winner 就算完成、勝者自動晉級；對手還沒確定的場次不能先填 winner。BYE 的場次自動晉級，不用列在這裡。",
-  "currentGroup": "C",
+  "currentGroup": "D",
   "currentMatch": null,
   "matches": {
     "A-R1-1": { "status": "scheduled", "winner": "team1" },
@@ -41,7 +41,7 @@
     "C-R2-4": { "status": "scheduled", "winner": "team1" },
     "C-R3-1": { "status": "scheduled", "winner": "team2" },
     "C-R3-2": { "status": "scheduled", "winner": "team1" },
-    "C-R4-1": { "status": "scheduled", "winner": null },
+    "C-R4-1": { "status": "scheduled", "winner": "team1" },
     "D-R1-1": { "status": "scheduled", "winner": null },
     "D-R1-2": { "status": "scheduled", "winner": null },
     "D-R1-3": { "status": "scheduled", "winner": null },
