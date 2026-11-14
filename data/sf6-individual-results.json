@@ -104,7 +104,7 @@
     "H-R2-4": { "status": "scheduled", "winner": "team1" },
     "H-R3-1": { "status": "scheduled", "winner": "team1" },
     "H-R3-2": { "status": "scheduled", "winner": "team2" },
-    "H-R4-1": { "status": "scheduled", "winner": null },
+    "H-R4-1": { "status": "scheduled", "winner": "team2" },
     "F-QF-1": { "status": "scheduled", "winner": null },
     "F-QF-2": { "status": "scheduled", "winner": null },
     "F-QF-3": { "status": "scheduled", "winner": null },
