@@ -4,7 +4,7 @@
   "currentGroup": "B",
   "currentMatch": null,
   "matches": {
-    "A-R1-1": { "status": "scheduled", "winner": "team1" },
+    "A-R1-1": { "status": "scheduled", "winner": "team2" },
     "A-R1-2": { "status": "scheduled", "winner": "team1" },
     "A-R1-3": { "status": "scheduled", "winner": "team1" },
     "A-R1-5": { "status": "scheduled", "winner": "team2" },
