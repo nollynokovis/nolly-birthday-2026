@@ -22,7 +22,7 @@
     "C-R3-1": { "status": "scheduled", "winner": "team2" },
     "D-R1-1": { "status": "scheduled", "winner": "team2" },
     "D-R1-2": { "status": "scheduled", "winner": "team1" },
-    "D-R1-3": { "status": "scheduled", "winner": null },
+    "D-R1-3": { "status": "scheduled", "winner": "team2" },
     "D-R2-1": { "status": "scheduled", "winner": "team1" },
     "D-R2-2": { "status": "scheduled", "winner": null },
     "D-R3-1": { "status": "scheduled", "winner": null },
