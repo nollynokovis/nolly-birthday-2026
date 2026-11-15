@@ -26,8 +26,8 @@
     "D-R2-1": { "status": "scheduled", "winner": "team1" },
     "D-R2-2": { "status": "scheduled", "winner": "team1" },
     "D-R3-1": { "status": "scheduled", "winner": "team1" },
-    "F-SF-1": { "status": "scheduled", "winner": null },
-    "F-SF-2": { "status": "scheduled", "winner": null },
+    "F-SF-1": { "status": "scheduled", "winner": "team1" },
+    "F-SF-2": { "status": "scheduled", "winner": "team2" },
     "F-F": { "status": "scheduled", "winner": null }
   }
 }
