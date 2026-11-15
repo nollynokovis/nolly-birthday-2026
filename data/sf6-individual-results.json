@@ -111,7 +111,7 @@
     "F-QF-4": { "status": "scheduled", "winner": "team2" },
     "F-SF-1": { "status": "scheduled", "winner": "team1" },
     "F-SF-2": { "status": "scheduled", "winner": "team2" },
-    "F-F": { "status": "scheduled", "winner": null },
+    "F-F": { "status": "scheduled", "winner": "team1" },
     "F-3RD": { "status": "scheduled", "winner": null }
   }
 }
