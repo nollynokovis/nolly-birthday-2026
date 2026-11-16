@@ -1,0 +1,13 @@
+{
+  "_note": "首頁「THANK YOU 工作人員・賽評」名單（js/credits.js 讀取），依比賽分開顯示（左 VALORANT、右 SF6）。名單是空的時候整個區塊不顯示；填入名字後自動出現。請只填實際協助活動的人員。",
+  "_fields": "valorant／sf6：各賽事的 staff（工作人員）與 commentators（賽評），每個人可以直接寫名字（各語系共用，不翻譯），或 { name, role }（role 選填，文字或 { zh, ja, en }）。specialThanks：其他協助活動的人員（SPECIAL THANKS），不分賽事，寫法同上。",
+  "valorant": {
+    "staff": ["信Hsin", "阿梅", "冥王Hades", "Yorufue", "颯沁", "咖啡吧", "OOscAr", "Henry"],
+    "commentators": ["Asunamywife"]
+  },
+  "sf6": {
+    "staff": ["Yorufue", "冥王Hades", "阿梅", "颯沁"],
+    "commentators": ["Maple", "Kaneruan", "Asunamywife", "承翰"]
+  },
+  "specialThanks": []
+}

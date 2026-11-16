@@ -1,0 +1,18 @@
+{
+  "_note": "2026 Nolly生日盃 最終結果（首頁與賽程頁的結果文字，js/results.js 讀取；三語系共用，名字不翻譯）。賽事已全部結束，這份資料是正式紀錄，不是即時更新。結果旁邊的決賽賽程元件用的是賽程頁原本的資料（valorant-schedule.json、sf6-*-results.json），不在這裡。",
+  "_fields": "valorant.champion：冠軍隊伍名稱。valorant.mvp：MVP 選手名稱，mvpTeam：MVP 所屬隊伍（選填）；mvp 填 null 或沒有這個欄位時，不顯示 MVP 那一列。sf6Individual.first／second／third：個人賽冠軍、亞軍、季軍的選手名稱。sf6Team.champion：團體賽冠軍隊伍的三位隊員（陣列，顯示成「A / B / C」）。",
+  "valorant": {
+    "champion": "年年四宮一全部倒第一",
+    "members": ["希恩", "Xiaoyi", "小安", "重億", "鯨魚比隆"],
+    "mvp": "重億",
+    "mvpTeam": "年年四宮一全部倒第一"
+  },
+  "sf6Individual": {
+    "first": "Hanabi",
+    "second": "Kayo",
+    "third": "tuki.(17)様のファン"
+  },
+  "sf6Team": {
+    "champion": ["Q玉米Q", "leotsai9999", "Kayo"]
+  }
+}
