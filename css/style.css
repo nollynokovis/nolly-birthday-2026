@@ -759,12 +759,12 @@ a.nav-logo:hover span { color: #fff; }
 
 /* ── channel BUTTON ── */
 
-.btn-yt, .btn-twitch, .btn-x, .btn-dc {
+.btn-yt, .btn-twitch, .btn-x, .btn-dc, .btn-official {
     display: inline-block;
     text-decoration: none;
     transition: opacity 0.2s, transform 0.15s;
 }
-.btn-yt:hover, .btn-twitch:hover, .btn-x:hover, .btn-dc:hover {
+.btn-yt:hover, .btn-twitch:hover, .btn-x:hover, .btn-dc:hover, .btn-official:hover {
     opacity: 0.75;
     transform: translateY(-2px);
 }
@@ -2288,54 +2288,10 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
     }
 }
 
-/* ── 比賽／組別狀態標記（VALORANT MATCH 編號旁、SF6 組別按鈕與對戰一覽）──
-   純 CSS 圖形、不用表情符號：灰點＝尚未開始、紅點＝進行中、灰勾＝已完成 */
-.status-mark {
-    display: inline-block;
-    flex-shrink: 0;
-    width: 8px;
-    height: 8px;
-    margin-left: 0.5rem;
-    border-radius: 50%;
-    vertical-align: middle;
-}
+/* 比賽／組別狀態標記（紅點＝進行中、灰勾＝已完成）：2026 賽事結束後已移除（js 不再產生 .status-mark），只保留敗方灰色等「結果」樣式 */
 
-.status-mark.is-scheduled { background: rgba(255, 255, 255, 0.3); }
-.status-mark.is-live { background: var(--c8); }
 
-.status-mark.is-completed {
-    width: 5px;
-    height: 9px;
-    border: solid rgba(255, 255, 255, 0.45);
-    border-width: 0 2px 2px 0;
-    border-radius: 0;
-    transform: translateY(-2px) rotate(45deg);
-}
-
-/* SF6 組別按鈕：標記放在按鈕右上角（不佔寬度，出現或消失時按鈕列不會跳動）；
-   按鈕底色各組不同，紅點加白框、勾用深灰，才看得清楚；尚未開始不加標記 */
-.group-btn { position: relative; }
-
-.group-btn .status-mark {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    margin: 0;
-}
-
-.group-btn .status-mark.is-live {
-    width: 11px;     /* 全站 box-sizing: border-box，含 1.5px 白框，紅色約 8px */
-    height: 11px;
-    border: 1.5px solid #fff;
-}
-
-.group-btn .status-mark.is-completed {
-    top: 4px;
-    right: 7px;
-    border-color: rgba(30, 32, 50, 0.7);
-}
-
-/* 賽程圖疊字：已完成比賽的敗方字變灰（SF6，見 bracket.js 的 is-lose）；框是深藍底，灰色稍亮一點才看得清楚 */
+/* 賽程圖疊字：已完成比賽的敗方字變灰（VALORANT、SF6 個人賽、SF6 團體賽共用，見 bracket.js 的 is-lose）；框是深藍底，灰色稍亮一點才看得清楚 */
 .bracket-slot.is-lose { color: #a3a5b1; }
 
 /* ── SF6 MATCH SCHEDULE（對戰一覽，js/sf6-schedule.js）──
@@ -2421,14 +2377,6 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
     font-variant-numeric: tabular-nums;
 }
 
-.sf6-match-id .status-mark { margin: 0 0.55rem 0 0; }
-
-/* 對戰一覽的組別分頁：分頁名稱前的狀態標記（進行中＝紅點、全部比完＝灰勾，同下方每一場的標記） */
-.sf6-schedule .match-stage-btn .status-mark {
-    align-self: center;
-    margin: 0 0.45rem 0 0;
-}
-
 /* 場次編號連結（切到上方對應的賽程圖）：平常和一般文字一樣，滑過時才出現細紫底線 */
 .sf6-match-link {
     text-decoration: underline;
@@ -2440,9 +2388,6 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
 
 .sf6-match-link:hover { text-decoration-color: rgba(123, 91, 201, 1.0); }
 .sf6-match-link:focus-visible { outline: 2px solid var(--c6); outline-offset: 3px; }
-
-/* 狀態文字只在手機版顯示（桌面版看編號旁的標記） */
-.sf6-status-text { display: none; }
 
 .sf6-round {
     color: rgba(255, 255, 255, 0.6);
@@ -2530,15 +2475,6 @@ a.bracket-code:focus-visible { outline: 3px solid #45497b; outline-offset: -3px;
     .sf6-match { grid-area: match; }
     .sf6-round { grid-area: round; align-self: center; }
     .sf6-sides { grid-area: sides; }
-
-    .sf6-status-text {
-        display: inline;
-        margin-left: 0.6rem;
-        color: var(--match-muted);
-        font-size: 0.7rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-    }
 
     /* 手機版不用左右對稱：兩邊上下排列，VS 夾在中間，三行置中 */
     .sf6-versus {
@@ -3686,6 +3622,24 @@ html:not([lang="zh-TW"]) .profile-reverse-text { font-size: 1.9rem; letter-spaci
     overflow-wrap: anywhere;
 }
 
+/* Nolly 的消息：多段落文字 */
+.memorial-body p {
+    margin: 0;
+    padding: 0;
+    font-size: calc(18 * var(--u) * var(--fit, 1));
+    line-height: 1.5;
+    color: #35345F;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.memorial-body .message-sign {
+    text-align: right;
+    font-weight: 700;
+    margin-top: calc(8 * var(--u));
+    font-size: calc(18 * var(--u) * var(--fit, 1));
+}
+
 /* 成員：三欄（隊長＋隊員 4 人＋候補＝兩排），不加外框，以留白分隔 */
 .memorial-members {
     display: grid;
@@ -4130,3 +4084,394 @@ html:not([lang="zh-TW"]) .profile-reverse-text { font-size: 1.9rem; letter-spaci
 @media (max-width: 640px) {
     #sf6-team-profile { padding-top: 1.5rem; }
 }
+
+/* ── EVENT COMPLETED／RESULTS（賽事結束後的首頁；結果區由 js/results.js 產生）──
+   沿用既有的 editorial 風格：細線分隔、字級層次、扁平不加光暈；圖片與賽程圖沿用原本賽程頁的樣式 */
+.hero-completed { margin: 0 0 0.6rem; }
+.hero-completed .title-eyebrow { margin-bottom: 0.4rem; color: var(--c5); }
+.hero-completed .title-eyebrow::before,
+.hero-completed .title-eyebrow::after { background: var(--c5); }
+.hero-completed-text {
+    color: #fff;
+    font-size: clamp(1.35rem, 3.6vw, 2rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+    line-height: 1.3;
+}
+.hero-completed-date {
+    margin-top: 0.3rem;
+    color: var(--c5);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.results-banner { margin-bottom: 3rem; text-align: center; }
+.results-banner .title-eyebrow { margin-bottom: 0.5rem; }
+.results-banner-text {
+    color: var(--c6);
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* 一個賽事一個區塊：左邊是結果文字（冠軍、MVP、前三名由上到下），右邊是原本賽程頁的決賽賽程元件（bracket.js 疊字，名字可點）；窄螢幕上下排列；區塊之間只用細線分隔 */
+.result-block {
+    --result-accent: var(--c8);
+    display: grid;
+    grid-template-columns: minmax(240px, 320px) minmax(0, 1fr);
+    gap: 1.5rem 3rem;
+    align-items: center;
+    padding: 3rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    scroll-margin-top: 64px;    /* hero 按鈕直接捲到這個賽事時，不被固定導覽列擋住 */
+}
+.result-block.is-sf6 { --result-accent: var(--c7); }
+.result-block:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
+
+.result-info { --result-accent: var(--c4); }
+.result-block .result-info { --result-accent: inherit; }
+.result-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 1rem; margin-bottom: 1.4rem; }
+.result-block .result-head { display: block; margin-bottom: 1.6rem; }
+.result-block .result-format { margin-top: 0.35rem; }
+.result-game {
+    color: var(--result-accent);
+    font-size: 1.7rem;
+    font-weight: 900;
+    letter-spacing: 3px;
+    line-height: 1.2;
+}
+.result-format {
+    color: var(--c5);
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* 名次：冠軍、MVP（亞軍、季軍）由上到下排在左邊 */
+.result-list { margin: 0; }
+.result-row { padding: 0.95rem 0; border-top: 1px solid rgba(255, 255, 255, 0.12); min-width: 0; }
+.result-role {
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    margin-bottom: 0.15rem;
+    color: var(--c4);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+.result-role-en { font-size: 0.68rem; letter-spacing: 3px; opacity: 0.8; }
+.result-row.is-main .result-role { color: var(--result-accent); }
+.result-name {
+    margin: 0;
+    color: #fff;
+    font-size: 1.35rem;
+    font-weight: 800;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+.result-row.is-main .result-name { font-size: 1.9rem; font-weight: 900; }
+.result-note {
+    display: block;
+    margin-top: 0.15rem;
+    color: var(--c5);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+.result-members {
+    display: block;
+    margin-top: 0.8rem;
+    color: var(--c4);
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.4;
+    white-space: normal;
+    overflow-wrap: break-word;
+}
+/* 團體賽三位隊員的名字縮小成一行（不換行） */
+.result-name.is-compact,
+.result-row.is-main .result-name.is-compact { font-size: 1.15rem; white-space: nowrap; overflow-wrap: normal; }
+
+/* 決賽賽程元件：三個賽事同樣大小；首頁的結果是歷史紀錄，敗方不變灰（賽程頁的賽程圖維持敗方灰色），也不顯示 VALORANT 圖上的對戰代號（G1、H1…） */
+.result-figure { margin: 0; min-width: 0; }
+.result-figure .prize-img { margin-bottom: 0; }
+.result-figure .bracket-slot.is-lose { color: #fff; }
+.result-figure .bracket-code { display: none; }
+.results-error { padding: 3rem 0; text-align: center; color: var(--c4); }
+
+/* 賽程頁最上方的結果（.result-info.is-page）：SF6 頁個人賽與團體賽並排 */
+.page-results { margin-bottom: 3rem; }
+.page-results-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2rem 3rem; }
+.result-info.is-page { margin: 0 auto 2.5rem; max-width: 560px; }
+.page-results-grid .result-info.is-page { margin: 0; max-width: none; }
+.page-results-grid [data-result-info="sf6Individual"] .result-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+
+@media (max-width: 1000px) {
+    .result-block { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; padding: 2.5rem 0; }
+    .result-row.is-main .result-name { font-size: 1.7rem; }
+    .result-row.is-main .result-name.is-compact { font-size: 1.15rem; }
+}
+
+@media (max-width: 800px) {
+    .page-results-grid { grid-template-columns: minmax(0, 1fr); gap: 0; }
+    .page-results-grid .result-info.is-page { margin-bottom: 2rem; }
+}
+
+@media (max-width: 640px) {
+    .results-banner { margin-bottom: 2rem; }
+    .result-game { font-size: 1.4rem; letter-spacing: 2px; }
+    .result-head { margin-bottom: 1rem; }
+    .result-name { font-size: 1.2rem; }
+    .result-row.is-main .result-name { font-size: 1.5rem; }
+    .result-name.is-compact,
+    .result-row.is-main .result-name.is-compact { font-size: clamp(0.85rem, 4.2vw, 1.15rem); }
+}
+
+/* Nolly 想說的話：一欄文字、細線上下框住，口吻像寫給大家的短信，簽名靠右 */
+.message-body {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2.2rem 0 1.6rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+.message-body p {
+    margin: 0 0 1.1rem;
+    color: var(--c5);
+    font-size: 1.05rem;
+    line-height: 2;
+}
+.message-body .message-sign {
+    margin: 1.4rem 0 0;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-align: right;
+}
+
+/* 活動回顧：一段說明文字，下面左右兩欄（左 VALORANT、右 SF6）；每欄有日期、規模和該賽事兩場的 YouTube 直播存檔，只用細線分隔 */
+.recap-text {
+    max-width: 760px;
+    margin: 0 auto;
+    color: var(--c5);
+    font-size: 1.05rem;
+    line-height: 2;
+    text-align: center;
+}
+.recap-columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4rem 0;
+    margin: 2.5rem 0 0;    /* 寬度同上方「比賽結果」區塊（整個 .section-inner）；上方與兩欄中間都沒有分隔線 */
+}
+.recap-col { padding: 1.6rem 0 0; text-align: center; min-width: 0; }
+.recap-fact-game { display: block; font-size: 0.95rem; font-weight: 900; letter-spacing: 3px; }
+.recap-col.is-valo .recap-fact-game { color: var(--c8); }
+.recap-col.is-sf6 .recap-fact-game { color: var(--c7); }
+.recap-fact-date { display: block; margin-top: 0.3rem; color: #fff; font-size: 1.5rem; font-weight: 900; letter-spacing: 1px; }
+.recap-fact-count { display: block; margin-top: 0.1rem; color: var(--c5); font-size: 0.9rem; font-weight: 700; }
+.recap-fact-count { margin-bottom: 1.6rem; }
+
+/* YouTube 直播存檔：整個區塊共用一個標題（.recap-yt-head），下面左右兩欄（VALORANT、SF6）各兩支影片。
+   初始是 16:9 縮圖＋中央播放鈕（.yt-frame 本身是連到 YouTube 的連結，沒有 JS 時也能看），點播放才由 js/youtube-archive.js 在原位置建立 YouTube iframe（.yt-player），
+   所以首頁一開始不會載入任何 YouTube 播放器；外框沿用賽程圖的 3px 邊框與圓角，不加光暈 */
+.recap-yt-head { margin: 3.5rem 0 0.4rem; text-align: center; }
+.recap-yt-head .subsection-title { margin: 0; }
+.yt-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.8rem; }
+.yt-card { min-width: 0; text-align: left; }
+.yt-frame,
+.yt-player {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #000;
+    border: 3px solid var(--c4);
+    border-radius: 12px;
+}
+.yt-thumb { display: block; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.2s; }
+.yt-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 68px;
+    height: 48px;
+    margin: -24px 0 0 -34px;
+    background: #e62117;    /* YouTube 紅，不加外框 */
+    border-radius: 14px;
+    transition: background 0.2s;
+}
+.yt-play::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -10px 0 0 -6px;
+    border-style: solid;
+    border-width: 10px 0 10px 18px;
+    border-color: transparent transparent transparent #fff;
+}
+@media (hover: hover) {
+    .yt-frame:hover .yt-thumb { opacity: 0.85; }
+    .yt-frame:hover .yt-play { background: #ff0000; }
+}
+.yt-frame:focus-visible { outline: 2px solid var(--c6); outline-offset: 4px; }
+.yt-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yt-day {
+    display: block;
+    margin-top: 0.8rem;
+    color: var(--c4);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+.recap-col.is-valo .yt-day { color: var(--c8); }
+.recap-col.is-sf6 .yt-day { color: var(--c7); }
+.yt-title {
+    display: block;
+    margin-top: 0.15rem;
+    color: var(--c6);
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.5;
+}
+@media (max-width: 760px) {
+    .recap-columns { grid-template-columns: minmax(0, 1fr); }
+    .recap-col + .recap-col { margin-top: 2rem; }
+}
+/* THANK YOU：工作人員・賽評名單（data/credits.json，js/credits.js）；依比賽左右兩欄（左 VALORANT、右 SF6），每欄分工作人員、賽評，乾淨的名單，沒有卡片 */
+.credits-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 3rem;    /* 寬度同整個 .section-inner；上方與兩欄中間都沒有分隔線 */
+}
+.credits-col { min-width: 0; }
+.credits-game { margin: 0 0 1.4rem; font-size: 1.15rem; font-weight: 900; letter-spacing: 3px; text-align: center; }
+.credits-col.is-valo .credits-game { color: var(--c8); }
+.credits-col.is-sf6 .credits-game { color: var(--c7); }
+.credits-group { margin: 0 0 1.8rem; }
+.credits-group:last-child { margin-bottom: 0; }
+.credits-columns + .credits-group { margin: 2.5rem 0 0; }
+.credits-title {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin: 0 0 0.4rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    color: var(--c6);
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+.credits-title-en { color: var(--c4); font-size: 0.7rem; font-weight: 700; letter-spacing: 3px; }
+.credits-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 0 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.credits-item { padding: 0.6rem 0; border-bottom: 1px solid rgba(255, 255, 255, 0.08); min-width: 0; overflow-wrap: anywhere; }
+.credit-name { color: #fff; font-size: 1rem; font-weight: 800; }
+.credit-role { display: block; margin-top: 0.1rem; color: var(--c4); font-size: 0.8rem; font-weight: 700; letter-spacing: 1px; }
+@media (max-width: 760px) {
+    .credits-columns { grid-template-columns: minmax(0, 1fr); }
+    .credits-col + .credits-col { margin-top: 2rem; }
+}
+/* 回到 Nolly 官方網站／Store：網址只在 js/main.js 設定（OFFICIAL_SITE_URL），沒設定時 [data-official-site] 連結維持隱藏 */
+.footer-official {
+    display: inline-block;
+    margin: 0.7rem 0 1rem;
+    padding: 0.45rem 1.2rem;
+    border: 1px solid var(--c4);
+    border-radius: 4px;
+    color: var(--c5);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: color 0.2s, border-color 0.2s;
+}
+.footer-official[hidden],
+.btn-goods[hidden] { display: none; }
+/* 主辦區的官網圖示（favicon）：排在社群圖示最左邊，網址在 js/main.js 設定前維持隱藏 */
+.btn-official[hidden] { display: none; }
+.footer-official:hover { color: #fff; border-color: #fff; }
+/* 賽程頁最上方的結果：冠軍標籤用該賽事的顏色（VALORANT 紅、SF6 橘） */
+.result-info[data-result-info="valorant"] { --result-accent: var(--c8); }
+.result-info[data-result-info^="sf6"] { --result-accent: var(--c7); }
+
+/* ── 活動結束後的主要導覽與活動回顧頁（recap.html）──
+   主要 NAV：結果／活動回顧／主辦／周邊；右側是 Nolly Official Website 與語言切換（網址在 js/main.js 設定前維持隱藏）。手機版官網連結改放在漢堡選單最下面 */
+.nav-official {
+    display: inline-block;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid var(--c4);
+    border-radius: 4px;
+    color: var(--c5);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+}
+.nav-official[hidden] { display: none; }
+.nav-official:hover { color: #fff; border-color: #fff; }
+.nav-official-li { display: none; }
+@media (max-width: 768px) {
+    .nav-official { display: none; }
+    .nav-official-li { display: list-item; }
+}
+
+/* 活動回顧頁：標題下方的頁內導覽（沿用 .directory-switch，項目多時換行）；各區塊的細部樣式沿用首頁原本的 */
+.directory-switch.is-wrap { flex-wrap: wrap; row-gap: 0.2rem; }
+.recap-col .recap-fact-date + .yt-list { margin-top: 1.6rem; }
+.credits-group.sponsors { margin: 2.5rem 0 0; }
+.credits-group.sponsors .sponsor-grid { margin: 1.2rem 0 0; }
+.recap-summary .btn-goods { margin-top: 2.5rem; }
+/* 導覽列項目變多（結果／活動回顧／主辦／賽事／周邊／資訊＋官網＋語言）：中等寬度縮小間距，更窄時官網連結只留在頁尾與漢堡選單 */
+@media (max-width: 1100px) and (min-width: 769px) {
+    .nav-container { padding: 0 1.2rem; gap: 0.8rem; }
+    .nav-links a { padding: 0.35rem 0.4rem; }
+    .nav-official { padding: 0.4rem 0.6rem; font-size: 0.7rem; }
+}
+@media (max-width: 960px) and (min-width: 769px) {
+    .nav-official { display: none; }
+}
+
+/* 活動回顧（#archive）：所有子區塊（活動概要、規則、Nolly 想說的話、YouTube、工作人員）用同一套間距，數值與「活動概要→Nolly 想說的話」原本的距離相同：
+   - 子區塊之間：每個子區塊內容底部固定留 2rem（卡片本身的內距），再加 9rem 的外距
+   - 標題到內容：標題下 3rem，再加內容第一個元素上方 2rem（卡片本身的內距）
+   沒有卡片的內容（YouTube 兩欄、工作人員名單、圖片空位）補上同樣的 2rem，讓每個子區塊看起來一致 */
+#archive .subsection { margin-bottom: 9rem; }
+#archive .subsection:last-child { margin-bottom: 0; }
+#archive .subsection-title { margin-bottom: 3rem; }
+#archive .reg-grid { margin-bottom: 0; }
+#archive .btn-rules { margin: 2rem auto; }
+#archive .recap-columns { margin-top: 0; }
+#archive .recap-col { padding: 2rem 0; }
+#thanks .credits-columns { gap: 3rem; padding: 2rem 0; }
+#thanks .credits-col .credits-group { margin-bottom: 2.4rem; }
+#thanks .credits-col .credits-group:last-child { margin-bottom: 0; }
+#thanks .credits-game { margin-bottom: 2rem; }
+#thanks .credits-group.sponsors { margin-top: 3.5rem; }
+@media (max-width: 640px) {
+    #archive .subsection { margin-bottom: 7rem; }
+    #archive .subsection-title { margin-bottom: 2.4rem; }
+}
+/* Nolly 想說的話：預留放圖的空位（之後換成 <img>）；寬度同下方文字欄，16:9，虛線框只是預留位置的提示 */
+.message-image {
+    max-width: 680px;
+    margin: 0 auto 2rem;
+    aspect-ratio: 16 / 9;
+    border: 2px dashed var(--c3);
+    border-radius: 12px;
+}
+.message-image + .message-body { margin-top: 0; }

@@ -92,9 +92,11 @@
             },
             facts: [
                 { label: 'TIMEZONE', value: 'UTC+8 / TAIWAN', text: '所有時間均為台灣時間（UTC+8）。' },
+            ],
+            liveFacts: [
                 { label: 'CHECK-IN', value: '開賽前 10 分鐘', text: '詳細報到時間請至比賽時間表確認。' },
             ],
-            notes: [
+            liveNotes: [
                 '實際比賽及公開抽籤時間可能依賽事進度調整。',
                 '若前一輪比賽尚未結束，後續場次將依實際情況順延。',
             ],
@@ -134,9 +136,11 @@
             },
             facts: [
                 { label: 'TIMEZONE', value: 'UTC+8 / TAIWAN', text: 'すべての時間は台湾時間（UTC+8）です。' },
+            ],
+            liveFacts: [
                 { label: 'CHECK-IN', value: '開始 10 分前', text: '詳細な受付時間は試合スケジュールでご確認ください。' },
             ],
-            notes: [
+            liveNotes: [
                 '実際の試合および公開抽選の時間は、大会の進行状況により変更となる場合があります。',
                 '前のラウンドが終了していない場合、以降の試合は実際の状況に応じて順延されます。',
             ],
@@ -176,9 +180,11 @@
             },
             facts: [
                 { label: 'TIMEZONE', value: 'UTC+8 / TAIWAN', text: 'All times are Taiwan Time (UTC+8).' },
+            ],
+            liveFacts: [
                 { label: 'CHECK-IN', value: '10 MIN BEFORE START', text: 'Please check the Match Schedule for detailed check-in times.' },
             ],
-            notes: [
+            liveNotes: [
                 'Actual match and public draw times may change depending on how the event progresses.',
                 'If the previous round has not finished, later matches will be delayed accordingly.',
             ],
@@ -266,10 +272,14 @@
             },
             facts: [
                 { label: 'TIMEZONE', value: 'UTC+8 / TAIWAN', text: '所有時間均為台灣時間（UTC+8）。' },
+            ],
+            liveFacts: [
                 { label: 'CHECK-IN', value: '開賽前 10 分鐘', text: '請於集合時間前至 Discord 報到。' },
             ],
             notes: [
                 '時間下方標示日期者為隔天凌晨。',
+            ],
+            liveNotes: [
                 '實際比賽時間可能依賽事進度調整。',
             ],
         },
@@ -299,10 +309,14 @@
             },
             facts: [
                 { label: 'TIMEZONE', value: 'UTC+8 / TAIWAN', text: 'すべての時間は台湾時間（UTC+8）です。' },
+            ],
+            liveFacts: [
                 { label: 'CHECK-IN', value: '開始 10 分前', text: '集合時間までに Discord でチェックインしてください。' },
             ],
             notes: [
                 '時間の下に日付が表示されているものは翌日の深夜です。',
+            ],
+            liveNotes: [
                 '実際の試合時間は、大会の進行状況により変更となる場合があります。',
             ],
         },
@@ -332,10 +346,14 @@
             },
             facts: [
                 { label: 'TIMEZONE', value: 'UTC+8 / TAIWAN', text: 'All times are Taiwan Time (UTC+8).' },
+            ],
+            liveFacts: [
                 { label: 'CHECK-IN', value: '10 MIN BEFORE START', text: 'Please check in on Discord by the check-in time.' },
             ],
             notes: [
                 'Times with a date shown below are early the next morning.',
+            ],
+            liveNotes: [
                 'Actual match times may change depending on how the event progresses.',
             ],
         },
@@ -454,7 +472,7 @@
         });
     });
 
-    // 底部：兩個重點資訊（時區、報到時間）＋較小的補充說明
+    // 底部：時區說明＋較小的補充說明；賽事已結束，報到提醒（liveFacts）與「時間可能依進度調整」（liveNotes）是活動期間才有意義的資訊，保留在上方資料裡但不再顯示
     const foot = el('div', 'es-foot');
     const facts = el('div', 'es-facts');
     facts.append(...t.facts.map(f => {
@@ -462,9 +480,12 @@
         box.append(el('span', 'es-fact-label', f.label), el('strong', 'es-fact-value', f.value), el('span', 'es-fact-text', f.text));
         return box;
     }));
-    const notes = el('ul', 'es-notes');
-    notes.append(...t.notes.map(text => el('li', '', text)));
-    foot.append(facts, notes);
+    foot.append(facts);
+    if (t.notes && t.notes.length) {
+        const notes = el('ul', 'es-notes');
+        notes.append(...t.notes.map(text => el('li', '', text)));
+        foot.append(notes);
+    }
 
     root.querySelector('.es-mount').replaceChildren(tablist, panels, foot);
     select(DAYS.findIndex(day => day.id === DEFAULT_DAY));

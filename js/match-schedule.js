@@ -7,10 +7,12 @@
 // 反過來，賽程圖上的對戰代號（bracket.js 畫的 A1、E1…）點下去會切到這裡那一場並短暫標示（見 showMatch）
 // 比賽結果（score1／score2／winner）：確認勝方後顯示比分、下一場的「A1 勝者」自動換成勝隊（見 resultOf、sideResolver）
 // 自動更新：定期重新讀一次 JSON（間隔見 js/live-source.js 的 POLL_MS；NollyLive.watch：分頁在背景時暫停，回到頁面立刻檢查），資料有變才更新畫面，不改目前的 Tab、搜尋與捲動位置
-// 比賽狀態：MATCH 編號旁的小標記（灰點＝尚未開始、紅點＝進行中、灰勾＝已結束），見 statusOf
+// 比賽狀態：statusOf 仍會計算（尚未開始／進行中／已結束），但 2026 賽事結束後不再顯示 MATCH 編號旁的紅點與灰勾；
+// 敗方隊名變灰（.match-team.is-lose）是比賽結果，繼續保留
 (() => {
+    // 頁面上沒有 .match-schedule（例如首頁的結果區）時是「資料模式」：只讀資料、算出晉級結果並送出 valorant-schedule:update 給 bracket.js，不畫時間表
     const root = document.querySelector('.match-schedule');
-    if (!root) return;
+    const feedOnly = !root;
 
     const SCHEDULE_URL = 'data/valorant-schedule.json';
     const TEAMS_URL    = 'data/valorant-teams.json';
@@ -60,13 +62,14 @@
     const lang = document.documentElement.lang;
     const t = I18N[lang.startsWith('ja') ? 'ja' : lang.startsWith('en') ? 'en' : 'zh'];
 
-    const stagesBox = root.querySelector('.match-stages');
-    const stageInfo = root.querySelector('.match-stage-info');
-    const testNote  = root.querySelector('.match-test');
-    const liveNote  = root.querySelector('.match-live');
-    const tbody     = root.querySelector('.match-table tbody');
+    const q = selector => root ? root.querySelector(selector) : null;
+    const stagesBox = q('.match-stages');
+    const stageInfo = q('.match-stage-info');
+    const testNote  = q('.match-test');
+    const liveNote  = q('.match-live');
+    const tbody     = q('.match-table tbody');
     const input     = document.getElementById('bracketSearch');    // 頁面上方的搜尋欄（賽程圖的下拉結果與標示由 bracket.js 負責）
-    const filter    = root.querySelector('.match-search input');   // 時間表上方的搜尋欄：只篩選時間表
+    const filter    = q('.match-search input');   // 時間表上方的搜尋欄：只篩選時間表
     // 篩選文字以時間表上方的搜尋欄為準；在頁面上方搜尋時文字會同步帶過來（見 apply），兩邊顯示一致
     const queryText = () => normalize(filter ? filter.value : input ? input.value : '');
 
@@ -294,12 +297,7 @@
         } else {
             id.append(el('span', 'match-tag', match.label));
         }
-        // 比賽狀態：編號旁的小標記（純 CSS 圖形，見 style.css 的 .status-mark），讀螢幕軟體念狀態文字
-        const mark = el('span', `status-mark is-${match.status}`);
-        mark.setAttribute('role', 'img');
-        mark.setAttribute('aria-label', t.status[match.status]);
-        mark.title = t.status[match.status];
-        id.append(mark);
+        // 活動結束後不再顯示比賽狀態標記（紅點／灰勾）；statusOf 仍照常計算，只是不畫出來
 
         // 隊伍 1｜VS｜隊伍 2：VS 固定在中間，兩隊各佔一半（見 style.css 的 .match-versus）
         // 攻守（attackSide＝"team1"／"team2"，另一隊自動是防守方）：ATK／DEF 小字放在隊名外側（隊伍 1 的左邊、隊伍 2 的右邊）
@@ -503,9 +501,6 @@
     let started = false;
 
     const apply = schedule => {
-        testNote.hidden = !schedule.isTest;
-        testNote.textContent = schedule.isTest ? t.test : '';
-
         const raw = schedule.matches;
         const groupOf = groupResolver(raw, teams, draw);
         const results = new Map(raw.map(data => [data.matchId, resultOf(data)]));
@@ -518,6 +513,11 @@
             const result = results.get(data.matchId);
             return [data.matchId, { sides: sides.map(teamName), winner: result ? teamName(sides[result.winner === 'team1' ? 0 : 1]) : null }];
         })) }));
+
+        if (feedOnly) return;    // 資料模式：到這裡就好，不畫時間表
+
+        testNote.hidden = !schedule.isTest;
+        testNote.textContent = schedule.isTest ? t.test : '';
 
         // 輪空的場次（team1／team2 是 null＝BYE）不顯示；其餘依日期 → 開賽時間（沒填的排最後）→ 比賽編號排序
         const timeKey = time => typeof time === 'string' && time ? time : '99:99';
@@ -560,7 +560,7 @@
                 onSearch();
             });
             if (filter) filter.addEventListener('input', onSearch);
-            if (liveNote) liveNote.hidden = false;
+            // 賽事已結束：不再顯示「賽事結果每 5 分鐘自動更新」（liveNote 維持 hidden）
             // 瀏覽器還原了頁面上方搜尋欄的文字時，一併帶進時間表的搜尋欄
             if (filter && input && input.value && !filter.value) filter.value = input.value;
             if (queryText()) onSearch();
@@ -595,7 +595,7 @@
         onData: onSchedule,
         onError: err => {
             console.error(err);
-            if (!started) showMessage('match-empty', t.error);
+            if (!started && !feedOnly) showMessage('match-empty', t.error);
         },
     });
 })();

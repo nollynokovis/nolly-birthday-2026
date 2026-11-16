@@ -301,7 +301,7 @@
     // detail＝Map(比賽編號 → { sides: [隊伍 1, 隊伍 2], winner })，都是已確定的隊名（還沒確定是 null），判斷規則與時間表相同
     // 收到後 VALORANT 各圖第一輪之後的格子改用這份資料（不再看 brackets.json 的 results）；預賽圖第一輪的抽籤不動：
     //   有對戰代號的一欄＝這一欄各場的兩隊（例如預賽圖的 16強欄＝E1、E2 的兩隊，輪空直接晉級的隊伍也會出現），
-    //   最後一欄（晉級決賽／冠軍）＝前一欄各場的勝隊。哪一場在哪一欄由 LAYOUTS／FINAL_LAYOUTS 的 codes 決定（由左到右每兩格一場）
+    //   最後一欄（晉級決賽／冠軍）＝前一欄各場的勝隊；每一欄另外算出已完成比賽的敗方（lost，字變淡，見 CSS 的 .bracket-slot.is-lose，與 SF6 共用）。哪一場在哪一欄由 LAYOUTS／FINAL_LAYOUTS 的 codes 決定（由左到右每兩格一場）
     // SF6：js/sf6-live.js 每次讀到有變化的 sf6-*-results.json 會發出 nolly-bracket:update，
     //   detail＝{ kind: 'sf6Solo'|'sf6Team', images: { 組別: [各欄 { ids, lost }] } }（由 js/sf6-logic.js 算好）
     //   ids＝這一欄由上到下（左側先、右側後）的參賽者 ID（選手 id／隊伍編號，還沒確定是 null；null 整欄＝不動，用在預賽圖第一欄的抽籤）
@@ -317,21 +317,26 @@
         if (!codes) return [];
         const sidesOf = code => (data.get(code) || { sides: [null, null] }).sides;
         const winnerOf = code => (data.get(code) || {}).winner || null;
+        // 已完成比賽的敗方（兩邊隊名都已確定、勝隊也確定，且不是勝隊）；輪空、還沒打完的場次都不標，與 SF6 的 lost 同樣對應 .is-lose
+        const lostOf = code => {
+            const winner = winnerOf(code);
+            return sidesOf(code).map(side => Boolean(winner && side && side !== winner));
+        };
         let k = 0;
         let previous = [];
         return info.columns.map((column, c) => {
             const pairs = c < info.columns.length - 1 ? column.slots.length / 2 : 0;
             const here = codes.slice(k, k + pairs);
             k += pairs;
-            if (here.length === 0) return previous.map(winnerOf);
+            if (here.length === 0) return { entries: previous.map(winnerOf), lost: previous.map(() => false) };
             previous = here;
-            return c === 0 && !info.isFinal ? null : here.flatMap(sidesOf);
+            return { entries: c === 0 && !info.isFinal ? null : here.flatMap(sidesOf), lost: here.flatMap(lostOf) };
         });
     };
 
     // 每張圖各欄要顯示的內容：[{ entries（null＝不動）, lost（null＝不標）}]
     const liveColumns = info => {
-        if (info.kind === 'valorant') return live ? liveEntries(info, live).map(entries => ({ entries, lost: null })) : [];
+        if (info.kind === 'valorant') return live ? liveEntries(info, live) : [];
         const detail = liveByKind[info.kind];
         const columns = detail && detail.images[info.group];
         if (!columns) return [];

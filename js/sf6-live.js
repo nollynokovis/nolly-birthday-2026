@@ -1,5 +1,5 @@
-// SF6 即時賽況（UI Renderer）：schedule-sf6*.html 的組別按鈕進度標記，
-// 並把晉級結果交給 bracket.js 更新賽程圖疊字（nolly-bracket:update 事件）、把同一份計算結果交給對戰一覽（js/sf6-schedule.js，nolly-sf6:update 事件）
+// SF6 即時賽況（UI Renderer）：把晉級結果交給 bracket.js 更新賽程圖疊字（nolly-bracket:update 事件）、把同一份計算結果交給對戰一覽（js/sf6-schedule.js，nolly-sf6:update 事件）；
+// 2026 賽事結束後，組別按鈕不再顯示進行中／已完成的標記
 //   資料來源：js/live-source.js（NollyLive）——比賽結構 data/sf6-*-matches.json 讀一次，結果 data/sf6-*-results.json 定期檢查（間隔見 live-source.js 的 POLL_MS）
 //   賽事邏輯：js/sf6-logic.js（NollySF6Logic）——勝方、晉級、BYE、組別進度都在那裡算，這裡只負責畫面
 // 結果資料格式錯誤（JSON 壞掉、場次編號或 status／winner 打錯）時整份不套用，畫面保留上一次成功的資料；
@@ -46,14 +46,7 @@
         console.warn(msg);
     };
 
-    // 狀態小標記（純 CSS 圖形，見 style.css 的 .status-mark）；讀螢幕軟體念狀態文字
-    const statusMark = status => {
-        const mark = el('span', `status-mark is-${status}`);
-        mark.setAttribute('role', 'img');
-        mark.setAttribute('aria-label', t.status[status]);
-        mark.title = t.status[status];
-        return mark;
-    };
+    // 賽事已結束：組別按鈕不再顯示進度標記（紅點／灰勾）；組別進度仍由 sf6-logic.js 計算，只是不畫出來
 
     // 參賽者顯示：個人賽＝選手名；團體賽＝三位隊員（「A / B / C」，不顯示 TEAM 03 這類編號；隊員名稱一樣可以搜尋）
     const participantsOf = (kind, players, brackets) => {
@@ -81,27 +74,6 @@
             throw new Error(`${cfg.structureUrl} 有錯誤，SF6 即時賽況不啟用`);
         }
         const byPosition = new Map(structure.matches.map(m => [`${m.group}|${m.round}|${m.index}`, m.matchId]));
-
-        // 組別按鈕（各圖容器同一區塊裡的 .group-buttons）→ 組別
-        const groupButtons = containers.flatMap(container => {
-            const row = container.parentElement.querySelector('.group-buttons');
-            return row ? [...row.querySelectorAll('.group-btn')] : [];
-        });
-
-        // 組別按鈕：進行中＝紅點、已完成＝灰勾、尚未開始不加標記；按鈕本身的顏色與切換功能不變
-        const renderGroups = model => {
-            groupButtons.forEach(button => {
-                const status = model.groups.get(button.dataset.group);
-                const old = button.querySelector('.status-mark');
-                if (status !== 'live' && status !== 'completed') {
-                    if (old) old.remove();
-                    return;
-                }
-                if (old && old.classList.contains(`is-${status}`)) return;
-                if (old) old.remove();
-                button.append(statusMark(status));
-            });
-        };
 
         // 賽程圖：每張圖各欄的參賽者與敗方標記，交給 bracket.js（第 0 欄：預賽是抽籤不動、決賽是第一輪的兩邊；之後各欄＝前一輪各場的勝者）
         const bracketDetail = model => {
@@ -144,7 +116,6 @@
                 const key = JSON.stringify([...model.matches].map(([id, m]) => [id, m.status, m.winner, m.sides.map(s => [s.kind, s.id, s.ref])]).concat([model.currentId, [...model.groups]]));
                 if (key === lastKey) return;
                 lastKey = key;
-                renderGroups(model);
                 document.dispatchEvent(new CustomEvent('nolly-bracket:update', { detail: bracketDetail(model) }));
                 // 對戰一覽（js/sf6-schedule.js）用同一份計算結果；輪次名稱與參賽者顯示也從這裡給，叫法一致
                 document.dispatchEvent(new CustomEvent('nolly-sf6:update', { detail: {

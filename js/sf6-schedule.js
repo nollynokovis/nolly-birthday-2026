@@ -72,13 +72,6 @@
         const [y, m, d] = iso.split('-').map(Number);
         return t.date(m, d, new Date(Date.UTC(y, m - 1, d)).getUTCDay());
     };
-    const statusMark = status => {
-        const mark = el('span', `status-mark is-${status}`);
-        mark.setAttribute('role', 'img');
-        mark.setAttribute('aria-label', t.status[status]);
-        mark.title = t.status[status];
-        return mark;
-    };
 
     // 分頁內顯示的場次編號：組別內 R1-1；決賽階段 QF-1、SF-1、3RD、FINAL（JSON 的 matchId 不變）
     const shortId = def => def.group !== 'Final' ? `${def.round}-${def.index}`
@@ -209,16 +202,6 @@
 
         const isHit = (item, query) => item.keys.some(key => key.includes(query));
 
-        // 分頁上的組別狀態（與組別按鈕同一份判斷，見 js/sf6-logic.js 的 groups）：進行中＝紅點、全部比完＝灰勾、尚未開始不加；狀態只顯示在分頁上，每一場不加標記
-        // 標記放在分頁名稱前面；狀態沒變就不動 DOM
-        const renderTabMark = (button, status) => {
-            const old = button.querySelector('.status-mark');
-            const want = status === 'live' || status === 'completed' ? status : null;
-            if (old && want && old.classList.contains(`is-${want}`)) return;
-            if (old) old.remove();
-            if (want) button.prepend(statusMark(want));
-        };
-
         const render = () => {
             const query = queryText();
             const found = query ? items.filter(item => isHit(item, query)) : items;
@@ -228,7 +211,6 @@
                 button.classList.toggle('is-empty', Boolean(query) && n === 0);
                 count.textContent = n;
                 count.hidden = !query || n === 0;
-                renderTabMark(button, detail && detail.model.groups.get(tab));
             });
             renderInfo();
             const rows = found.filter(item => item.tab === current);

@@ -103,6 +103,19 @@ if (pageLoader) {
     });
 }
 
+// 回到 Nolly 官方網站（Nolly Official Website）與官方 Store：這個 2026 網站只是活動紀錄，周邊與最新資訊都在正式官網
+// 網址只在這裡設定一次（結尾不要加斜線，例如 'https://example.com'）；頁面上的 <a data-official-site> 會連到官網、
+// <a data-official-site="/store/"> 連到官網的 /store/；網址留空時這些連結維持隱藏（HTML 上有 hidden），不會出現壞掉的連結
+const OFFICIAL_SITE_URL = 'https://nolly-official.pages.dev';
+if (OFFICIAL_SITE_URL) {
+    document.querySelectorAll('a[data-official-site]').forEach(a => {
+        a.href = OFFICIAL_SITE_URL.replace(/\/+$/, '') + a.dataset.officialSite;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.hidden = false;
+    });
+}
+
 const navbar      = document.getElementById('navbar');
 const heroOverlay = document.getElementById('heroOverlay');
 const heroContent = document.querySelector('.hero-content');
@@ -167,13 +180,16 @@ document.querySelectorAll('.group-buttons').forEach(row => {
     const images = row.parentElement.querySelectorAll('.schedule-image-container img');
     if (buttons.length === 0 || images.length === 0) return;
 
-    buttons[0].classList.add('active');
-    images[0].classList.add('active');
+    // Check if there's already an active button/image, otherwise set the first one
+    const activeButton = row.querySelector('.group-btn.active');
+    const activeIndex = activeButton ? Array.from(buttons).indexOf(activeButton) : 0;
+    if (!activeButton) buttons[0].classList.add('active');
+    if (!images[activeIndex].classList.contains('active')) images[activeIndex].classList.add('active');
 
     // Lazy images under display:none never load, so preload the other groups once the first one has loaded
     const preloadAll = () => images.forEach(img => { img.loading = 'eager'; });
-    if (images[0].complete) preloadAll();
-    else images[0].addEventListener('load', preloadAll, { once: true });
+    if (images[activeIndex].complete) preloadAll();
+    else images[activeIndex].addEventListener('load', preloadAll, { once: true });
 
     buttons.forEach((button, index) => {
         button.addEventListener('click', () => {
