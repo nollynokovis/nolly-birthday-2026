@@ -4403,6 +4403,18 @@ html:not([lang="zh-TW"]) .profile-reverse-text { font-size: 1.9rem; letter-spaci
 /* 主辦區的官網圖示（favicon）：排在社群圖示最左邊，網址在 js/main.js 設定前維持隱藏 */
 .btn-official[hidden] { display: none; }
 .footer-official:hover { color: #fff; border-color: #fff; }
+/* 官網尚未公開（js/main.js 的 OFFICIAL_SITE_OPEN = false）：灰色、不能按、沒有 hover 效果 */
+a[data-official-site].is-disabled,
+a[data-official-site].is-disabled:hover {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
+    transform: none;
+}
+.btn-goods.is-disabled,
+.btn-goods.is-disabled:hover { background: #8a8a8a; color: #e6e6e6; }
+.footer-official.is-disabled:hover,
+.nav-official.is-disabled:hover { color: var(--c5); border-color: var(--c4); }
 /* 賽程頁最上方的結果：冠軍標籤用該賽事的顏色（VALORANT 紅、SF6 橘） */
 .result-info[data-result-info="valorant"] { --result-accent: var(--c8); }
 .result-info[data-result-info^="sf6"] { --result-accent: var(--c7); }
