@@ -108,7 +108,7 @@ if (pageLoader) {
 // <a data-official-site="/store/"> 連到官網的 /store/；網址留空時這些連結維持隱藏（HTML 上有 hidden），不會出現壞掉的連結
 // 11/18 公開官網前，OFFICIAL_SITE_OPEN 維持 false：按鈕照常顯示但是灰色、不能按（沒有連結）；公開當天改成 true 即可
 const OFFICIAL_SITE_URL = 'https://nolly-official.pages.dev';
-const OFFICIAL_SITE_OPEN = false;
+const OFFICIAL_SITE_OPEN = true;
 if (OFFICIAL_SITE_URL) {
     document.querySelectorAll('a[data-official-site]').forEach(a => {
         a.hidden = false;
